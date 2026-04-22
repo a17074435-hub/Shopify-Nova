@@ -1,0 +1,148 @@
+<style>
+/* NovaLight inline overrides — rendered server-side, cannot be cached */
+
+/* 1. Override Radiant font-size CSS variables.
+      These load after theme-styles-variables so they win the cascade. */
+:root {
+  --font-size--h1: clamp(3rem, 8vw, 6.5rem);
+  --font-size--h2: clamp(2.2rem, 5vw, 4.2rem);
+  --font-size--h3: clamp(1.8rem, 3.5vw, 3rem);
+  --letter-spacing--heading-tight:  -0.04em;
+  --letter-spacing--heading-normal: -0.02em;
+  --letter-spacing--display-tight:  -0.045em;
+  --line-height--heading-tight:  1.05;
+  --line-height--display-tight:  1.0;
+  --nova-purple: #A855F7;
+  --nova-purple-deep: #7C3AED;
+}
+
+/* 2. Hero ambient glow — pseudo-element on .hero */
+.hero { position: relative !important; }
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 55% at 50% 105%, rgba(124,58,237,0.45) 0%, transparent 62%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 3. Hero text blocks.
+      Radiant: <div class="text-block h1"> NOT actual <h1> elements. */
+.hero .text-block.h1 > *,
+.hero .text-block.h1 :is(h1,h2,h3,h4,h5,h6) {
+  font-weight: 700 !important;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.6) !important;
+}
+
+/* Hero paragraph / subtitle */
+.hero .text-block.paragraph > *,
+.hero .text-block.rte > p,
+.hero .text-block.rte p {
+  opacity: 0.8 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Hero purple divider */
+.hero hr { border-color: rgba(168,85,247,0.6) !important; width: 36px !important; }
+
+/* 4. Announcement bar */
+.announcement-bar__text, .announcement-bar {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+/* 5. Sticky header blur */
+header-component[data-sticky-state="active"] .header,
+header-component[sticky="always"] .header {
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  background-color: rgba(0,0,0,0.82) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* 6. Nav hover purple */
+.header__nav-link:hover,
+.header__nav-link:focus-visible { color: var(--nova-purple) !important; }
+
+/* 7. Product cards */
+.product-card {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+}
+@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .product-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.12) !important;
+  }
+}
+
+/* 8. Button hover lift */
+@media (any-pointer: fine) {
+  .button:not(.button-secondary,.button-unstyled):hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
+  }
+  .button:not(.button-secondary,.button-unstyled):active { transform: translateY(0) !important; }
+  .button-secondary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 24px rgba(124,58,237,0.35) !important;
+  }
+  .button-secondary:active { transform: translateY(0) !important; }
+}
+
+/* 9. Purple sale badge + selected variant ring */
+.badge--sale {
+  background-color: var(--nova-purple) !important;
+  border-color: var(--nova-purple) !important;
+  color: #fff !important;
+}
+.variant-option__button-label:has(:checked) { box-shadow: 0 0 0 2px var(--nova-purple) !important; }
+.variant-option__button-label--has-swatch:has(:checked) {
+  outline: 2px solid var(--nova-purple) !important;
+  outline-offset: 2px !important;
+}
+
+/* 10. Inputs focus */
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: none !important;
+  border-color: var(--nova-purple) !important;
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.18) !important;
+}
+
+/* 11. Cart drawer glass + search */
+.cart-drawer__overlay, .drawer__overlay {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+.cart-drawer { border-left: 1px solid rgba(255,255,255,0.07) !important; }
+.popover-container {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* 12. Body smoothing */
+body {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* 13. Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--nova-purple); }
+
+/* 14. SVG logo size */
+.nova-logo__img {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  display: block !important;
+}
+@media (max-width: 749px) { .nova-logo__img { height: 24px !important; } }
+</style>
