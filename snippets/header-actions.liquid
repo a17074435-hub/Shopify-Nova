@@ -201,6 +201,9 @@
                   class="cart-drawer__heading h4"
                   id="cart-drawer-heading"
                 >
+                  <span class="svg-wrapper nova-cart-heading-icon" aria-hidden="true">
+                    {{- 'icon-cart.svg' | inline_asset_content -}}
+                  </span>
                   {{ 'content.cart_title' | t }}
                   {% render 'cart-bubble' %}
                 </h2>
