@@ -115,16 +115,33 @@
           box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(168,85,247,0.15) !important;
         }
       }
-      /* Button lift */
+      /* Primary button — on hover turns purple with glow (design-preview style) */
+      .button:not(.button-secondary,.button-unstyled) {
+        transition:background-color .4s var(--nova-ease),color .4s var(--nova-ease),box-shadow .4s var(--nova-ease),transform .22s var(--nova-ease) !important;
+      }
       @media (any-pointer:fine) {
         .button:not(.button-secondary,.button-unstyled):hover {
+          background-color: var(--nova-purple) !important;
+          border-color: var(--nova-purple) !important;
+          color: #fff !important;
           transform:translateY(-2px) !important;
-          box-shadow:0 8px 30px rgba(0,0,0,0.5),0 0 32px rgba(124,58,237,0.3) !important;
+          box-shadow:0 0 32px rgba(124,58,237,0.45),0 0 64px rgba(124,58,237,0.2) !important;
         }
         .button:not(.button-secondary,.button-unstyled):active { transform:translateY(0) !important; }
+      }
+      /* Secondary / ghost button — purple border, transparent bg */
+      .button-secondary {
+        border: 1px solid rgba(168,85,247,0.5) !important;
+        color: #fff !important;
+        background: transparent !important;
+        transition:border-color .4s var(--nova-ease),box-shadow .4s var(--nova-ease),background .4s var(--nova-ease),transform .22s var(--nova-ease) !important;
+      }
+      @media (any-pointer:fine) {
         .button-secondary:hover {
+          border-color: var(--nova-purple) !important;
+          background: rgba(168,85,247,0.08) !important;
+          box-shadow:0 0 24px rgba(124,58,237,0.3) !important;
           transform:translateY(-2px) !important;
-          box-shadow:0 0 20px var(--nova-glow) !important;
         }
         .button-secondary:active { transform:translateY(0) !important; }
       }
