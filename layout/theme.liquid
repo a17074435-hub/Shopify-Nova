@@ -457,11 +457,11 @@
       /* .cart-drawer__dialog is the actual color-scheme element — override to glass */
       /* NOTE: do NOT add .cart-drawer here — that class is on cart-drawer-component in the header */
       .cart-drawer__dialog {
-        background:rgba(6,0,20,0.08) !important;
-        backdrop-filter:blur(56px) saturate(1.5) brightness(0.88) !important;
-        -webkit-backdrop-filter:blur(56px) saturate(1.5) brightness(0.88) !important;
-        border-left:1px solid rgba(168,85,247,0.35) !important;
-        box-shadow:-24px 0 80px rgba(0,0,0,0.3),inset 1px 0 0 rgba(168,85,247,0.28),inset 0 0 120px rgba(109,40,217,0.06) !important;
+        background:rgba(70,15,140,0.22) !important;
+        backdrop-filter:blur(48px) saturate(1.6) !important;
+        -webkit-backdrop-filter:blur(48px) saturate(1.6) !important;
+        border-left:1px solid rgba(168,85,247,0.40) !important;
+        box-shadow:-24px 0 60px rgba(0,0,0,0.25),inset 1px 0 0 rgba(168,85,247,0.35),inset 0 1px 0 rgba(255,255,255,0.05),inset 0 0 80px rgba(109,40,217,0.10) !important;
       }
       /* cart-drawer-component wrapper in the header must be invisible */
       cart-drawer-component.cart-drawer {
@@ -470,10 +470,14 @@
         box-shadow:none !important;
         backdrop-filter:none !important;
       }
-      .cart-drawer__inner { background:transparent !important; }
+      /* Force all inner wrappers transparent so the glass dialog shows through */
+      .cart-drawer__inner,
+      .cart-drawer__content,
+      .cart-drawer__items,
+      scroll-hint { background:transparent !important; }
       /* Cart header */
       .cart-drawer__header {
-        background:rgba(109,40,217,0.1) !important;
+        background:rgba(168,85,247,0.07) !important;
         border-bottom:1px solid rgba(168,85,247,0.18) !important;
       }
       .cart-drawer__heading {
@@ -508,10 +512,8 @@
       }
       /* Cart summary footer */
       .cart-drawer__summary {
-        background:rgba(109,40,217,0.08) !important;
+        background:rgba(168,85,247,0.06) !important;
         border-top:1px solid rgba(168,85,247,0.22) !important;
-        backdrop-filter:blur(16px) !important;
-        -webkit-backdrop-filter:blur(16px) !important;
       }
       /* Checkout button — purple pill + neon glow */
       .cart-drawer__summary .button,
