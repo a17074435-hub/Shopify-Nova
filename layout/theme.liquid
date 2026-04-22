@@ -180,6 +180,12 @@
         background:transparent !important;
         background-color:transparent !important;
       }
+      /* underlay divs carry the actual color-scheme gradient — nuke them */
+      .header__underlay-closed,
+      .header__underlay-open {
+        background:transparent !important;
+        background-color:transparent !important;
+      }
       header-component[data-sticky-state="active"] .header,
       header-component[sticky="always"] .header {
         backdrop-filter:none !important;
@@ -445,13 +451,20 @@
         background:rgba(0,0,0,0.55) !important;
       }
       /* .cart-drawer__dialog is the actual color-scheme element — override to glass */
-      .cart-drawer__dialog,
-      .cart-drawer {
+      /* NOTE: do NOT add .cart-drawer here — that class is on cart-drawer-component in the header */
+      .cart-drawer__dialog {
         background:rgba(8,0,26,0.60) !important;
         backdrop-filter:blur(44px) saturate(2) brightness(1.08) !important;
         -webkit-backdrop-filter:blur(44px) saturate(2) brightness(1.08) !important;
         border-left:1px solid rgba(168,85,247,0.28) !important;
         box-shadow:-24px 0 80px rgba(0,0,0,0.55),inset 1px 0 0 rgba(168,85,247,0.2),inset 0 0 120px rgba(109,40,217,0.05) !important;
+      }
+      /* cart-drawer-component wrapper in the header must be invisible */
+      cart-drawer-component.cart-drawer {
+        background:transparent !important;
+        border:none !important;
+        box-shadow:none !important;
+        backdrop-filter:none !important;
       }
       .cart-drawer__inner { background:transparent !important; }
       /* Cart header */
