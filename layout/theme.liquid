@@ -173,7 +173,7 @@
         color:#fff !important; text-shadow:0 0 12px rgba(255,255,255,0.3) !important;
       }
 
-      /* 7 — Header — always transparent */
+      /* 7 — Header — always transparent, only pills float */
       header-component,
       header-component .header,
       .header {
@@ -186,26 +186,15 @@
         background:transparent !important;
         background-color:transparent !important;
       }
-      .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
-
-      /* 7-sticky — When JS clones the sticky header, backdrop-filter on *children*
-         breaks because the clone fades in via opacity:0→1 (compositing group isolation).
-         Fix: put the glass on the sticky header element ITSELF, not its children.
-         On self, backdrop-filter is applied before opacity compositing → works. */
-      .header[data-sticky-state="active"] {
-        background:rgba(6,1,22,0.62) !important;
-        backdrop-filter:blur(32px) saturate(1.8) !important;
-        -webkit-backdrop-filter:blur(32px) saturate(1.8) !important;
-        border-bottom:1px solid rgba(168,85,247,0.18) !important;
-        box-shadow:0 4px 32px rgba(0,0,0,0.45) !important;
-      }
-      /* Pills inside sticky header: keep visual shape but no own backdrop-filter */
-      .header[data-sticky-state] header-menu,
-      .header[data-sticky-state] header-actions {
+      header-component[data-sticky-state="active"] .header,
+      header-component[sticky="always"] .header {
         backdrop-filter:none !important;
         -webkit-backdrop-filter:none !important;
-        background:rgba(168,85,247,0.08) !important;
+        background:transparent !important;
+        border-bottom:none !important;
+        box-shadow:none !important;
       }
+      .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
 
       /* 7b — Logo orbit sparkle (desktop) */
       @media screen and (min-width:750px) {
@@ -230,12 +219,15 @@
       }
       @media (prefers-reduced-motion:reduce) { .header-logo::after { animation:none !important; } }
 
-      /* 7c — Nav pill (desktop) — non-sticky header only */
+      /* 7c — Nav pill (desktop) */
+      /* will-change:backdrop-filter promotes to its own compositing layer so the blur
+         survives the sticky header's opacity:0→1 fade-in transition */
       @media screen and (min-width:750px) {
-        .header:not([data-sticky-state]) header-menu {
+        header-menu {
           background:rgba(10,3,30,0.52) !important;
           backdrop-filter:blur(28px) saturate(1.8) !important;
           -webkit-backdrop-filter:blur(28px) saturate(1.8) !important;
+          will-change:backdrop-filter !important;
           border:1px solid rgba(168,85,247,0.28) !important;
           border-radius:100px !important;
           padding:4px 10px !important;
@@ -253,11 +245,12 @@
         }
       }
 
-      /* 7d — Actions pill — non-sticky header only */
-      .header:not([data-sticky-state]) header-actions {
+      /* 7d — Actions pill (desktop + mobile) */
+      header-actions {
         background:rgba(10,3,30,0.52) !important;
         backdrop-filter:blur(28px) saturate(1.8) !important;
         -webkit-backdrop-filter:blur(28px) saturate(1.8) !important;
+        will-change:backdrop-filter !important;
         border:1px solid rgba(168,85,247,0.28) !important;
         border-radius:100px !important;
         padding:3px 4px !important;
