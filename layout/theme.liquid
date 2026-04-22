@@ -438,18 +438,90 @@
         box-shadow:0 0 0 3px rgba(168,85,247,0.2) !important;
       }
 
-      /* 14 — Cart drawer */
+      /* 14 — Cart drawer — frosted glass window */
       .cart-drawer__overlay,.drawer__overlay {
-        backdrop-filter:blur(8px) brightness(0.4) !important;
-        -webkit-backdrop-filter:blur(8px) brightness(0.4) !important;
-        background:rgba(0,0,0,0.5) !important;
+        backdrop-filter:blur(10px) brightness(0.35) !important;
+        -webkit-backdrop-filter:blur(10px) brightness(0.35) !important;
+        background:rgba(0,0,0,0.55) !important;
       }
+      /* .cart-drawer__dialog is the actual color-scheme element — override to glass */
+      .cart-drawer__dialog,
       .cart-drawer {
-        background:rgba(5,0,22,0.93) !important;
-        backdrop-filter:blur(32px) saturate(1.5) !important;
-        -webkit-backdrop-filter:blur(32px) saturate(1.5) !important;
-        border-left:1px solid rgba(168,85,247,0.24) !important;
-        box-shadow:-20px 0 60px rgba(0,0,0,0.7),inset 1px 0 0 rgba(168,85,247,0.1) !important;
+        background:rgba(8,0,26,0.60) !important;
+        backdrop-filter:blur(44px) saturate(2) brightness(1.08) !important;
+        -webkit-backdrop-filter:blur(44px) saturate(2) brightness(1.08) !important;
+        border-left:1px solid rgba(168,85,247,0.28) !important;
+        box-shadow:-24px 0 80px rgba(0,0,0,0.55),inset 1px 0 0 rgba(168,85,247,0.2),inset 0 0 120px rgba(109,40,217,0.05) !important;
+      }
+      .cart-drawer__inner { background:transparent !important; }
+      /* Cart header */
+      .cart-drawer__header {
+        background:rgba(109,40,217,0.1) !important;
+        border-bottom:1px solid rgba(168,85,247,0.18) !important;
+      }
+      .cart-drawer__heading {
+        color:var(--nova-purple) !important;
+        text-shadow:0 0 18px rgba(168,85,247,0.5) !important;
+        font-weight:700 !important;
+      }
+      /* Cart item rows */
+      .cart-drawer__items .cart-items__table-row {
+        border-bottom:1px solid rgba(168,85,247,0.1) !important;
+      }
+      /* Cart product titles */
+      .cart-drawer__items .cart-items__name,
+      .cart-drawer__items a[href*="/products"] {
+        color:var(--nova-purple) !important;
+      }
+      /* Cart summary footer */
+      .cart-drawer__summary {
+        background:rgba(109,40,217,0.08) !important;
+        border-top:1px solid rgba(168,85,247,0.22) !important;
+        backdrop-filter:blur(16px) !important;
+        -webkit-backdrop-filter:blur(16px) !important;
+      }
+      /* Checkout button — purple pill + neon glow */
+      .cart-drawer__summary .button,
+      .cart-drawer__summary [href*="checkout"],
+      .cart__checkout-button {
+        background:var(--nova-purple) !important;
+        border-color:var(--nova-purple) !important;
+        color:#fff !important;
+        border-radius:100px !important;
+        font-weight:700 !important;
+        letter-spacing:0.04em !important;
+        box-shadow:0 0 24px rgba(124,58,237,0.55),0 0 48px rgba(124,58,237,0.2) !important;
+        transition:transform .3s var(--nova-ease),box-shadow .3s var(--nova-ease) !important;
+      }
+      @media (any-pointer:fine) {
+        .cart-drawer__summary .button:hover,
+        .cart-drawer__summary [href*="checkout"]:hover,
+        .cart__checkout-button:hover {
+          transform:translateY(-3px) !important;
+          box-shadow:0 0 40px rgba(124,58,237,0.75),0 0 80px rgba(124,58,237,0.35) !important;
+        }
+      }
+      /* Quantity selector glass */
+      .cart-drawer .quantity-selector,
+      .cart-drawer .component-quantity {
+        background:rgba(109,40,217,0.12) !important;
+        border:1px solid rgba(168,85,247,0.28) !important;
+        border-radius:100px !important;
+      }
+
+      /* Close buttons — spin + purple on hover (all dialogs/drawers) */
+      .close-button {
+        border-radius:50% !important;
+        transition:transform .35s var(--nova-ease),color .3s,background .3s !important;
+        padding:6px !important;
+      }
+      .close-button:hover {
+        transform:rotate(90deg) scale(1.22) !important;
+        color:var(--nova-purple) !important;
+        background:rgba(168,85,247,0.12) !important;
+      }
+      .close-button:active {
+        transform:rotate(180deg) scale(0.9) !important;
       }
 
       /* 15 — Popovers */
