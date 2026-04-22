@@ -95,9 +95,13 @@
       #header-group, #MainContent, footer { position:relative; z-index:1; }
 
       /* 2 — Section transparency (stars show through) */
+      /* Radiant uses div.section-background for section color — that's the black layer */
+      .section-background { background:transparent !important; background-color:transparent !important; }
       .shopify-section { background:transparent !important; }
       .shopify-section > section,
       .shopify-section > .section { background:transparent !important; }
+      /* catch any remaining color-scheme wrappers */
+      .shopify-section [class*="color-scheme-"] { background-color:transparent !important; }
 
       /* 3 — Ambient blobs */
       #nova-atm {
@@ -356,11 +360,14 @@
         font-weight:500 !important;
       }
 
-      /* 9d — Quick-add glass button */
+      /* 9d — Quick-add glass button — always visible, expands on hover */
+      .quick-add__button {
+        opacity:1 !important;           /* always visible, override Radiant's opacity:0 */
+        visibility:visible !important;
+      }
       .product-card .quick-add__button,
       .product-card [data-quick-add-btn],
-      .product-card .card__add-to-cart,
-      .product-card form [type="submit"] {
+      .product-card .card__add-to-cart {
         background:rgba(109,40,217,0.28) !important;
         backdrop-filter:blur(14px) !important;
         -webkit-backdrop-filter:blur(14px) !important;
@@ -370,16 +377,16 @@
         font-weight:600 !important;
         letter-spacing:0.03em !important;
         box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 4px 16px rgba(0,0,0,0.3) !important;
-        transition:all .3s var(--nova-ease) !important;
+        transition:transform .28s var(--nova-ease),box-shadow .28s var(--nova-ease),background .28s var(--nova-ease),scale .28s var(--nova-ease) !important;
       }
       @media (any-pointer:fine) {
         .product-card .quick-add__button:hover,
         .product-card [data-quick-add-btn]:hover,
-        .product-card .card__add-to-cart:hover,
-        .product-card form [type="submit"]:hover {
+        .product-card .card__add-to-cart:hover {
           background:var(--nova-purple) !important;
           border-color:var(--nova-purple) !important;
           box-shadow:0 0 28px rgba(124,58,237,0.65),0 0 60px rgba(124,58,237,0.28) !important;
+          scale:1.07 !important;          /* expand on hover */
           transform:translateY(-2px) !important;
         }
       }
