@@ -1,15 +1,15 @@
 /* ============================================================
-   NovaLight — Premium custom styles
-   Layered on top of Radiant. No functionality affected.
+   NovaLight — Premium visual layer
+   Safe override: only CSS classes, no Liquid functionality touched.
    ============================================================ */
 
-/* --- Design tokens --- */
+/* --- Custom tokens --- */
 :root {
-  --nova-purple:       #A855F7;
-  --nova-purple-deep:  #7C3AED;
-  --nova-purple-glow:  rgba(168, 85, 247, 0.28);
-  --nova-ease:         cubic-bezier(0.16, 1, 0.3, 1);
-  --nova-dur:          0.38s;
+  --nova-purple:      #A855F7;
+  --nova-purple-deep: #7C3AED;
+  --nova-glow:        rgba(124, 58, 237, 0.35);
+  --nova-ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --nova-dur:         0.4s;
 }
 
 /* ============================================================
@@ -19,7 +19,6 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -27,17 +26,26 @@ body {
   color: #fff;
 }
 
-/* WebKit scrollbar — thin, dark */
-::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar            { width: 5px; }
 ::-webkit-scrollbar-track      { background: transparent; }
-::-webkit-scrollbar-thumb      { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+::-webkit-scrollbar-thumb      { background: rgba(255,255,255,0.1); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover{ background: var(--nova-purple); }
+
+/* ============================================================
+   Announcement bar
+   ============================================================ */
+
+.announcement-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  letter-spacing: 0.06em;
+  font-size: 0.72rem !important;
+  text-transform: uppercase;
+}
 
 /* ============================================================
    Header
    ============================================================ */
 
-/* Smooth transition regardless of state */
 header-component {
   transition:
     background-color var(--nova-dur) var(--nova-ease),
@@ -45,32 +53,168 @@ header-component {
     border-color     var(--nova-dur) var(--nova-ease);
 }
 
-/* Frosted glass when header is actively sticky (scrolled past natural position) */
 header-component[data-sticky-state="active"] .header,
 header-component[sticky="always"] .header {
   backdrop-filter: blur(24px) saturate(1.6);
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  background-color: rgba(0, 0, 0, 0.78) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: rgba(0, 0, 0, 0.82) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Nav link hover — purple */
+/* Logo: refined */
+.header__logo {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Nav link hover */
 .header__nav-link:hover,
 .header__nav-link:focus-visible {
   color: var(--nova-purple) !important;
-  transition: color 0.2s ease;
 }
 
-/* Cart icon: purple dot when has items */
-.header-actions__cart-icon--has-cart .cart-count {
-  background-color: var(--nova-purple);
+/* ============================================================
+   Hero — The most important section
+   ============================================================ */
+
+/* Bottom ambient purple glow */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 110%, rgba(124, 58, 237, 0.45) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Massive editorial heading */
+.hero h1,
+.hero .h1 {
+  font-size: clamp(2.8rem, 7.5vw, 6rem) !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.0 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtitle */
+.hero p {
+  font-size: clamp(1rem, 1.5vw, 1.1rem) !important;
+  opacity: 0.78;
+  letter-spacing: 0.005em;
+}
+
+/* Hero divider: thin purple accent line */
+.hero hr {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  width: 40px !important;
+  margin: 0 !important;
+}
+
+/* ============================================================
+   Section (generic / pull-quote)
+   ============================================================ */
+
+/* The big statement h2: editorial */
+.section h2,
+.section .h2 {
+  font-size: clamp(2rem, 4.5vw, 4rem) !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
+  font-weight: 600 !important;
+}
+
+/* Small label text above heading: uppercase tag */
+.section .paragraph {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  opacity: 0.5;
+  font-weight: 500;
+}
+
+/* ============================================================
+   Product list (featured products)
+   ============================================================ */
+
+/* "Featured products" heading */
+.product-list h2,
+.product-list .h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem) !important;
+  letter-spacing: -0.025em !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================================
+   Product Cards
+   ============================================================ */
+
+/* Subtle border on cards — glows on hover */
+.product-card {
+  border-radius: 4px;
+  overflow: hidden;
+  transition:
+    transform    var(--nova-dur) var(--nova-ease),
+    box-shadow   var(--nova-dur) var(--nova-ease) !important;
+}
+
+@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(168, 85, 247, 0.15) !important;
+  }
+}
+
+/* Product name on card */
+.product-card h5,
+.product-card .h5 {
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   Media with content sections (split layout)
+   ============================================================ */
+
+/* Content side: slightly more padding for breathing room */
+.media-with-content h2,
+.media-with-content .h2 {
+  font-size: clamp(1.8rem, 3.5vw, 3rem) !important;
+  letter-spacing: -0.03em !important;
+  font-weight: 600 !important;
+}
+
+.media-with-content p {
+  opacity: 0.75;
+  line-height: 1.65;
+}
+
+/* ============================================================
+   Marquee ticker
+   ============================================================ */
+
+.marquee {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.marquee p {
+  font-size: clamp(1rem, 2vw, 1.4rem) !important;
+  letter-spacing: -0.01em;
+  opacity: 0.65;
 }
 
 /* ============================================================
    Buttons
    ============================================================ */
 
-/* Replace default transition with smoother NovaLight one */
 .button,
 .button-secondary,
 button.shopify-payment-button__button--unbranded {
@@ -83,40 +227,35 @@ button.shopify-payment-button__button--unbranded {
   will-change: transform, box-shadow;
 }
 
-/* Primary button: subtle lift + glow on hover */
 @media (any-pointer: fine) {
   .button:not(.button-secondary, .button-unstyled):hover {
     transform: translateY(-2px);
     box-shadow:
       inset 0 0 0 var(--button-border-width, 0px) var(--button-border-color, transparent),
-      0 4px 24px rgba(0, 0, 0, 0.45),
-      0 0 28px rgba(255, 255, 255, 0.08) !important;
+      0 8px 30px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(255, 255, 255, 0.06) !important;
   }
-
   .button:not(.button-secondary, .button-unstyled):active {
     transform: translateY(0);
   }
 
-  /* Secondary button: purple glow on hover */
   .button-secondary:hover {
     transform: translateY(-2px);
     box-shadow:
       inset 0 0 0 var(--button-border-width, 1px) var(--button-border-color, transparent),
-      0 0 22px var(--nova-purple-glow) !important;
+      0 0 24px var(--nova-glow) !important;
   }
-
   .button-secondary:active {
     transform: translateY(0);
   }
 }
 
-/* Shopify accelerated checkout (Buy Now) — match our radius */
 .shopify-payment-button__button {
   border-radius: 12px !important;
 }
 
 /* ============================================================
-   Inputs & Forms
+   Inputs
    ============================================================ */
 
 input:focus-visible,
@@ -125,39 +264,25 @@ select:focus-visible {
   outline: none !important;
   border-color: var(--nova-purple) !important;
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* ============================================================
    Variant Picker
    ============================================================ */
 
-/* Selected variant button: purple glow ring */
 .variant-option__button-label:has(:checked) {
   box-shadow: 0 0 0 2px var(--nova-purple) !important;
 }
 
-/* Selected swatch: purple ring */
 .variant-option__button-label--has-swatch:has(:checked) {
   outline: 2px solid var(--nova-purple) !important;
   outline-offset: 2px;
 }
 
 /* ============================================================
-   Product Cards
+   Product media thumbnails
    ============================================================ */
 
-@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .product-card:hover {
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55) !important;
-  }
-}
-
-/* ============================================================
-   Product Media Thumbnails
-   ============================================================ */
-
-/* Active/selected thumbnail: purple ring */
 .thumbnail[aria-current="true"],
 .thumbnail[aria-selected="true"] {
   outline: 2px solid var(--nova-purple) !important;
@@ -168,26 +293,22 @@ select:focus-visible {
    Badges
    ============================================================ */
 
-/* Sale badge: purple */
-.badge--sale,
-.badge[data-type="sale"] {
+.badge--sale {
   background-color: var(--nova-purple) !important;
   border-color:     var(--nova-purple) !important;
   color: #fff !important;
 }
 
 /* ============================================================
-   Typography
+   Typography headings — global tightening
    ============================================================ */
 
-/* Tighter letter-spacing on large headings — feels premium */
 @media screen and (min-width: 750px) {
-  h1, .h1 { letter-spacing: -0.03em; }
+  h1, .h1 { letter-spacing: -0.035em; }
   h2, .h2 { letter-spacing: -0.025em; }
   h3, .h3 { letter-spacing: -0.02em; }
 }
 
-/* Price: tighter tracking */
 .price__current,
 .price-item--regular {
   letter-spacing: -0.02em;
@@ -197,56 +318,36 @@ select:focus-visible {
    Cart Drawer
    ============================================================ */
 
-/* Backdrop blur on the overlay */
 .cart-drawer__overlay,
 .drawer__overlay {
   backdrop-filter: blur(6px) !important;
   -webkit-backdrop-filter: blur(6px) !important;
 }
 
-/* Subtle left border */
 .cart-drawer {
   border-left: 1px solid rgba(255, 255, 255, 0.07) !important;
 }
 
 /* ============================================================
-   Search & Predictive Search
+   Search / Popovers
    ============================================================ */
 
-predictive-search-component,
-.predictive-search {
+predictive-search-component {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
-/* ============================================================
-   Popovers & Dropdowns
-   ============================================================ */
-
-.popover-container,
-.popover {
+.popover-container {
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 /* ============================================================
-   Quick-add Modal
-   ============================================================ */
-
-.quick-add-modal__content {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* ============================================================
    Dividers
    ============================================================ */
 
-.divider hr,
-hr {
+.divider hr, hr {
   border-color: rgba(255, 255, 255, 0.07) !important;
-  opacity: 1 !important;
 }
 
 /* ============================================================
@@ -254,38 +355,69 @@ hr {
    ============================================================ */
 
 footer > .shopify-section:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ============================================================
-   Breadcrumb
+   Scroll reveal animations
    ============================================================ */
 
-.breadcrumbs__item a {
-  opacity: 0.5;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .nova-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity   0.65s var(--nova-ease),
+      transform 0.65s var(--nova-ease);
+  }
 
-.breadcrumbs__item a:hover {
-  opacity: 1;
-  color: var(--nova-purple);
+  .nova-reveal.nova-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger children within revealed sections */
+  .nova-reveal-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity   0.5s var(--nova-ease),
+      transform 0.5s var(--nova-ease);
+  }
+
+  .nova-reveal-children.nova-visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: none; }
+  .nova-reveal-children.nova-visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: none; }
+  .nova-reveal-children.nova-visible > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: none; }
+  .nova-reveal-children.nova-visible > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: none; }
 }
 
 /* ============================================================
-   Announcement bar
+   SVG Logo
    ============================================================ */
 
-.announcement-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+.nova-logo__img {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 200px;
+  display: block;
+}
+
+@media screen and (max-width: 749px) {
+  .nova-logo__img {
+    height: 24px !important;
+  }
 }
 
 /* ============================================================
-   Mobile refinements
+   Mobile
    ============================================================ */
 
 @media screen and (max-width: 749px) {
-  .button,
-  .button-secondary {
+  .button, .button-secondary {
     min-height: 52px;
+  }
+
+  .hero h1, .hero .h1 {
+    letter-spacing: -0.03em !important;
   }
 }
