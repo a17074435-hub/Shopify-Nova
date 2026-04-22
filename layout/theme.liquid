@@ -37,7 +37,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-      /* ── NovaLight v3 · Liquid Glass ── */
+      /* ── NovaLight v4 · Liquid Glass ── */
 
       /* 0 — Tokens */
       :root {
@@ -67,6 +67,26 @@
         --letter-spacing--display-tight:  -0.045em;
         --line-height--heading-tight:  1.05;
         --line-height--heading-normal: 1.1;
+      }
+
+      /* Keyframes */
+      @keyframes nova-drift-a {
+        0%,100% { transform:translate(0,0) scale(1); }
+        40%     { transform:translate(-3vw,4vh) scale(1.07); }
+        70%     { transform:translate(2vw,-2vh) scale(0.95); }
+      }
+      @keyframes nova-drift-b {
+        0%,100% { transform:translate(0,0) scale(1); }
+        35%     { transform:translate(4vw,-3vh) scale(1.05); }
+        65%     { transform:translate(-2vw,3vh) scale(0.97); }
+      }
+      @keyframes nova-twinkle {
+        0%,100% { opacity:0.08; transform:scale(0.35); }
+        50%     { opacity:1;    transform:scale(1); }
+      }
+      @keyframes nova-orbit {
+        0%   { transform:rotate(0deg)   translateX(42px); }
+        100% { transform:rotate(360deg) translateX(42px); }
       }
 
       /* 1 — Global */
@@ -99,18 +119,17 @@
           transparent 65%);
         animation:nova-drift-b 24s ease-in-out infinite;
       }
-      @keyframes nova-drift-a {
-        0%,100% { transform:translate(0,0) scale(1); }
-        40%     { transform:translate(-3vw,4vh) scale(1.07); }
-        70%     { transform:translate(2vw,-2vh) scale(0.95); }
-      }
-      @keyframes nova-drift-b {
-        0%,100% { transform:translate(0,0) scale(1); }
-        35%     { transform:translate(4vw,-3vh) scale(1.05); }
-        65%     { transform:translate(-2vw,3vh) scale(0.97); }
-      }
       @media (prefers-reduced-motion:reduce) {
         #nova-atm::before, #nova-atm::after { animation:none; }
+      }
+
+      /* Stars */
+      .nova-star {
+        position:absolute;
+        border-radius:50%;
+        pointer-events:none;
+        animation:nova-twinkle var(--dur,3s) ease-in-out infinite;
+        animation-delay:var(--del,0s);
       }
 
       /* 3 — Typography */
@@ -125,7 +144,7 @@
       .text-block.h2 > * { font-size:clamp(2rem,5vw,4rem) !important; letter-spacing:-0.03em !important; line-height:1.1 !important; }
       .text-block.h3 > * { font-size:clamp(1.5rem,3vw,2.5rem) !important; }
 
-      /* 4 — Announcement bar — purple-tinted glass */
+      /* 4 — Announcement bar */
       .announcement-bar {
         background:rgba(109,40,217,0.14) !important;
         backdrop-filter:blur(14px) !important;
@@ -136,7 +155,7 @@
         font-size:0.7rem !important; letter-spacing:0.1em !important; text-transform:uppercase !important;
       }
 
-      /* 5 — Header — dark tinted glass */
+      /* 5 — Header glass */
       header-component {
         transition:background-color .4s var(--nova-ease),backdrop-filter .4s var(--nova-ease),border-color .4s var(--nova-ease) !important;
       }
@@ -149,6 +168,82 @@
         box-shadow:0 1px 0 rgba(168,85,247,0.09),0 8px 40px rgba(0,0,0,0.5) !important;
       }
       .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
+
+      /* 5b — Logo centered + orbit sparkle (desktop) */
+      @media screen and (min-width:750px) {
+        .header-logo {
+          position:relative !important;
+          overflow:visible !important;
+          z-index:2 !important;
+        }
+        .header-logo::after {
+          content:'' !important;
+          position:absolute !important;
+          top:50% !important; left:50% !important;
+          width:7px !important; height:7px !important;
+          margin:-3.5px 0 0 -3.5px !important;
+          border-radius:50% !important;
+          background:var(--nova-purple) !important;
+          box-shadow:0 0 6px 3px var(--nova-purple),0 0 16px rgba(168,85,247,0.7) !important;
+          animation:nova-orbit 5s linear infinite !important;
+          z-index:10 !important;
+          pointer-events:none !important;
+        }
+      }
+      @media (prefers-reduced-motion:reduce) {
+        .header-logo::after { animation:none !important; }
+      }
+
+      /* 5c — Nav pill */
+      @media screen and (min-width:750px) {
+        header-menu {
+          background:rgba(255,255,255,0.04) !important;
+          backdrop-filter:blur(22px) saturate(1.4) !important;
+          -webkit-backdrop-filter:blur(22px) saturate(1.4) !important;
+          border:1px solid rgba(168,85,247,0.24) !important;
+          border-radius:100px !important;
+          padding:4px 10px !important;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 20px rgba(0,0,0,0.3) !important;
+        }
+        .header-menu .menu-list__link {
+          border-radius:100px !important;
+          padding:7px 18px !important;
+          transition:background .3s var(--nova-ease),color .3s var(--nova-ease) !important;
+        }
+        .header-menu .menu-list__link:hover,
+        .header-menu .menu-list__link:focus-visible {
+          background:rgba(168,85,247,0.14) !important;
+          color:var(--nova-purple) !important;
+        }
+      }
+
+      /* 5d — Header actions pill */
+      @media screen and (min-width:750px) {
+        header-actions {
+          background:rgba(255,255,255,0.04) !important;
+          backdrop-filter:blur(22px) saturate(1.4) !important;
+          -webkit-backdrop-filter:blur(22px) saturate(1.4) !important;
+          border:1px solid rgba(168,85,247,0.24) !important;
+          border-radius:100px !important;
+          padding:3px 6px !important;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 20px rgba(0,0,0,0.3) !important;
+          display:flex !important;
+          align-items:center !important;
+          gap:2px !important;
+        }
+        .header-actions__action {
+          border-radius:100px !important;
+          padding:7px 11px !important;
+          transition:background .3s var(--nova-ease),color .3s var(--nova-ease) !important;
+          background:transparent !important;
+          min-width:unset !important;
+          min-height:unset !important;
+        }
+        .header-actions__action:hover {
+          background:rgba(168,85,247,0.14) !important;
+          color:var(--nova-purple) !important;
+        }
+      }
 
       /* 6 — Hero */
       .hero { position:relative !important; overflow:hidden; }
@@ -182,6 +277,34 @@
           transform:translateY(-6px) !important;
           border-color:rgba(168,85,247,0.42) !important;
           box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 28px 60px rgba(0,0,0,0.55),0 0 40px rgba(124,58,237,0.22) !important;
+        }
+      }
+
+      /* 7b — Quick-add / add-to-cart glass button */
+      .product-card .quick-add__button,
+      .product-card [data-quick-add-btn],
+      .product-card .card__add-to-cart,
+      .product-card form [type="submit"] {
+        background:rgba(109,40,217,0.28) !important;
+        backdrop-filter:blur(14px) !important;
+        -webkit-backdrop-filter:blur(14px) !important;
+        border:1px solid rgba(168,85,247,0.5) !important;
+        border-radius:100px !important;
+        color:#fff !important;
+        font-weight:600 !important;
+        letter-spacing:0.03em !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 4px 16px rgba(0,0,0,0.3) !important;
+        transition:background .3s var(--nova-ease),box-shadow .3s var(--nova-ease),transform .22s var(--nova-ease),border-color .3s !important;
+      }
+      @media (any-pointer:fine) {
+        .product-card .quick-add__button:hover,
+        .product-card [data-quick-add-btn]:hover,
+        .product-card .card__add-to-cart:hover,
+        .product-card form [type="submit"]:hover {
+          background:var(--nova-purple) !important;
+          border-color:var(--nova-purple) !important;
+          box-shadow:0 0 28px rgba(124,58,237,0.65),0 0 60px rgba(124,58,237,0.28),inset 0 1px 0 rgba(255,255,255,0.15) !important;
+          transform:translateY(-2px) !important;
         }
       }
 
@@ -233,7 +356,7 @@
         box-shadow:0 0 0 3px rgba(168,85,247,0.2) !important;
       }
 
-      /* 12 — Cart drawer — deep dark glass */
+      /* 12 — Cart drawer */
       .cart-drawer__overlay,.drawer__overlay {
         backdrop-filter:blur(8px) brightness(0.4) !important;
         -webkit-backdrop-filter:blur(8px) brightness(0.4) !important;
@@ -274,11 +397,45 @@
       ::-webkit-scrollbar-thumb { background:rgba(168,85,247,0.28); border-radius:99px; }
       ::-webkit-scrollbar-thumb:hover { background:var(--nova-purple); }
 
-      /* 17 — Logo */
+      /* 17 — Logo image */
       .nova-logo__img { height:30px !important; width:auto !important; max-width:200px !important; display:block !important; }
       @media (max-width:749px) { .nova-logo__img { height:24px !important; } }
 
-      /* 18 — Scroll reveal */
+      /* 18 — Product description toggle */
+      .nova-desc-wrap { margin-top:12px; }
+      .nova-desc-btn {
+        display:flex; align-items:center; justify-content:space-between;
+        width:100%;
+        background:rgba(109,40,217,0.1);
+        backdrop-filter:blur(12px);
+        -webkit-backdrop-filter:blur(12px);
+        border:1px solid rgba(168,85,247,0.28);
+        border-radius:12px;
+        padding:11px 18px;
+        color:#fff;
+        font-size:0.85rem;
+        letter-spacing:0.06em;
+        text-transform:uppercase;
+        cursor:pointer;
+        transition:border-color .3s var(--nova-ease),background .3s var(--nova-ease);
+      }
+      .nova-desc-btn:hover { border-color:var(--nova-purple); background:rgba(109,40,217,0.18); }
+      .nova-desc-btn .nova-chev {
+        display:inline-block;
+        transition:transform .35s var(--nova-ease);
+        font-style:normal;
+      }
+      .nova-desc-btn[aria-expanded="true"] .nova-chev { transform:rotate(180deg); }
+      .nova-desc-body {
+        display:grid;
+        grid-template-rows:0fr;
+        transition:grid-template-rows .4s var(--nova-ease);
+        overflow:hidden;
+      }
+      .nova-desc-body.nova-open { grid-template-rows:1fr; }
+      .nova-desc-body > div { min-height:0; padding-top:10px; }
+
+      /* 19 — Scroll reveal */
       @media (prefers-reduced-motion:no-preference) {
         .nova-reveal { opacity:0; transform:translateY(28px); transition:opacity .65s var(--nova-ease),transform .65s var(--nova-ease); }
         .nova-reveal.nova-visible { opacity:1 !important; transform:translateY(0) !important; }
@@ -388,5 +545,37 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    <script>
+      /* NovaLight v4 — star generator */
+      (function () {
+        if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+        var atm = document.getElementById('nova-atm');
+        if (!atm) return;
+        var palettes = [
+          'rgba(168,85,247,OP)',
+          'rgba(255,255,255,OP)',
+          'rgba(139,92,246,OP)',
+          'rgba(192,132,252,OP)'
+        ];
+        for (var i = 0; i < 55; i++) {
+          var el = document.createElement('div');
+          el.className = 'nova-star';
+          var sz = (Math.random() * 1.8 + 0.6).toFixed(1);
+          var op = (Math.random() * 0.6 + 0.4).toFixed(2);
+          var col = palettes[Math.floor(Math.random() * palettes.length)].replace('OP', op);
+          var dur = (Math.random() * 4 + 2).toFixed(1);
+          var del = (-(Math.random() * 7)).toFixed(1);
+          el.style.cssText =
+            'width:' + sz + 'px;height:' + sz + 'px;' +
+            'top:' + (Math.random() * 100).toFixed(1) + '%;' +
+            'left:' + (Math.random() * 100).toFixed(1) + '%;' +
+            'background:' + col + ';' +
+            'box-shadow:0 0 ' + (parseFloat(sz) * 2.5).toFixed(0) + 'px ' + col + ';' +
+            '--dur:' + dur + 's;--del:' + del + 's;';
+          atm.appendChild(el);
+        }
+      })();
+    </script>
   </body>
 </html>
