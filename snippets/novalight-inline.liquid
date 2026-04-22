@@ -1,119 +1,159 @@
-<style>
-/* NovaLight inline overrides — rendered server-side, cannot be cached */
+{% comment %} NovaLight inline styles — server-rendered, loads after all Radiant CSS {% endcomment %}
 
-/* 1. Override Radiant font-size CSS variables.
-      These load after theme-styles-variables so they win the cascade. */
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── NovaLight override block ─────────────────────────────────
+   Loaded last in <head>. Inline = server-rendered = no cache.
+   ──────────────────────────────────────────────────────────── */
+
+/* 1 ── Tokens */
+:root {
+  --nova-purple:      #A855F7;
+  --nova-purple-deep: #7C3AED;
+  --nova-glow:        rgba(124, 58, 237, 0.15);
+  --nova-glow-strong: rgba(124, 58, 237, 0.30);
+  --nova-ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --nova-dur:         0.4s;
+}
+
+/* 2 ── Space Grotesk for all headings
+        Overrides --font-heading--family set by theme-styles-variables */
+:root {
+  --font-heading--family:    'Space Grotesk', -apple-system, sans-serif;
+  --font-subheading--family: 'Space Grotesk', -apple-system, sans-serif;
+}
+
+/* 3 ── Font size & tracking (overrides theme-styles-variables :root values) */
 :root {
   --font-size--h1: clamp(3rem, 8vw, 6.5rem);
-  --font-size--h2: clamp(2.2rem, 5vw, 4.2rem);
-  --font-size--h3: clamp(1.8rem, 3.5vw, 3rem);
+  --font-size--h2: clamp(2rem,  5vw, 4rem);
+  --font-size--h3: clamp(1.5rem, 3vw, 2.5rem);
   --letter-spacing--heading-tight:  -0.04em;
   --letter-spacing--heading-normal: -0.02em;
   --letter-spacing--display-tight:  -0.045em;
   --line-height--heading-tight:  1.05;
+  --line-height--heading-normal: 1.1;
   --line-height--display-tight:  1.0;
-  --nova-purple: #A855F7;
-  --nova-purple-deep: #7C3AED;
 }
 
-/* 2. Hero ambient glow — pseudo-element on .hero */
-.hero { position: relative !important; }
+/* 4 ── Body smoothing */
+body {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* 5 ── Hero: ambient glow + subtle grid */
+.hero { position: relative !important; overflow: hidden; }
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 90% 55% at 50% 105%, rgba(124,58,237,0.45) 0%, transparent 62%);
+  background: radial-gradient(ellipse 80% 60% at 50% 70%, rgba(124,58,237,0.18) 0%, transparent 65%);
   pointer-events: none;
-  z-index: 3;
+  z-index: 2;
 }
 
-/* 3. Hero text blocks.
-      Radiant: <div class="text-block h1"> NOT actual <h1> elements. */
+/* Hero text blocks: Radiant uses div.text-block.h1, NOT <h1> */
 .hero .text-block.h1 > *,
 .hero .text-block.h1 :is(h1,h2,h3,h4,h5,h6) {
   font-weight: 700 !important;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.6) !important;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5) !important;
 }
 
-/* Hero paragraph / subtitle */
 .hero .text-block.paragraph > *,
-.hero .text-block.rte > p,
 .hero .text-block.rte p {
-  opacity: 0.8 !important;
-  letter-spacing: 0.01em !important;
+  opacity: 0.72 !important;
+  line-height: 1.65 !important;
 }
 
-/* Hero purple divider */
-.hero hr { border-color: rgba(168,85,247,0.6) !important; width: 36px !important; }
+.hero hr { border-color: rgba(168,85,247,0.55) !important; width: 36px !important; }
 
-/* 4. Announcement bar */
+/* 6 ── Announcement bar */
 .announcement-bar__text, .announcement-bar {
-  font-size: 0.72rem !important;
-  letter-spacing: 0.06em !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
 }
 
-/* 5. Sticky header blur */
+/* 7 ── Header sticky glass */
 header-component[data-sticky-state="active"] .header,
 header-component[sticky="always"] .header {
-  backdrop-filter: blur(24px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
-  background-color: rgba(0,0,0,0.82) !important;
+  backdrop-filter: blur(20px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.8) !important;
+  background-color: rgba(0,0,0,0.80) !important;
   border-bottom: 1px solid rgba(255,255,255,0.07) !important;
 }
 
-/* 6. Nav hover purple */
 .header__nav-link:hover,
 .header__nav-link:focus-visible { color: var(--nova-purple) !important; }
 
-/* 7. Product cards */
+/* 8 ── Product cards */
 .product-card {
   border-radius: 4px !important;
   overflow: hidden !important;
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
-              box-shadow 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+  transition: transform 0.4s var(--nova-ease), box-shadow 0.4s var(--nova-ease) !important;
 }
 @media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
   .product-card:hover {
     transform: translateY(-5px) !important;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.12) !important;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.15) !important;
   }
 }
 
-/* 8. Button hover lift */
+/* 9 ── Button hover lift */
 @media (any-pointer: fine) {
-  .button:not(.button-secondary,.button-unstyled):hover {
+  .button:not(.button-secondary, .button-unstyled):hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 32px var(--nova-glow-strong) !important;
   }
-  .button:not(.button-secondary,.button-unstyled):active { transform: translateY(0) !important; }
+  .button:not(.button-secondary, .button-unstyled):active { transform: translateY(0) !important; }
   .button-secondary:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 0 24px rgba(124,58,237,0.35) !important;
+    background: var(--nova-glow) !important;
+    box-shadow: 0 0 20px var(--nova-glow) !important;
   }
   .button-secondary:active { transform: translateY(0) !important; }
 }
 
-/* 9. Purple sale badge + selected variant ring */
+/* 10 ── Purple accents */
 .badge--sale {
   background-color: var(--nova-purple) !important;
   border-color: var(--nova-purple) !important;
   color: #fff !important;
 }
-.variant-option__button-label:has(:checked) { box-shadow: 0 0 0 2px var(--nova-purple) !important; }
+
+.variant-option__button-label:has(:checked) {
+  box-shadow: 0 0 0 2px var(--nova-purple) !important;
+}
 .variant-option__button-label--has-swatch:has(:checked) {
   outline: 2px solid var(--nova-purple) !important;
   outline-offset: 2px !important;
 }
 
-/* 10. Inputs focus */
+/* 11 ── Input focus ring */
 input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: none !important;
   border-color: var(--nova-purple) !important;
   box-shadow: 0 0 0 3px rgba(168,85,247,0.18) !important;
 }
 
-/* 11. Cart drawer glass + search */
+/* 12 ── Cart / popover glass */
 .cart-drawer__overlay, .drawer__overlay {
   backdrop-filter: blur(6px) !important;
   -webkit-backdrop-filter: blur(6px) !important;
@@ -125,19 +165,13 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   border: 1px solid rgba(255,255,255,0.08) !important;
 }
 
-/* 12. Body smoothing */
-body {
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
-}
-
-/* 13. Custom scrollbar */
+/* 13 ── Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--nova-purple); }
 
-/* 14. SVG logo size */
+/* 14 ── SVG logo */
 .nova-logo__img {
   height: 30px !important;
   width: auto !important;
@@ -145,4 +179,9 @@ body {
   display: block !important;
 }
 @media (max-width: 749px) { .nova-logo__img { height: 24px !important; } }
+
+/* 15 ── Footer top border */
+footer > .shopify-section:first-child {
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+}
 </style>
