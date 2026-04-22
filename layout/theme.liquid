@@ -575,37 +575,49 @@
       }
       .facets__summary:hover { background:rgba(168,85,247,0.14) !important; border-color:var(--nova-purple) !important; }
 
-      /* 19 — Social icons — colorful glass */
+      /* 19 — Social icons — free-floating crystal glass (no bubble) */
       .social-icons__icon-wrapper {
-        background:rgba(109,40,217,0.1) !important;
-        backdrop-filter:blur(14px) !important;
-        -webkit-backdrop-filter:blur(14px) !important;
-        border:1px solid rgba(168,85,247,0.28) !important;
-        border-radius:14px !important;
-        transition:all .3s var(--nova-ease) !important;
-        padding:4px !important;
+        background:transparent !important;
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        border:none !important;
+        border-radius:0 !important;
+        box-shadow:none !important;
+        padding:6px !important;
+        transition:transform .3s var(--nova-ease) !important;
       }
       .social-icons__icon-wrapper:hover {
-        background:rgba(168,85,247,0.2) !important;
-        border-color:var(--nova-purple) !important;
-        box-shadow:0 0 22px rgba(168,85,247,0.45) !important;
-        transform:translateY(-2px) !important;
+        background:transparent !important;
+        border:none !important;
+        box-shadow:none !important;
+        transform:translateY(-3px) scale(1.12) !important;
       }
-      /* Platform-specific glow colors */
-      .social-icons__icon-wrapper:has([href*="instagram"]):hover {
-        border-color:rgba(225,48,108,0.7) !important;
-        box-shadow:0 0 22px rgba(225,48,108,0.4) !important;
+      /* Crystal glass icons — white with purple glow */
+      .social-icons__icon {
+        width:30px !important;
+        height:30px !important;
+        color:rgba(255,255,255,0.88) !important;
+        filter:drop-shadow(0 0 7px rgba(168,85,247,0.55)) !important;
+        transition:filter .3s var(--nova-ease),color .3s !important;
       }
-      .social-icons__icon-wrapper:has([href*="wa.me"]):hover,
-      .social-icons__icon-wrapper:has([href*="whatsapp"]):hover {
-        border-color:rgba(37,211,102,0.7) !important;
-        box-shadow:0 0 22px rgba(37,211,102,0.4) !important;
+      .social-icons__icon-wrapper:hover .social-icons__icon {
+        color:#fff !important;
+        filter:drop-shadow(0 0 12px rgba(168,85,247,1)) drop-shadow(0 0 28px rgba(124,58,237,0.55)) !important;
       }
-      .social-icons__icon-wrapper:has([href*="tiktok"]):hover {
-        border-color:rgba(105,201,208,0.7) !important;
-        box-shadow:0 0 22px rgba(105,201,208,0.4) !important;
+      /* Platform glow on hover */
+      .social-icons__icon-wrapper:has([href*="instagram"]):hover .social-icons__icon {
+        filter:drop-shadow(0 0 12px rgba(225,48,108,0.9)) drop-shadow(0 0 24px rgba(225,48,108,0.4)) !important;
       }
-      .social-icons__icon { color:#fff !important; }
+      .social-icons__icon-wrapper:has([href*="wa.me"]):hover .social-icons__icon,
+      .social-icons__icon-wrapper:has([href*="whatsapp"]):hover .social-icons__icon {
+        filter:drop-shadow(0 0 12px rgba(37,211,102,0.9)) drop-shadow(0 0 24px rgba(37,211,102,0.4)) !important;
+      }
+      .social-icons__icon-wrapper:has([href*="youtube"]):hover .social-icons__icon {
+        filter:drop-shadow(0 0 12px rgba(255,0,0,0.8)) drop-shadow(0 0 24px rgba(255,0,0,0.35)) !important;
+      }
+      .social-icons__icon-wrapper:has([href*="tiktok"]):hover .social-icons__icon {
+        filter:drop-shadow(0 0 12px rgba(105,201,208,0.9)) drop-shadow(0 0 24px rgba(105,201,208,0.4)) !important;
+      }
 
       /* 20 — Dividers & footer */
       .divider hr,hr { border-color:rgba(168,85,247,0.15) !important; }
