@@ -1,9 +1,12 @@
 /* ============================================================
    NovaLight — Premium visual layer
-   Correct selectors verified against Radiant source.
+   Loaded LAST in <head> — overrides all Radiant theme variables
+   by source order (no !important needed for :root variables).
+   Verified against Radiant v3.5.1: text blocks are
+   <div class="text-block h1|h2|h3"> NOT actual <h1> tags.
    ============================================================ */
 
-/* --- Custom tokens --- */
+/* --- Nova color tokens --- */
 :root {
   --nova-purple:      #A855F7;
   --nova-purple-deep: #7C3AED;
@@ -13,14 +16,26 @@
 }
 
 /* ============================================================
-   Safety net: Override CSS custom properties at root level
-   These cascade through all of Radiant's --font-h*--size vars
+   Override Radiant CSS variables
+   These win because this file loads AFTER theme-styles-variables
+   inline <style> block — same :root specificity, later source = winner.
    ============================================================ */
 :root {
-  --letter-spacing--heading-tight: -0.04em !important;
-  --letter-spacing--heading-normal: -0.02em !important;
-  --line-height--heading-tight: 1.05 !important;
-  --line-height--display-tight: 1.0 !important;
+  /* Bigger, more editorial font sizes */
+  --font-size--h1: clamp(3rem, 8vw, 6.5rem);
+  --font-size--h2: clamp(2.2rem, 5vw, 4.5rem);
+  --font-size--h3: clamp(1.8rem, 3.5vw, 3rem);
+
+  /* Tighter tracking */
+  --letter-spacing--heading-tight:  -0.04em;
+  --letter-spacing--heading-normal: -0.02em;
+  --letter-spacing--display-tight:  -0.045em;
+  --letter-spacing--display-normal: -0.03em;
+
+  /* Tighter leading */
+  --line-height--heading-tight:  1.05;
+  --line-height--heading-normal: 1.1;
+  --line-height--display-tight:  1.0;
 }
 
 /* ============================================================
@@ -78,16 +93,16 @@ header-component[sticky="always"] .header {
 }
 
 /* ============================================================
-   HERO — Big editorial text + ambient glow
-   Radiant renders hero as: .hero > .hero__container > .section > .hero__media-grid
-   Text blocks: .text-block.heading > h1
+   HERO — ambient glow + text details
+   Radiant: .hero > .hero__container.section > .hero__media-grid
+   Text blocks: <div class="text-block h1|paragraph"> (NOT <h1>)
    ============================================================ */
 
 .hero {
   position: relative !important;
 }
 
-/* Purple ambient glow at bottom of hero, above the image overlay */
+/* Purple ambient glow rising from bottom */
 .hero::after {
   content: '' !important;
   position: absolute !important;
@@ -97,21 +112,17 @@ header-component[sticky="always"] .header {
   z-index: 3 !important;
 }
 
-/* H1 inside hero — target directly + via text-block class */
-.hero h1,
-.hero .text-block h1,
-.hero .text-block.heading h1,
-.hero .text-block.h1 > * {
-  font-size: clamp(3rem, 8vw, 6.5rem) !important;
-  letter-spacing: -0.045em !important;
-  line-height: 1.0 !important;
+/* Hero heading text blocks — div.text-block.h1 not <h1> */
+.hero .text-block.h1 > *,
+.hero .text-block.h1 :is(h1, h2, h3, h4, h5, h6) {
   font-weight: 700 !important;
   text-shadow: 0 2px 40px rgba(0,0,0,0.6) !important;
 }
 
-/* Hero subtitle paragraph */
-.hero p,
-.hero .text-block p {
+/* Hero subtitle */
+.hero .text-block.paragraph > *,
+.hero .text-block.rte > p,
+.hero p {
   font-size: clamp(1rem, 1.6vw, 1.15rem) !important;
   opacity: 0.82 !important;
   letter-spacing: 0.01em !important;
@@ -124,57 +135,11 @@ header-component[sticky="always"] .header {
 }
 
 /* ============================================================
-   Section (type = "section") — the statement/pull-quote block
-   Radiant: .section.section--page-width > blocks
+   Media with content paragraph text
    ============================================================ */
 
-.section h2,
-.section .text-block h2,
-.section .text-block.h2 > *,
-.section .text-block.heading h2 {
-  font-size: clamp(2.2rem, 5vw, 4.5rem) !important;
-  letter-spacing: -0.035em !important;
-  line-height: 1.05 !important;
-  font-weight: 600 !important;
-}
-
-/* Small "Our shop" label above the heading */
-.section .text-block.paragraph p,
-.section .text-block.rte p {
-  font-size: 0.72rem !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
-  opacity: 0.5 !important;
-  font-weight: 500 !important;
-}
-
-/* ============================================================
-   Product list section
-   Radiant schema class: ui-test-product-list
-   ============================================================ */
-
-.ui-test-product-list h2,
-.ui-test-product-list .text-block h2,
-[data-testid="product-list"] h2 {
-  font-size: clamp(1.6rem, 2.8vw, 2.4rem) !important;
-  letter-spacing: -0.025em !important;
-  font-weight: 600 !important;
-}
-
-/* ============================================================
-   Media with content (split sections)
-   ============================================================ */
-
-.media-with-content h2,
-.media-with-content .text-block h2,
-.media-with-content h3,
-.media-with-content .text-block h3 {
-  font-size: clamp(1.8rem, 3.5vw, 3rem) !important;
-  letter-spacing: -0.03em !important;
-  font-weight: 600 !important;
-}
-
-.media-with-content p {
+.media-with-content .text-block.paragraph > *,
+.media-with-content .text-block.rte > p {
   opacity: 0.75 !important;
   line-height: 1.65 !important;
 }
@@ -188,8 +153,8 @@ header-component[sticky="always"] .header {
   border-bottom: 1px solid rgba(255,255,255,0.07) !important;
 }
 
-.marquee p,
-.marquee .text-block p {
+.marquee .text-block > *,
+.marquee p {
   font-size: clamp(1rem, 2vw, 1.5rem) !important;
   letter-spacing: -0.01em !important;
   opacity: 0.65 !important;
@@ -394,9 +359,5 @@ footer > .shopify-section:first-child {
 @media screen and (max-width: 749px) {
   .button, .button-secondary {
     min-height: 52px !important;
-  }
-  .hero h1,
-  .hero .text-block h1 {
-    letter-spacing: -0.03em !important;
   }
 }
