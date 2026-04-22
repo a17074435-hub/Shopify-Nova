@@ -31,8 +31,108 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
-    {{ 'novalight.css' | asset_url | stylesheet_tag }}
-    {%- render 'novalight-inline' -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      /* ── NovaLight v1 ── inline in theme.liquid, no external deps ── */
+      :root {
+        --nova-purple: #A855F7;
+        --nova-glow: rgba(124,58,237,0.18);
+        --nova-ease: cubic-bezier(0.16,1,0.3,1);
+        /* Override Radiant font variables — wins by source order */
+        --font-heading--family:    'Space Grotesk',-apple-system,sans-serif;
+        --font-subheading--family: 'Space Grotesk',-apple-system,sans-serif;
+        --font-size--h1: clamp(3rem,8vw,6.5rem);
+        --font-size--h2: clamp(2rem,5vw,4rem);
+        --font-size--h3: clamp(1.5rem,3vw,2.5rem);
+        --letter-spacing--heading-tight:  -0.04em;
+        --letter-spacing--heading-normal: -0.02em;
+        --line-height--heading-tight:  1.05;
+        --line-height--heading-normal: 1.1;
+      }
+      body { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+      /* Hero ambient glow + grid */
+      .hero { position:relative !important; overflow:hidden; }
+      .hero::before {
+        content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+        background-image:
+          linear-gradient(rgba(124,58,237,0.035) 1px,transparent 1px),
+          linear-gradient(90deg,rgba(124,58,237,0.035) 1px,transparent 1px);
+        background-size:80px 80px;
+      }
+      .hero::after {
+        content:''; position:absolute; inset:0; pointer-events:none; z-index:2;
+        background:radial-gradient(ellipse 80% 60% at 50% 70%,rgba(124,58,237,0.22) 0%,transparent 65%);
+      }
+      /* Text blocks — Radiant uses div.text-block.h1, NOT actual <h1> */
+      .hero .text-block.h1 > *, .hero .text-block.h1 :is(h1,h2,h3,h4,h5,h6) {
+        font-weight:700 !important; text-shadow:0 2px 40px rgba(0,0,0,0.5) !important;
+      }
+      .hero .text-block.paragraph > *, .hero .text-block.rte p {
+        opacity:0.72 !important; line-height:1.65 !important;
+      }
+      .hero hr { border-color:rgba(168,85,247,0.55) !important; width:36px !important; }
+      /* Sticky header glass */
+      header-component[data-sticky-state="active"] .header,
+      header-component[sticky="always"] .header {
+        backdrop-filter:blur(20px) saturate(1.8) !important;
+        -webkit-backdrop-filter:blur(20px) saturate(1.8) !important;
+        background-color:rgba(0,0,0,0.82) !important;
+        border-bottom:1px solid rgba(255,255,255,0.07) !important;
+      }
+      .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
+      /* Announcement bar */
+      .announcement-bar__text,.announcement-bar {
+        font-size:0.7rem !important; letter-spacing:0.08em !important; text-transform:uppercase !important;
+      }
+      /* Product cards */
+      .product-card {
+        border-radius:4px !important; overflow:hidden !important;
+        transition:transform .4s var(--nova-ease),box-shadow .4s var(--nova-ease) !important;
+      }
+      @media (any-pointer:fine) and (prefers-reduced-motion:no-preference) {
+        .product-card:hover {
+          transform:translateY(-5px) !important;
+          box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(168,85,247,0.15) !important;
+        }
+      }
+      /* Button lift */
+      @media (any-pointer:fine) {
+        .button:not(.button-secondary,.button-unstyled):hover {
+          transform:translateY(-2px) !important;
+          box-shadow:0 8px 30px rgba(0,0,0,0.5),0 0 32px rgba(124,58,237,0.3) !important;
+        }
+        .button:not(.button-secondary,.button-unstyled):active { transform:translateY(0) !important; }
+        .button-secondary:hover {
+          transform:translateY(-2px) !important;
+          box-shadow:0 0 20px var(--nova-glow) !important;
+        }
+        .button-secondary:active { transform:translateY(0) !important; }
+      }
+      /* Purple accents */
+      .badge--sale { background-color:var(--nova-purple) !important; border-color:var(--nova-purple) !important; color:#fff !important; }
+      .variant-option__button-label:has(:checked) { box-shadow:0 0 0 2px var(--nova-purple) !important; }
+      .variant-option__button-label--has-swatch:has(:checked) { outline:2px solid var(--nova-purple) !important; outline-offset:2px !important; }
+      input:focus-visible,textarea:focus-visible,select:focus-visible {
+        outline:none !important; border-color:var(--nova-purple) !important;
+        box-shadow:0 0 0 3px rgba(168,85,247,0.18) !important;
+      }
+      /* Cart glass */
+      .cart-drawer__overlay,.drawer__overlay { backdrop-filter:blur(6px) !important; -webkit-backdrop-filter:blur(6px) !important; }
+      .cart-drawer { border-left:1px solid rgba(255,255,255,0.07) !important; }
+      .popover-container { backdrop-filter:blur(16px) !important; -webkit-backdrop-filter:blur(16px) !important; border:1px solid rgba(255,255,255,0.08) !important; }
+      /* Scrollbar */
+      ::-webkit-scrollbar { width:5px; }
+      ::-webkit-scrollbar-track { background:transparent; }
+      ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:99px; }
+      ::-webkit-scrollbar-thumb:hover { background:var(--nova-purple); }
+      /* Logo */
+      .nova-logo__img { height:30px !important; width:auto !important; max-width:200px !important; display:block !important; }
+      @media (max-width:749px) { .nova-logo__img { height:24px !important; } }
+    </style>
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
