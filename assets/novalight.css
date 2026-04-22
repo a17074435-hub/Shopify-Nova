@@ -1,0 +1,291 @@
+/* ============================================================
+   NovaLight — Premium custom styles
+   Layered on top of Radiant. No functionality affected.
+   ============================================================ */
+
+/* --- Design tokens --- */
+:root {
+  --nova-purple:       #A855F7;
+  --nova-purple-deep:  #7C3AED;
+  --nova-purple-glow:  rgba(168, 85, 247, 0.28);
+  --nova-ease:         cubic-bezier(0.16, 1, 0.3, 1);
+  --nova-dur:          0.38s;
+}
+
+/* ============================================================
+   Global
+   ============================================================ */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(168, 85, 247, 0.22);
+  color: #fff;
+}
+
+/* WebKit scrollbar — thin, dark */
+::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar-track      { background: transparent; }
+::-webkit-scrollbar-thumb      { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--nova-purple); }
+
+/* ============================================================
+   Header
+   ============================================================ */
+
+/* Smooth transition regardless of state */
+header-component {
+  transition:
+    background-color var(--nova-dur) var(--nova-ease),
+    backdrop-filter  var(--nova-dur) var(--nova-ease),
+    border-color     var(--nova-dur) var(--nova-ease);
+}
+
+/* Frosted glass when header is actively sticky (scrolled past natural position) */
+header-component[data-sticky-state="active"] .header,
+header-component[sticky="always"] .header {
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  background-color: rgba(0, 0, 0, 0.78) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Nav link hover — purple */
+.header__nav-link:hover,
+.header__nav-link:focus-visible {
+  color: var(--nova-purple) !important;
+  transition: color 0.2s ease;
+}
+
+/* Cart icon: purple dot when has items */
+.header-actions__cart-icon--has-cart .cart-count {
+  background-color: var(--nova-purple);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+/* Replace default transition with smoother NovaLight one */
+.button,
+.button-secondary,
+button.shopify-payment-button__button--unbranded {
+  transition:
+    color             var(--nova-dur) var(--nova-ease),
+    background-color  var(--nova-dur) var(--nova-ease),
+    box-shadow        var(--nova-dur) var(--nova-ease),
+    border-color      var(--nova-dur) var(--nova-ease),
+    transform         0.22s          var(--nova-ease) !important;
+  will-change: transform, box-shadow;
+}
+
+/* Primary button: subtle lift + glow on hover */
+@media (any-pointer: fine) {
+  .button:not(.button-secondary, .button-unstyled):hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 0 0 var(--button-border-width, 0px) var(--button-border-color, transparent),
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 28px rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .button:not(.button-secondary, .button-unstyled):active {
+    transform: translateY(0);
+  }
+
+  /* Secondary button: purple glow on hover */
+  .button-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 0 0 var(--button-border-width, 1px) var(--button-border-color, transparent),
+      0 0 22px var(--nova-purple-glow) !important;
+  }
+
+  .button-secondary:active {
+    transform: translateY(0);
+  }
+}
+
+/* Shopify accelerated checkout (Buy Now) — match our radius */
+.shopify-payment-button__button {
+  border-radius: 12px !important;
+}
+
+/* ============================================================
+   Inputs & Forms
+   ============================================================ */
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none !important;
+  border-color: var(--nova-purple) !important;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ============================================================
+   Variant Picker
+   ============================================================ */
+
+/* Selected variant button: purple glow ring */
+.variant-option__button-label:has(:checked) {
+  box-shadow: 0 0 0 2px var(--nova-purple) !important;
+}
+
+/* Selected swatch: purple ring */
+.variant-option__button-label--has-swatch:has(:checked) {
+  outline: 2px solid var(--nova-purple) !important;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Product Cards
+   ============================================================ */
+
+@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .product-card:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55) !important;
+  }
+}
+
+/* ============================================================
+   Product Media Thumbnails
+   ============================================================ */
+
+/* Active/selected thumbnail: purple ring */
+.thumbnail[aria-current="true"],
+.thumbnail[aria-selected="true"] {
+  outline: 2px solid var(--nova-purple) !important;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Badges
+   ============================================================ */
+
+/* Sale badge: purple */
+.badge--sale,
+.badge[data-type="sale"] {
+  background-color: var(--nova-purple) !important;
+  border-color:     var(--nova-purple) !important;
+  color: #fff !important;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+/* Tighter letter-spacing on large headings — feels premium */
+@media screen and (min-width: 750px) {
+  h1, .h1 { letter-spacing: -0.03em; }
+  h2, .h2 { letter-spacing: -0.025em; }
+  h3, .h3 { letter-spacing: -0.02em; }
+}
+
+/* Price: tighter tracking */
+.price__current,
+.price-item--regular {
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   Cart Drawer
+   ============================================================ */
+
+/* Backdrop blur on the overlay */
+.cart-drawer__overlay,
+.drawer__overlay {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+/* Subtle left border */
+.cart-drawer {
+  border-left: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+/* ============================================================
+   Search & Predictive Search
+   ============================================================ */
+
+predictive-search-component,
+.predictive-search {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ============================================================
+   Popovers & Dropdowns
+   ============================================================ */
+
+.popover-container,
+.popover {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ============================================================
+   Quick-add Modal
+   ============================================================ */
+
+.quick-add-modal__content {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   Dividers
+   ============================================================ */
+
+.divider hr,
+hr {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  opacity: 1 !important;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+footer > .shopify-section:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================================
+   Breadcrumb
+   ============================================================ */
+
+.breadcrumbs__item a {
+  opacity: 0.5;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.breadcrumbs__item a:hover {
+  opacity: 1;
+  color: var(--nova-purple);
+}
+
+/* ============================================================
+   Announcement bar
+   ============================================================ */
+
+.announcement-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   Mobile refinements
+   ============================================================ */
+
+@media screen and (max-width: 749px) {
+  .button,
+  .button-secondary {
+    min-height: 52px;
+  }
+}
