@@ -1,6 +1,6 @@
 /* ============================================================
    NovaLight — Premium visual layer
-   Safe override: only CSS classes, no Liquid functionality touched.
+   Correct selectors verified against Radiant source.
    ============================================================ */
 
 /* --- Custom tokens --- */
@@ -13,12 +13,23 @@
 }
 
 /* ============================================================
+   Safety net: Override CSS custom properties at root level
+   These cascade through all of Radiant's --font-h*--size vars
+   ============================================================ */
+:root {
+  --letter-spacing--heading-tight: -0.04em !important;
+  --letter-spacing--heading-normal: -0.02em !important;
+  --line-height--heading-tight: 1.05 !important;
+  --line-height--display-tight: 1.0 !important;
+}
+
+/* ============================================================
    Global
    ============================================================ */
 
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
 }
 
 ::selection {
@@ -35,11 +46,11 @@ body {
    Announcement bar
    ============================================================ */
 
+.announcement-bar__text,
 .announcement-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.06em !important;
   font-size: 0.72rem !important;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
 }
 
 /* ============================================================
@@ -55,160 +66,133 @@ header-component {
 
 header-component[data-sticky-state="active"] .header,
 header-component[sticky="always"] .header {
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
   background-color: rgba(0, 0, 0, 0.82) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
 }
 
-/* Logo: refined */
-.header__logo {
-  letter-spacing: -0.02em;
-  font-weight: 600;
-}
-
-/* Nav link hover */
 .header__nav-link:hover,
 .header__nav-link:focus-visible {
   color: var(--nova-purple) !important;
 }
 
 /* ============================================================
-   Hero — The most important section
+   HERO — Big editorial text + ambient glow
+   Radiant renders hero as: .hero > .hero__container > .section > .hero__media-grid
+   Text blocks: .text-block.heading > h1
    ============================================================ */
 
-/* Bottom ambient purple glow */
 .hero {
-  position: relative;
-  overflow: hidden;
+  position: relative !important;
 }
 
+/* Purple ambient glow at bottom of hero, above the image overlay */
 .hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 110%, rgba(124, 58, 237, 0.45) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 2;
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(ellipse 90% 55% at 50% 105%, rgba(124, 58, 237, 0.5) 0%, transparent 60%) !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
 }
 
-/* Massive editorial heading */
+/* H1 inside hero — target directly + via text-block class */
 .hero h1,
-.hero .h1 {
-  font-size: clamp(2.8rem, 7.5vw, 6rem) !important;
-  letter-spacing: -0.04em !important;
+.hero .text-block h1,
+.hero .text-block.heading h1,
+.hero .text-block.h1 > * {
+  font-size: clamp(3rem, 8vw, 6.5rem) !important;
+  letter-spacing: -0.045em !important;
   line-height: 1.0 !important;
   font-weight: 700 !important;
-  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.6) !important;
 }
 
-/* Subtitle */
-.hero p {
-  font-size: clamp(1rem, 1.5vw, 1.1rem) !important;
-  opacity: 0.78;
-  letter-spacing: 0.005em;
+/* Hero subtitle paragraph */
+.hero p,
+.hero .text-block p {
+  font-size: clamp(1rem, 1.6vw, 1.15rem) !important;
+  opacity: 0.82 !important;
+  letter-spacing: 0.01em !important;
 }
 
-/* Hero divider: thin purple accent line */
+/* Hero divider: thin purple accent */
 .hero hr {
-  border-color: rgba(168, 85, 247, 0.5) !important;
-  width: 40px !important;
-  margin: 0 !important;
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  width: 36px !important;
 }
 
 /* ============================================================
-   Section (generic / pull-quote)
+   Section (type = "section") — the statement/pull-quote block
+   Radiant: .section.section--page-width > blocks
    ============================================================ */
 
-/* The big statement h2: editorial */
 .section h2,
-.section .h2 {
-  font-size: clamp(2rem, 4.5vw, 4rem) !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.1 !important;
+.section .text-block h2,
+.section .text-block.h2 > *,
+.section .text-block.heading h2 {
+  font-size: clamp(2.2rem, 5vw, 4.5rem) !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.05 !important;
   font-weight: 600 !important;
 }
 
-/* Small label text above heading: uppercase tag */
-.section .paragraph {
-  font-size: 0.7rem !important;
+/* Small "Our shop" label above the heading */
+.section .text-block.paragraph p,
+.section .text-block.rte p {
+  font-size: 0.72rem !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
-  opacity: 0.5;
-  font-weight: 500;
+  opacity: 0.5 !important;
+  font-weight: 500 !important;
 }
 
 /* ============================================================
-   Product list (featured products)
+   Product list section
+   Radiant schema class: ui-test-product-list
    ============================================================ */
 
-/* "Featured products" heading */
-.product-list h2,
-.product-list .h2 {
-  font-size: clamp(1.5rem, 2.5vw, 2.2rem) !important;
+.ui-test-product-list h2,
+.ui-test-product-list .text-block h2,
+[data-testid="product-list"] h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem) !important;
   letter-spacing: -0.025em !important;
   font-weight: 600 !important;
 }
 
 /* ============================================================
-   Product Cards
+   Media with content (split sections)
    ============================================================ */
 
-/* Subtle border on cards — glows on hover */
-.product-card {
-  border-radius: 4px;
-  overflow: hidden;
-  transition:
-    transform    var(--nova-dur) var(--nova-ease),
-    box-shadow   var(--nova-dur) var(--nova-ease) !important;
-}
-
-@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 20px 50px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(168, 85, 247, 0.15) !important;
-  }
-}
-
-/* Product name on card */
-.product-card h5,
-.product-card .h5 {
-  letter-spacing: -0.01em;
-}
-
-/* ============================================================
-   Media with content sections (split layout)
-   ============================================================ */
-
-/* Content side: slightly more padding for breathing room */
 .media-with-content h2,
-.media-with-content .h2 {
+.media-with-content .text-block h2,
+.media-with-content h3,
+.media-with-content .text-block h3 {
   font-size: clamp(1.8rem, 3.5vw, 3rem) !important;
   letter-spacing: -0.03em !important;
   font-weight: 600 !important;
 }
 
 .media-with-content p {
-  opacity: 0.75;
-  line-height: 1.65;
+  opacity: 0.75 !important;
+  line-height: 1.65 !important;
 }
 
 /* ============================================================
-   Marquee ticker
+   Marquee
    ============================================================ */
 
 .marquee {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
 }
 
-.marquee p {
-  font-size: clamp(1rem, 2vw, 1.4rem) !important;
-  letter-spacing: -0.01em;
-  opacity: 0.65;
+.marquee p,
+.marquee .text-block p {
+  font-size: clamp(1rem, 2vw, 1.5rem) !important;
+  letter-spacing: -0.01em !important;
+  opacity: 0.65 !important;
 }
 
 /* ============================================================
@@ -229,24 +213,23 @@ button.shopify-payment-button__button--unbranded {
 
 @media (any-pointer: fine) {
   .button:not(.button-secondary, .button-unstyled):hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) !important;
     box-shadow:
       inset 0 0 0 var(--button-border-width, 0px) var(--button-border-color, transparent),
-      0 8px 30px rgba(0, 0, 0, 0.5),
-      0 0 30px rgba(255, 255, 255, 0.06) !important;
+      0 8px 30px rgba(0,0,0,0.5),
+      0 0 28px rgba(255,255,255,0.06) !important;
   }
   .button:not(.button-secondary, .button-unstyled):active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
-
   .button-secondary:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) !important;
     box-shadow:
       inset 0 0 0 var(--button-border-width, 1px) var(--button-border-color, transparent),
       0 0 24px var(--nova-glow) !important;
   }
   .button-secondary:active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
 }
 
@@ -267,26 +250,43 @@ select:focus-visible {
 }
 
 /* ============================================================
-   Variant Picker
+   Variant picker — selected state = purple ring
    ============================================================ */
 
 .variant-option__button-label:has(:checked) {
   box-shadow: 0 0 0 2px var(--nova-purple) !important;
 }
-
 .variant-option__button-label--has-swatch:has(:checked) {
   outline: 2px solid var(--nova-purple) !important;
-  outline-offset: 2px;
+  outline-offset: 2px !important;
 }
 
 /* ============================================================
-   Product media thumbnails
+   Product cards
+   ============================================================ */
+
+.product-card {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  transition: transform var(--nova-dur) var(--nova-ease),
+              box-shadow var(--nova-dur) var(--nova-ease) !important;
+}
+
+@media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .product-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(168,85,247,0.12) !important;
+  }
+}
+
+/* ============================================================
+   Media thumbnails (product page)
    ============================================================ */
 
 .thumbnail[aria-current="true"],
 .thumbnail[aria-selected="true"] {
   outline: 2px solid var(--nova-purple) !important;
-  outline-offset: 2px;
+  outline-offset: 2px !important;
 }
 
 /* ============================================================
@@ -300,22 +300,16 @@ select:focus-visible {
 }
 
 /* ============================================================
-   Typography headings — global tightening
+   Price
    ============================================================ */
-
-@media screen and (min-width: 750px) {
-  h1, .h1 { letter-spacing: -0.035em; }
-  h2, .h2 { letter-spacing: -0.025em; }
-  h3, .h3 { letter-spacing: -0.02em; }
-}
 
 .price__current,
 .price-item--regular {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em !important;
 }
 
 /* ============================================================
-   Cart Drawer
+   Cart drawer
    ============================================================ */
 
 .cart-drawer__overlay,
@@ -325,21 +319,21 @@ select:focus-visible {
 }
 
 .cart-drawer {
-  border-left: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-left: 1px solid rgba(255,255,255,0.07) !important;
 }
 
 /* ============================================================
-   Search / Popovers
+   Search & Popovers
    ============================================================ */
 
 predictive-search-component {
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
 }
 
 .popover-container {
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
 }
 
 /* ============================================================
@@ -347,7 +341,7 @@ predictive-search-component {
    ============================================================ */
 
 .divider hr, hr {
-  border-color: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255,255,255,0.07) !important;
 }
 
 /* ============================================================
@@ -355,11 +349,28 @@ predictive-search-component {
    ============================================================ */
 
 footer > .shopify-section:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
 }
 
 /* ============================================================
-   Scroll reveal animations
+   SVG Logo
+   ============================================================ */
+
+.nova-logo__img {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  display: block !important;
+}
+
+@media screen and (max-width: 749px) {
+  .nova-logo__img {
+    height: 24px !important;
+  }
+}
+
+/* ============================================================
+   Scroll reveal animations (driven by novalight.js)
    ============================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -370,41 +381,9 @@ footer > .shopify-section:first-child {
       opacity   0.65s var(--nova-ease),
       transform 0.65s var(--nova-ease);
   }
-
   .nova-reveal.nova-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Stagger children within revealed sections */
-  .nova-reveal-children > * {
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity   0.5s var(--nova-ease),
-      transform 0.5s var(--nova-ease);
-  }
-
-  .nova-reveal-children.nova-visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: none; }
-  .nova-reveal-children.nova-visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: none; }
-  .nova-reveal-children.nova-visible > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: none; }
-  .nova-reveal-children.nova-visible > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: none; }
-}
-
-/* ============================================================
-   SVG Logo
-   ============================================================ */
-
-.nova-logo__img {
-  height: 30px !important;
-  width: auto !important;
-  max-width: 200px;
-  display: block;
-}
-
-@media screen and (max-width: 749px) {
-  .nova-logo__img {
-    height: 24px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
 }
 
@@ -414,10 +393,10 @@ footer > .shopify-section:first-child {
 
 @media screen and (max-width: 749px) {
   .button, .button-secondary {
-    min-height: 52px;
+    min-height: 52px !important;
   }
-
-  .hero h1, .hero .h1 {
+  .hero h1,
+  .hero .text-block h1 {
     letter-spacing: -0.03em !important;
   }
 }
