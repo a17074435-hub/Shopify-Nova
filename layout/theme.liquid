@@ -169,11 +169,13 @@
         color:#fff !important; text-shadow:0 0 12px rgba(255,255,255,0.3) !important;
       }
 
-      /* 7 — Header — no dark bar on scroll, just floating pills */
-      header-component {
-        transition:all .4s var(--nova-ease) !important;
+      /* 7 — Header — always transparent, only pills float */
+      header-component,
+      header-component .header,
+      .header {
+        background:transparent !important;
+        background-color:transparent !important;
       }
-      /* Remove the full dark header background so only pills float */
       header-component[data-sticky-state="active"] .header,
       header-component[sticky="always"] .header {
         backdrop-filter:none !important;
@@ -254,7 +256,13 @@
         aspect-ratio:auto !important;
       }
       .header-actions__action:hover { background:rgba(168,85,247,0.16) !important; }
-      /* Cart icon area */
+      /* Cart icon area — fix square */
+      cart-drawer-component {
+        background:transparent !important;
+        border:none !important;
+        display:flex !important;
+        align-items:center !important;
+      }
       .action__cart, .header-actions__cart-icon, cart-icon {
         background:transparent !important;
         border:none !important;
