@@ -37,7 +37,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-      /* ── NovaLight v4 · Liquid Glass ── */
+      /* ── NovaLight v5 · Crystal Islands ── */
 
       /* 0 — Tokens */
       :root {
@@ -47,7 +47,6 @@
         --glass-purple:     rgba(109,40,217,0.08);
         --glass-dark:       rgba(5,0,20,0.85);
         --glass-border:     rgba(168,85,247,0.22);
-        --glass-hi:         rgba(255,255,255,0.06);
         --font-heading--family:    'Space Grotesk',-apple-system,sans-serif;
         --font-subheading--family: 'Space Grotesk',-apple-system,sans-serif;
         --font-h1--family:  'Space Grotesk',-apple-system,sans-serif;
@@ -72,16 +71,16 @@
       /* Keyframes */
       @keyframes nova-drift-a {
         0%,100% { transform:translate(0,0) scale(1); }
-        40%     { transform:translate(-3vw,4vh) scale(1.07); }
-        70%     { transform:translate(2vw,-2vh) scale(0.95); }
+        40%     { transform:translate(-3vw,4vh) scale(1.08); }
+        70%     { transform:translate(2vw,-2vh) scale(0.94); }
       }
       @keyframes nova-drift-b {
         0%,100% { transform:translate(0,0) scale(1); }
-        35%     { transform:translate(4vw,-3vh) scale(1.05); }
-        65%     { transform:translate(-2vw,3vh) scale(0.97); }
+        35%     { transform:translate(4vw,-3vh) scale(1.06); }
+        65%     { transform:translate(-2vw,3vh) scale(0.96); }
       }
       @keyframes nova-twinkle {
-        0%,100% { opacity:0.08; transform:scale(0.35); }
+        0%,100% { opacity:0.05; transform:scale(0.3); }
         50%     { opacity:1;    transform:scale(1); }
       }
       @keyframes nova-orbit {
@@ -89,12 +88,18 @@
         100% { transform:rotate(360deg) translateX(42px); }
       }
 
-      /* 1 — Global */
+      /* 1 — Base */
+      html, body { background:#040010 !important; }
       body { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
       ::selection { background:rgba(168,85,247,0.28); color:#fff; }
       #header-group, #MainContent, footer { position:relative; z-index:1; }
 
-      /* 2 — Ambient blobs */
+      /* 2 — Section transparency (stars show through) */
+      .shopify-section { background:transparent !important; }
+      .shopify-section > section,
+      .shopify-section > .section { background:transparent !important; }
+
+      /* 3 — Ambient blobs */
       #nova-atm {
         position:fixed; inset:0;
         pointer-events:none; z-index:0; overflow:hidden;
@@ -102,20 +107,20 @@
       #nova-atm::before {
         content:''; position:absolute;
         top:-25vh; right:-15vw;
-        width:65vw; height:65vw; border-radius:50%;
+        width:70vw; height:70vw; border-radius:50%;
         background:radial-gradient(circle at center,
-          rgba(124,58,237,0.16) 0%,
-          rgba(109,40,217,0.07) 35%,
+          rgba(124,58,237,0.18) 0%,
+          rgba(109,40,217,0.08) 35%,
           transparent 65%);
         animation:nova-drift-a 18s ease-in-out infinite;
       }
       #nova-atm::after {
         content:''; position:absolute;
         bottom:-20vh; left:-20vw;
-        width:58vw; height:58vw; border-radius:50%;
+        width:62vw; height:62vw; border-radius:50%;
         background:radial-gradient(circle at center,
-          rgba(139,92,246,0.13) 0%,
-          rgba(124,58,237,0.05) 40%,
+          rgba(139,92,246,0.14) 0%,
+          rgba(124,58,237,0.06) 40%,
           transparent 65%);
         animation:nova-drift-b 24s ease-in-out infinite;
       }
@@ -132,7 +137,7 @@
         animation-delay:var(--del,0s);
       }
 
-      /* 3 — Typography */
+      /* 4 — Typography */
       .text-block.h1 > *,
       .text-block.h1 :is(h1,h2,h3,h4,h5,h6),
       .text-block.h2 > *,
@@ -144,32 +149,42 @@
       .text-block.h2 > * { font-size:clamp(2rem,5vw,4rem) !important; letter-spacing:-0.03em !important; line-height:1.1 !important; }
       .text-block.h3 > * { font-size:clamp(1.5rem,3vw,2.5rem) !important; }
 
-      /* 4 — Announcement bar */
+      /* 5 — Section headings — neon purple */
+      :not(.hero) .text-block.h2 > *,
+      :not(.hero) .text-block.h3 > * {
+        color:var(--nova-purple) !important;
+        text-shadow:0 0 22px rgba(168,85,247,0.35) !important;
+      }
+
+      /* 6 — Announcement bar — crystal glass */
       .announcement-bar {
-        background:rgba(109,40,217,0.14) !important;
-        backdrop-filter:blur(14px) !important;
-        -webkit-backdrop-filter:blur(14px) !important;
-        border-bottom:1px solid rgba(168,85,247,0.2) !important;
+        background:rgba(90,28,200,0.22) !important;
+        backdrop-filter:blur(20px) saturate(1.8) !important;
+        -webkit-backdrop-filter:blur(20px) saturate(1.8) !important;
+        border-bottom:1px solid rgba(168,85,247,0.3) !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.09),0 2px 20px rgba(109,40,217,0.3) !important;
       }
       .announcement-bar__text,.announcement-bar {
         font-size:0.7rem !important; letter-spacing:0.1em !important; text-transform:uppercase !important;
+        color:#fff !important; text-shadow:0 0 12px rgba(255,255,255,0.3) !important;
       }
 
-      /* 5 — Header glass */
+      /* 7 — Header — no dark bar on scroll, just floating pills */
       header-component {
-        transition:background-color .4s var(--nova-ease),backdrop-filter .4s var(--nova-ease),border-color .4s var(--nova-ease) !important;
+        transition:all .4s var(--nova-ease) !important;
       }
+      /* Remove the full dark header background so only pills float */
       header-component[data-sticky-state="active"] .header,
       header-component[sticky="always"] .header {
-        backdrop-filter:blur(28px) saturate(1.6) brightness(0.88) !important;
-        -webkit-backdrop-filter:blur(28px) saturate(1.6) brightness(0.88) !important;
-        background:rgba(0,0,10,0.76) !important;
-        border-bottom:1px solid rgba(168,85,247,0.18) !important;
-        box-shadow:0 1px 0 rgba(168,85,247,0.09),0 8px 40px rgba(0,0,0,0.5) !important;
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        background:transparent !important;
+        border-bottom:none !important;
+        box-shadow:none !important;
       }
       .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
 
-      /* 5b — Logo centered + orbit sparkle (desktop) */
+      /* 7b — Logo orbit sparkle (desktop) */
       @media screen and (min-width:750px) {
         .header-logo {
           position:relative !important;
@@ -184,26 +199,24 @@
           margin:-3.5px 0 0 -3.5px !important;
           border-radius:50% !important;
           background:var(--nova-purple) !important;
-          box-shadow:0 0 6px 3px var(--nova-purple),0 0 16px rgba(168,85,247,0.7) !important;
+          box-shadow:0 0 6px 3px var(--nova-purple),0 0 18px rgba(168,85,247,0.8) !important;
           animation:nova-orbit 5s linear infinite !important;
           z-index:10 !important;
           pointer-events:none !important;
         }
       }
-      @media (prefers-reduced-motion:reduce) {
-        .header-logo::after { animation:none !important; }
-      }
+      @media (prefers-reduced-motion:reduce) { .header-logo::after { animation:none !important; } }
 
-      /* 5c — Nav pill */
+      /* 7c — Nav pill (desktop) */
       @media screen and (min-width:750px) {
         header-menu {
           background:rgba(255,255,255,0.04) !important;
-          backdrop-filter:blur(22px) saturate(1.4) !important;
-          -webkit-backdrop-filter:blur(22px) saturate(1.4) !important;
-          border:1px solid rgba(168,85,247,0.24) !important;
+          backdrop-filter:blur(24px) saturate(1.6) !important;
+          -webkit-backdrop-filter:blur(24px) saturate(1.6) !important;
+          border:1px solid rgba(168,85,247,0.26) !important;
           border-radius:100px !important;
           padding:4px 10px !important;
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 20px rgba(0,0,0,0.3) !important;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 4px 24px rgba(0,0,0,0.35) !important;
         }
         .header-menu .menu-list__link {
           border-radius:100px !important;
@@ -217,35 +230,57 @@
         }
       }
 
-      /* 5d — Header actions pill */
-      @media screen and (min-width:750px) {
-        header-actions {
+      /* 7d — Actions pill (desktop + mobile) */
+      header-actions {
+        background:rgba(255,255,255,0.04) !important;
+        backdrop-filter:blur(24px) saturate(1.6) !important;
+        -webkit-backdrop-filter:blur(24px) saturate(1.6) !important;
+        border:1px solid rgba(168,85,247,0.26) !important;
+        border-radius:100px !important;
+        padding:3px 4px !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 4px 24px rgba(0,0,0,0.35) !important;
+        display:flex !important;
+        align-items:center !important;
+        gap:1px !important;
+      }
+      .header-actions__action {
+        border-radius:100px !important;
+        padding:7px 10px !important;
+        transition:background .3s var(--nova-ease),color .3s var(--nova-ease) !important;
+        background:transparent !important;
+        border:none !important;
+        min-width:unset !important;
+        min-height:unset !important;
+        aspect-ratio:auto !important;
+      }
+      .header-actions__action:hover { background:rgba(168,85,247,0.16) !important; }
+      /* Cart icon area */
+      .action__cart, .header-actions__cart-icon, cart-icon {
+        background:transparent !important;
+        border:none !important;
+      }
+
+      /* 7e — Cart bubble — circular purple */
+      .cart-bubble__background {
+        background:var(--nova-purple) !important;
+        border-radius:50% !important;
+      }
+      .cart-bubble__text-count,
+      .cart-bubble__text { color:#fff !important; }
+
+      /* 7f — Hamburger menu pill (mobile) */
+      @media screen and (max-width:749px) {
+        .header__icon--menu {
           background:rgba(255,255,255,0.04) !important;
-          backdrop-filter:blur(22px) saturate(1.4) !important;
-          -webkit-backdrop-filter:blur(22px) saturate(1.4) !important;
+          backdrop-filter:blur(20px) !important;
+          -webkit-backdrop-filter:blur(20px) !important;
           border:1px solid rgba(168,85,247,0.24) !important;
           border-radius:100px !important;
-          padding:3px 6px !important;
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 4px 20px rgba(0,0,0,0.3) !important;
-          display:flex !important;
-          align-items:center !important;
-          gap:2px !important;
-        }
-        .header-actions__action {
-          border-radius:100px !important;
-          padding:7px 11px !important;
-          transition:background .3s var(--nova-ease),color .3s var(--nova-ease) !important;
-          background:transparent !important;
-          min-width:unset !important;
-          min-height:unset !important;
-        }
-        .header-actions__action:hover {
-          background:rgba(168,85,247,0.14) !important;
-          color:var(--nova-purple) !important;
+          padding:7px 12px !important;
         }
       }
 
-      /* 6 — Hero */
+      /* 8 — Hero */
       .hero { position:relative !important; overflow:hidden; }
       .hero::after {
         content:'' !important; position:absolute !important; inset:0 !important;
@@ -256,13 +291,14 @@
       .hero .text-block.h1 :is(h1,h2,h3,h4,h5,h6) {
         font-weight:700 !important; text-shadow:0 2px 40px rgba(0,0,0,0.65) !important;
         position:relative; z-index:4;
+        color:#fff !important;
       }
       .hero .text-block.paragraph > *, .hero .text-block.rte p {
-        opacity:0.75 !important; line-height:1.65 !important; position:relative; z-index:4;
+        opacity:0.78 !important; line-height:1.65 !important; position:relative; z-index:4;
       }
       .hero hr { border-color:rgba(168,85,247,0.65) !important; width:36px !important; }
 
-      /* 7 — Product cards — purple-tinted glass */
+      /* 9 — Product cards — glass */
       .product-card {
         background:rgba(109,40,217,0.07) !important;
         backdrop-filter:blur(16px) saturate(1.3) !important;
@@ -275,12 +311,44 @@
       @media (any-pointer:fine) and (prefers-reduced-motion:no-preference) {
         .product-card:hover {
           transform:translateY(-6px) !important;
-          border-color:rgba(168,85,247,0.42) !important;
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 28px 60px rgba(0,0,0,0.55),0 0 40px rgba(124,58,237,0.22) !important;
+          border-color:rgba(168,85,247,0.44) !important;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 28px 60px rgba(0,0,0,0.55),0 0 44px rgba(124,58,237,0.24) !important;
         }
       }
 
-      /* 7b — Quick-add / add-to-cart glass button */
+      /* 9b — Product titles — neon purple */
+      .product-card product-title,
+      .product-card product-title a,
+      .product-card-gallery__title-placeholder,
+      .product-card-gallery__title-placeholder a,
+      .product-card .text-block > * {
+        color:var(--nova-purple) !important;
+        text-shadow:0 0 16px rgba(168,85,247,0.3) !important;
+      }
+
+      /* 9c — Prices */
+      .price .price-item--sale,
+      .price .price-item--regular,
+      .price__current,
+      .price-item--regular {
+        color:#fff !important;
+        font-weight:700 !important;
+        font-size:1.05em !important;
+        text-shadow:0 0 12px rgba(255,255,255,0.35) !important;
+        letter-spacing:-0.02em !important;
+      }
+      /* Compare-at (original price when on sale) — red neon strikethrough */
+      .price .price-item--compare-at,
+      .price--compare-at,
+      s.price-item {
+        color:rgba(255,85,85,1) !important;
+        text-decoration:line-through !important;
+        text-shadow:0 0 10px rgba(255,80,80,0.5) !important;
+        opacity:1 !important;
+        font-weight:500 !important;
+      }
+
+      /* 9d — Quick-add glass button */
       .product-card .quick-add__button,
       .product-card [data-quick-add-btn],
       .product-card .card__add-to-cart,
@@ -288,13 +356,13 @@
         background:rgba(109,40,217,0.28) !important;
         backdrop-filter:blur(14px) !important;
         -webkit-backdrop-filter:blur(14px) !important;
-        border:1px solid rgba(168,85,247,0.5) !important;
+        border:1px solid rgba(168,85,247,0.52) !important;
         border-radius:100px !important;
         color:#fff !important;
         font-weight:600 !important;
         letter-spacing:0.03em !important;
         box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 4px 16px rgba(0,0,0,0.3) !important;
-        transition:background .3s var(--nova-ease),box-shadow .3s var(--nova-ease),transform .22s var(--nova-ease),border-color .3s !important;
+        transition:all .3s var(--nova-ease) !important;
       }
       @media (any-pointer:fine) {
         .product-card .quick-add__button:hover,
@@ -303,12 +371,12 @@
         .product-card form [type="submit"]:hover {
           background:var(--nova-purple) !important;
           border-color:var(--nova-purple) !important;
-          box-shadow:0 0 28px rgba(124,58,237,0.65),0 0 60px rgba(124,58,237,0.28),inset 0 1px 0 rgba(255,255,255,0.15) !important;
+          box-shadow:0 0 28px rgba(124,58,237,0.65),0 0 60px rgba(124,58,237,0.28) !important;
           transform:translateY(-2px) !important;
         }
       }
 
-      /* 8 — Primary button */
+      /* 10 — Primary button */
       .button:not(.button-secondary,.button-unstyled) {
         transition:background-color .4s var(--nova-ease),color .4s var(--nova-ease),box-shadow .4s var(--nova-ease),border-color .4s var(--nova-ease),transform .22s var(--nova-ease) !important;
       }
@@ -323,7 +391,7 @@
         .button:not(.button-secondary,.button-unstyled):active { transform:translateY(0) !important; }
       }
 
-      /* 9 — Secondary/ghost button — purple-tinted glass */
+      /* 11 — Secondary/ghost button — glass */
       .button-secondary {
         background:rgba(109,40,217,0.08) !important;
         backdrop-filter:blur(12px) !important;
@@ -331,77 +399,202 @@
         border:1px solid rgba(168,85,247,0.42) !important;
         color:#fff !important;
         box-shadow:inset 0 1px 0 rgba(255,255,255,0.07) !important;
-        transition:border-color .4s var(--nova-ease),box-shadow .4s var(--nova-ease),background .4s var(--nova-ease),transform .22s var(--nova-ease) !important;
+        transition:all .4s var(--nova-ease) !important;
       }
       @media (any-pointer:fine) {
         .button-secondary:hover {
           border-color:var(--nova-purple) !important;
           background:rgba(168,85,247,0.15) !important;
-          box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 0 28px rgba(124,58,237,0.38) !important;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 0 28px rgba(124,58,237,0.4) !important;
           transform:translateY(-2px) !important;
         }
         .button-secondary:active { transform:translateY(0) !important; }
       }
 
-      /* 10 — Purple accents */
+      /* 12 — Purple accents */
       .badge--sale { background-color:var(--nova-purple) !important; border-color:var(--nova-purple) !important; color:#fff !important; }
       .variant-option__button-label:has(:checked) { box-shadow:0 0 0 2px var(--nova-purple) !important; }
       .variant-option__button-label--has-swatch:has(:checked) { outline:2px solid var(--nova-purple) !important; outline-offset:2px !important; }
       .thumbnail[aria-current="true"],.thumbnail[aria-selected="true"] { outline:2px solid var(--nova-purple) !important; outline-offset:2px !important; }
-      .price__current,.price-item--regular { letter-spacing:-0.02em !important; }
 
-      /* 11 — Inputs */
+      /* 13 — Inputs */
       input:focus-visible,textarea:focus-visible,select:focus-visible {
         outline:none !important; border-color:var(--nova-purple) !important;
         box-shadow:0 0 0 3px rgba(168,85,247,0.2) !important;
       }
 
-      /* 12 — Cart drawer */
+      /* 14 — Cart drawer */
       .cart-drawer__overlay,.drawer__overlay {
         backdrop-filter:blur(8px) brightness(0.4) !important;
         -webkit-backdrop-filter:blur(8px) brightness(0.4) !important;
-        background:rgba(0,0,0,0.48) !important;
+        background:rgba(0,0,0,0.5) !important;
       }
       .cart-drawer {
-        background:rgba(5,0,22,0.92) !important;
+        background:rgba(5,0,22,0.93) !important;
         backdrop-filter:blur(32px) saturate(1.5) !important;
         -webkit-backdrop-filter:blur(32px) saturate(1.5) !important;
-        border-left:1px solid rgba(168,85,247,0.22) !important;
-        box-shadow:-20px 0 60px rgba(0,0,0,0.65),inset 1px 0 0 rgba(168,85,247,0.1) !important;
+        border-left:1px solid rgba(168,85,247,0.24) !important;
+        box-shadow:-20px 0 60px rgba(0,0,0,0.7),inset 1px 0 0 rgba(168,85,247,0.1) !important;
       }
 
-      /* 13 — Popovers */
+      /* 15 — Popovers */
       .popover-container {
-        background:rgba(8,0,28,0.9) !important;
+        background:rgba(8,0,28,0.92) !important;
         backdrop-filter:blur(24px) saturate(1.4) !important;
         -webkit-backdrop-filter:blur(24px) saturate(1.4) !important;
-        border:1px solid rgba(168,85,247,0.22) !important;
-        box-shadow:0 20px 60px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.05) !important;
+        border:1px solid rgba(168,85,247,0.24) !important;
+        box-shadow:0 20px 60px rgba(0,0,0,0.65) !important;
       }
       predictive-search-component { border:1px solid rgba(168,85,247,0.2) !important; }
 
-      /* 14 — Marquee */
+      /* 16 — Marquee — neon white */
       .marquee {
-        border-top:1px solid rgba(168,85,247,0.22) !important;
-        border-bottom:1px solid rgba(168,85,247,0.22) !important;
-        background:rgba(109,40,217,0.05) !important;
+        border-top:1px solid rgba(168,85,247,0.25) !important;
+        border-bottom:1px solid rgba(168,85,247,0.25) !important;
+        background:rgba(109,40,217,0.06) !important;
+      }
+      .marquee .text-block > *,
+      .marquee p,
+      .marquee span {
+        color:#fff !important;
+        text-shadow:0 0 18px rgba(255,255,255,0.7),0 0 40px rgba(255,255,255,0.3) !important;
+        opacity:1 !important;
+        letter-spacing:0.04em !important;
       }
 
-      /* 15 — Dividers & footer */
-      .divider hr,hr { border-color:rgba(168,85,247,0.15) !important; }
-      footer > .shopify-section:first-child { border-top:1px solid rgba(168,85,247,0.18) !important; }
+      /* 17 — Email signup — crystal glass */
+      .email-signup__input,
+      .email-signup__input-group--integrated {
+        background:rgba(109,40,217,0.1) !important;
+        backdrop-filter:blur(16px) !important;
+        -webkit-backdrop-filter:blur(16px) !important;
+        border:1px solid rgba(168,85,247,0.4) !important;
+        border-radius:100px !important;
+        color:#fff !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 0 0 0 transparent !important;
+        transition:border-color .3s,box-shadow .3s !important;
+      }
+      .email-signup__input:focus {
+        border-color:var(--nova-purple) !important;
+        box-shadow:0 0 0 3px rgba(168,85,247,0.2),inset 0 1px 0 rgba(255,255,255,0.08) !important;
+      }
+      .email-signup__button {
+        background:rgba(109,40,217,0.28) !important;
+        backdrop-filter:blur(14px) !important;
+        -webkit-backdrop-filter:blur(14px) !important;
+        border:1px solid rgba(168,85,247,0.5) !important;
+        border-radius:100px !important;
+        color:#fff !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.1) !important;
+        transition:all .3s var(--nova-ease) !important;
+      }
+      .email-signup__button:hover {
+        background:var(--nova-purple) !important;
+        box-shadow:0 0 24px rgba(124,58,237,0.6) !important;
+        border-color:var(--nova-purple) !important;
+      }
 
-      /* 16 — Scrollbar */
+      /* 18 — Sort/filter — glass panels */
+      .sorting-filter__select-wrapper {
+        background:rgba(109,40,217,0.1) !important;
+        backdrop-filter:blur(16px) !important;
+        -webkit-backdrop-filter:blur(16px) !important;
+        border:1px solid rgba(168,85,247,0.3) !important;
+        border-radius:12px !important;
+        transition:border-color .3s !important;
+      }
+      .sorting-filter__select-wrapper:hover { border-color:var(--nova-purple) !important; }
+      .sorting-filter__select {
+        color:var(--nova-purple) !important;
+        background:transparent !important;
+        font-weight:500 !important;
+        letter-spacing:0.04em !important;
+      }
+      .sorting-filter__options {
+        background:rgba(8,0,28,0.92) !important;
+        backdrop-filter:blur(24px) !important;
+        -webkit-backdrop-filter:blur(24px) !important;
+        border:1px solid rgba(168,85,247,0.3) !important;
+        border-radius:12px !important;
+        box-shadow:0 16px 48px rgba(0,0,0,0.6) !important;
+      }
+      .sorting-filter__label,
+      .sorting-filter__option-label,
+      .facets__label {
+        color:var(--nova-purple) !important;
+        text-shadow:0 0 10px rgba(168,85,247,0.3) !important;
+        font-weight:500 !important;
+      }
+      .facets-toggle__button {
+        background:rgba(109,40,217,0.1) !important;
+        backdrop-filter:blur(16px) !important;
+        -webkit-backdrop-filter:blur(16px) !important;
+        border:1px solid rgba(168,85,247,0.3) !important;
+        border-radius:100px !important;
+        color:var(--nova-purple) !important;
+        transition:all .3s var(--nova-ease) !important;
+      }
+      .facets-toggle__button:hover {
+        background:rgba(168,85,247,0.18) !important;
+        border-color:var(--nova-purple) !important;
+        box-shadow:0 0 18px rgba(168,85,247,0.3) !important;
+      }
+      .facets__summary {
+        background:rgba(109,40,217,0.08) !important;
+        border:1px solid rgba(168,85,247,0.25) !important;
+        border-radius:10px !important;
+        color:var(--nova-purple) !important;
+        transition:all .3s var(--nova-ease) !important;
+      }
+      .facets__summary:hover { background:rgba(168,85,247,0.14) !important; border-color:var(--nova-purple) !important; }
+
+      /* 19 — Social icons — colorful glass */
+      .social-icons__icon-wrapper {
+        background:rgba(109,40,217,0.1) !important;
+        backdrop-filter:blur(14px) !important;
+        -webkit-backdrop-filter:blur(14px) !important;
+        border:1px solid rgba(168,85,247,0.28) !important;
+        border-radius:14px !important;
+        transition:all .3s var(--nova-ease) !important;
+        padding:4px !important;
+      }
+      .social-icons__icon-wrapper:hover {
+        background:rgba(168,85,247,0.2) !important;
+        border-color:var(--nova-purple) !important;
+        box-shadow:0 0 22px rgba(168,85,247,0.45) !important;
+        transform:translateY(-2px) !important;
+      }
+      /* Platform-specific glow colors */
+      .social-icons__icon-wrapper:has([href*="instagram"]):hover {
+        border-color:rgba(225,48,108,0.7) !important;
+        box-shadow:0 0 22px rgba(225,48,108,0.4) !important;
+      }
+      .social-icons__icon-wrapper:has([href*="wa.me"]):hover,
+      .social-icons__icon-wrapper:has([href*="whatsapp"]):hover {
+        border-color:rgba(37,211,102,0.7) !important;
+        box-shadow:0 0 22px rgba(37,211,102,0.4) !important;
+      }
+      .social-icons__icon-wrapper:has([href*="tiktok"]):hover {
+        border-color:rgba(105,201,208,0.7) !important;
+        box-shadow:0 0 22px rgba(105,201,208,0.4) !important;
+      }
+      .social-icons__icon { color:#fff !important; }
+
+      /* 20 — Dividers & footer */
+      .divider hr,hr { border-color:rgba(168,85,247,0.15) !important; }
+      footer > .shopify-section:first-child { border-top:1px solid rgba(168,85,247,0.2) !important; }
+
+      /* 21 — Scrollbar */
       ::-webkit-scrollbar { width:5px; }
       ::-webkit-scrollbar-track { background:transparent; }
-      ::-webkit-scrollbar-thumb { background:rgba(168,85,247,0.28); border-radius:99px; }
+      ::-webkit-scrollbar-thumb { background:rgba(168,85,247,0.3); border-radius:99px; }
       ::-webkit-scrollbar-thumb:hover { background:var(--nova-purple); }
 
-      /* 17 — Logo image */
+      /* 22 — Logo image */
       .nova-logo__img { height:30px !important; width:auto !important; max-width:200px !important; display:block !important; }
       @media (max-width:749px) { .nova-logo__img { height:24px !important; } }
 
-      /* 18 — Product description toggle */
+      /* 23 — Product description toggle */
       .nova-desc-wrap { margin-top:12px; }
       .nova-desc-btn {
         display:flex; align-items:center; justify-content:space-between;
@@ -420,25 +613,24 @@
         transition:border-color .3s var(--nova-ease),background .3s var(--nova-ease);
       }
       .nova-desc-btn:hover { border-color:var(--nova-purple); background:rgba(109,40,217,0.18); }
-      .nova-desc-btn .nova-chev {
-        display:inline-block;
-        transition:transform .35s var(--nova-ease);
-        font-style:normal;
-      }
+      .nova-desc-btn .nova-chev { display:inline-block; transition:transform .35s var(--nova-ease); font-style:normal; }
       .nova-desc-btn[aria-expanded="true"] .nova-chev { transform:rotate(180deg); }
-      .nova-desc-body {
-        display:grid;
-        grid-template-rows:0fr;
-        transition:grid-template-rows .4s var(--nova-ease);
-        overflow:hidden;
-      }
+      .nova-desc-body { display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s var(--nova-ease); overflow:hidden; }
       .nova-desc-body.nova-open { grid-template-rows:1fr; }
       .nova-desc-body > div { min-height:0; padding-top:10px; }
 
-      /* 19 — Scroll reveal */
+      /* 24 — Hide sticky add-to-cart bar */
+      sticky-add-to-cart { display:none !important; }
+
+      /* 25 — Scroll reveal */
       @media (prefers-reduced-motion:no-preference) {
         .nova-reveal { opacity:0; transform:translateY(28px); transition:opacity .65s var(--nova-ease),transform .65s var(--nova-ease); }
         .nova-reveal.nova-visible { opacity:1 !important; transform:translateY(0) !important; }
+      }
+
+      /* 26 — Mobile touch targets */
+      @media screen and (max-width:749px) {
+        .button,.button-secondary { min-height:48px !important; }
       }
     </style>
 
@@ -547,7 +739,7 @@
     {% endif %}
 
     <script>
-      /* NovaLight v4 — star generator */
+      /* NovaLight v5 — star generator */
       (function () {
         if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
         var atm = document.getElementById('nova-atm');
@@ -555,23 +747,24 @@
         var palettes = [
           'rgba(168,85,247,OP)',
           'rgba(255,255,255,OP)',
+          'rgba(192,132,252,OP)',
           'rgba(139,92,246,OP)',
-          'rgba(192,132,252,OP)'
+          'rgba(255,255,255,OP)'
         ];
-        for (var i = 0; i < 55; i++) {
+        for (var i = 0; i < 65; i++) {
           var el = document.createElement('div');
           el.className = 'nova-star';
-          var sz = (Math.random() * 1.8 + 0.6).toFixed(1);
-          var op = (Math.random() * 0.6 + 0.4).toFixed(2);
+          var sz = (Math.random() * 2.2 + 0.8).toFixed(1);
+          var op = (Math.random() * 0.65 + 0.35).toFixed(2);
           var col = palettes[Math.floor(Math.random() * palettes.length)].replace('OP', op);
-          var dur = (Math.random() * 4 + 2).toFixed(1);
-          var del = (-(Math.random() * 7)).toFixed(1);
+          var dur = (Math.random() * 4 + 2.5).toFixed(1);
+          var del = (-(Math.random() * 8)).toFixed(1);
           el.style.cssText =
             'width:' + sz + 'px;height:' + sz + 'px;' +
             'top:' + (Math.random() * 100).toFixed(1) + '%;' +
             'left:' + (Math.random() * 100).toFixed(1) + '%;' +
             'background:' + col + ';' +
-            'box-shadow:0 0 ' + (parseFloat(sz) * 2.5).toFixed(0) + 'px ' + col + ';' +
+            'box-shadow:0 0 ' + (parseFloat(sz) * 3).toFixed(0) + 'px ' + col + ';' +
             '--dur:' + dur + 's;--del:' + del + 's;';
           atm.appendChild(el);
         }
