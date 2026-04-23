@@ -1,0 +1,169 @@
+{%- liquid
+  assign badge_text      = block.settings.discount_text
+  assign countdown_hours = block.settings.countdown_hours | default: 2
+  assign countdown_label = block.settings.countdown_label | default: 'Only for'
+  assign product_id      = closest.product.id | default: block.id
+-%}
+
+{% if badge_text != blank %}
+<div class="nova-discount-badge" {{ block.shopify_attributes }}>
+
+  <div class="nova-discount-text">{{ badge_text }}</div>
+
+  <div class="nova-countdown"
+       id="nova-cd-{{ block.id }}"
+       data-pid="{{ product_id }}"
+       data-hours="{{ countdown_hours }}">
+    <span class="nova-countdown__icon" aria-hidden="true">⏱</span>
+    <span class="nova-countdown__label">{{ countdown_label }}</span>
+    <span class="nova-countdown__timer">
+      <span class="nova-countdown__num" data-part="h">00</span><span class="nova-countdown__sep" aria-hidden="true">:</span><span class="nova-countdown__num" data-part="m">00</span><span class="nova-countdown__sep" aria-hidden="true">:</span><span class="nova-countdown__num" data-part="s">00</span>
+    </span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var cd = document.getElementById('nova-cd-{{ block.id }}');
+  if (!cd) return;
+
+  var pid   = cd.getAttribute('data-pid');
+  var hours = parseFloat(cd.getAttribute('data-hours')) || 2;
+  var KEY   = 'nova-cd-' + pid;
+
+  var stored  = localStorage.getItem(KEY);
+  var endTime = stored ? parseFloat(stored) : 0;
+
+  if (!endTime || endTime <= Date.now()) {
+    endTime = Date.now() + hours * 3600000;
+    localStorage.setItem(KEY, endTime);
+  }
+
+  var hEl = cd.querySelector('[data-part="h"]');
+  var mEl = cd.querySelector('[data-part="m"]');
+  var sEl = cd.querySelector('[data-part="s"]');
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function tick() {
+    var rem = Math.max(0, endTime - Date.now());
+    if (rem === 0) {
+      endTime = Date.now() + hours * 3600000;
+      localStorage.setItem(KEY, endTime);
+      rem = hours * 3600000;
+    }
+    var t = Math.floor(rem / 1000);
+    if (hEl) hEl.textContent = pad(Math.floor(t / 3600));
+    if (mEl) mEl.textContent = pad(Math.floor((t % 3600) / 60));
+    if (sEl) sEl.textContent = pad(t % 60);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+{% endif %}
+
+{% stylesheet %}
+  .nova-discount-badge {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-block: 4px;
+  }
+
+  .nova-discount-text {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-shadow:
+      0 0 8px  rgba(255,255,255,0.95),
+      0 0 24px rgba(255,255,255,0.70),
+      0 0 60px rgba(220,200,255,0.55);
+  }
+
+  .nova-countdown {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: rgba(168,85,247,0.10);
+    border: 1px solid rgba(168,85,247,0.25);
+    border-radius: 100px;
+    width: fit-content;
+  }
+
+  .nova-countdown__icon {
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .nova-countdown__label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(255,255,255,0.50);
+  }
+
+  .nova-countdown__timer {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #fff;
+    letter-spacing: 0.03em;
+    text-shadow:
+      0 0 8px  rgba(168,85,247,0.90),
+      0 0 20px rgba(168,85,247,0.55);
+  }
+
+  .nova-countdown__sep {
+    opacity: 0.45;
+    animation: nova-cd-blink 1s step-end infinite;
+  }
+
+  @keyframes nova-cd-blink {
+    0%,100% { opacity: 0.45; }
+    50%      { opacity: 0.10; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Discount Badge",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Discount text",
+      "placeholder": "50% OFF",
+      "info": "e.g. 50% OFF · SAVE $100 · LIMITED DEAL"
+    },
+    {
+      "type": "range",
+      "id": "countdown_hours",
+      "label": "Countdown duration (hours)",
+      "min": 1,
+      "max": 72,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "countdown_label",
+      "label": "Countdown label",
+      "default": "Only for"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Discount Badge",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

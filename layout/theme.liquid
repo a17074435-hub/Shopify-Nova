@@ -564,9 +564,9 @@
         order: -1 !important;
       }
 
-      /* Etiqueta "ANTES" encima del precio tachado */
+      /* Etiqueta "WAS" encima del precio tachado */
       .product-details .price__sale .price-item__group:has(.compare-at-price)::before {
-        content: 'ANTES' !important;
+        content: 'WAS' !important;
         display: block !important;
         font-size: 0.58rem !important;
         letter-spacing: 0.18em !important;
@@ -582,9 +582,9 @@
         font-size: 1.15rem !important;
       }
 
-      /* Etiqueta "AHORA" encima del precio actual */
+      /* Etiqueta "NOW" encima del precio actual */
       .product-details .price__sale .price-item__group:has(.price-item--sale)::before {
-        content: 'AHORA' !important;
+        content: 'NOW' !important;
         display: block !important;
         font-size: 0.58rem !important;
         letter-spacing: 0.18em !important;
@@ -595,12 +595,9 @@
         line-height: 1 !important;
       }
 
-      /* Separador sutil entre los dos grupos de precio */
+      /* Sin separador — jerarquía visual es suficiente */
       .product-details .price__sale .price-item__group:has(.price-item--sale) {
         margin-top: 6px !important;
-        padding-top: 12px !important;
-        border-top: 1px solid rgba(168,85,247,0.18) !important;
-        width: 100% !important;
       }
 
       /* 9d — Quick-add glass button — always visible, expands on hover */
