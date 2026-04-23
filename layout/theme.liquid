@@ -1427,20 +1427,17 @@
         }
         #nova-pill .header-menu .menu-list__link:active::before { opacity: 1 !important; }
 
-        /* ── 4. Reemplazar SVGs del tema con iconos propios ── */
-        /* Ocultar SVGs nativos en search y header-actions */
-        #nova-pill .search-action svg,
-        #nova-pill header-actions svg { display: none !important; }
-
-        /* search-action = exactamente 40px */
+        /* ── 4. SVGs nativos del tema — normalizar a tamaño y trazo idénticos ── */
         #nova-pill .search-action {
           width: 40px !important;
           min-width: 40px !important;
           max-width: 40px !important;
+          justify-content: center !important;
         }
         #nova-pill header-actions .header__actions {
           gap: 0 !important;
           padding: 0 !important;
+          margin: 0 !important;
           align-items: center !important;
           height: 100% !important;
           display: flex !important;
@@ -1464,39 +1461,23 @@
           overflow: visible !important;
           position: relative !important;
         }
-        /* Icono de lupa via ::before */
-        #nova-pill .search-action a::before,
-        #nova-pill .search-action button::before {
-          content: '' !important;
+        /* Normalizar todos los SVGs del tema al mismo tamaño y trazo */
+        #nova-pill .search-action svg,
+        #nova-pill header-actions svg {
           display: block !important;
           width: 18px !important;
           height: 18px !important;
-          background: center / contain no-repeat !important;
-          opacity: 0.88 !important;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") !important;
+          min-width: 18px !important;
+          min-height: 18px !important;
+          max-width: 18px !important;
+          max-height: 18px !important;
+          color: rgba(255,255,255,0.90) !important;
+          filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
+          flex-shrink: 0 !important;
         }
-        /* Icono de cuenta (primer hijo) via ::before */
-        #nova-pill header-actions .header__actions > :first-child::before,
-        #nova-pill header-actions [href*="account"]::before {
-          content: '' !important;
-          display: block !important;
-          width: 18px !important;
-          height: 18px !important;
-          background: center / contain no-repeat !important;
-          opacity: 0.88 !important;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E") !important;
-        }
-        /* Icono de carrito (último hijo) via ::before */
-        #nova-pill header-actions .header__actions > :last-child::before,
-        #nova-pill header-actions [href*="cart"]::before {
-          content: '' !important;
-          display: block !important;
-          width: 18px !important;
-          height: 18px !important;
-          background: center / contain no-repeat !important;
-          opacity: 0.88 !important;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'/%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cpath d='M16 10a4 4 0 0 1-8 0'/%3E%3C/svg%3E") !important;
-        }
+        /* Igualar grosor de trazo (search suele ser más fino) */
+        #nova-pill .search-action svg *,
+        #nova-pill header-actions svg * { stroke-width: 2 !important; }
         /* Badge del carrito — no recortar */
         #nova-pill header-actions,
         #nova-pill header-actions .header__actions,
