@@ -1735,6 +1735,8 @@
         .button,.button-secondary { min-height: 48px !important; }
 
         /* ── Quick-add button: visible + circular + pure black (matches PC) ── */
+        /* Use .product-card parent to match the (0,2,0) global rule specificity */
+        .product-card .quick-add__button,
         .quick-add__button {
           display: flex !important;
           opacity: 1 !important;
@@ -1751,8 +1753,9 @@
           overflow: hidden !important;
           justify-content: center !important;
           align-items: center !important;
-          /* Pure black — matches scheme-1 (#000000) that PC uses */
+          /* Pure black — override the rgba(109,40,217,0.28) global rule */
           background: #000000 !important;
+          background-color: #000000 !important;
           border-color: rgba(255,255,255,0.18) !important;
           color: #ffffff !important;
         }
