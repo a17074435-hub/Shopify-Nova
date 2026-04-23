@@ -1740,16 +1740,38 @@
           opacity: 1 !important;
           visibility: visible !important;
           pointer-events: auto !important;
+          /* Circle: force equal width × height, override .button min-height:48px */
           width: var(--button-size-md) !important;
           min-width: var(--button-size-md) !important;
           max-width: var(--button-size-md) !important;
+          height: var(--button-size-md) !important;
+          min-height: var(--button-size-md) !important;
           border-radius: 50% !important;
+          /* Glass dark fill */
           background: rgba(10,3,30,0.78) !important;
-          border-color: rgba(168,85,247,0.42) !important;
+          border: 1.5px solid rgba(168,85,247,0.42) !important;
           padding: 0 !important;
           overflow: hidden !important;
+          /* White icon (dark bg) */
+          color: rgba(255,255,255,0.92) !important;
+          justify-content: center !important;
+          align-items: center !important;
         }
-        .quick-add__button .add-to-cart-text { display: none !important; }
+        /* Inner wrapper: transparent so dark glass shows through */
+        .quick-add__button .add-to-cart-text {
+          background: transparent !important;
+          border-radius: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        /* Hide only text, NOT the icon (icon is sibling inside add-to-cart-text) */
+        .quick-add__button .add-to-cart-text__content { display: none !important; }
+        /* Icon size */
+        .quick-add__button .add-to-cart-icon { width: auto !important; height: auto !important; }
+        .quick-add__button .add-to-cart-icon svg { width: 18px !important; height: 18px !important; }
 
         /* ── Filter bar — remove ugly full-width background bar ── */
         .facets-toggle {
