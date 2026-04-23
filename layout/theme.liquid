@@ -443,7 +443,25 @@
         }
       }
 
-      /* 9b — Product titles — neon purple */
+      /* 9b — Padding del área de texto de las tarjetas
+         El tema usa padding:0 por defecto — el texto queda pegado al borde y
+         el border-radius:18px + overflow:hidden lo recorta. */
+      .product-card .product-card__content {
+        padding-block-end:16px !important;
+      }
+      /* Padding lateral en todos los bloques de texto (no en la galería de imagen) */
+      .product-card product-title,
+      .product-card .text-block:not(.card-gallery),
+      .product-card .price,
+      .product-card .price-wrapper {
+        padding-inline:14px !important;
+      }
+      /* La galería de imagen ocupa todo el ancho — sin padding lateral */
+      .product-card .card-gallery {
+        padding-inline:0 !important;
+      }
+
+      /* 9c — Product titles — neon purple */
       .product-card product-title,
       .product-card product-title a,
       .product-card-gallery__title-placeholder,
