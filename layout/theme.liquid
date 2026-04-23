@@ -1734,13 +1734,13 @@
         .shopify-payment-button { width: 100% !important; }
         .button,.button-secondary { min-height: 48px !important; }
 
-        /* ── Quick-add button: visible + circular (keep theme's own dark style) ── */
+        /* ── Quick-add button: visible + circular + pure black (matches PC) ── */
         .quick-add__button {
           display: flex !important;
           opacity: 1 !important;
           visibility: visible !important;
           pointer-events: auto !important;
-          /* Equal W×H circle — override .button { min-height:48px } */
+          /* Circle: equal W×H, override .button { min-height:48px } */
           width: var(--button-size-md) !important;
           min-width: var(--button-size-md) !important;
           max-width: var(--button-size-md) !important;
@@ -1751,9 +1751,12 @@
           overflow: hidden !important;
           justify-content: center !important;
           align-items: center !important;
-          /* No background/border override — theme's dark card bg already looks correct */
+          /* Pure black — matches scheme-1 (#000000) that PC uses */
+          background: #000000 !important;
+          border-color: rgba(255,255,255,0.18) !important;
+          color: #ffffff !important;
         }
-        /* Inner wrapper: transparent so the button's own background shows */
+        /* Inner wrapper: transparent so black button bg shows */
         .quick-add__button .add-to-cart-text {
           background: transparent !important;
           border-radius: 0 !important;
@@ -1763,10 +1766,10 @@
           width: 100% !important;
           height: 100% !important;
         }
-        /* Hide text only — icon is a sibling span inside add-to-cart-text */
+        /* Hide text only — icon lives inside add-to-cart-text as a sibling span */
         .quick-add__button .add-to-cart-text__content { display: none !important; }
         .quick-add__button .add-to-cart-text--added { display: none !important; }
-        /* Icon sizing + center */
+        /* Icon sizing */
         .quick-add__button .add-to-cart-icon { width: auto !important; height: auto !important; }
         .quick-add__button .add-to-cart-icon svg { width: 18px !important; height: 18px !important; }
 
