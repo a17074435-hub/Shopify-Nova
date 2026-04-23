@@ -1475,14 +1475,22 @@
         /* SVG del carrito dentro de .svg-wrapper */
         #nova-pill .header-actions__cart-icon .svg-wrapper {
           display: flex !important; align-items: center !important; justify-content: center !important;
-          width: 18px !important; height: 18px !important;
+          width: 20px !important; height: 20px !important;
         }
         #nova-pill .header-actions__cart-icon .svg-wrapper svg {
-          width: 18px !important; height: 18px !important; display: block !important;
+          width: 20px !important; height: 20px !important; display: block !important;
           color: rgba(255,255,255,0.90) !important;
           filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
         }
         #nova-pill .header-actions__cart-icon .svg-wrapper svg * { stroke-width: 2 !important; }
+        /* El tema aplica un mask-donut al SVG del carrito para hacer hueco al badge.
+           A 20px el donut cubre todo el SVG — lo eliminamos y reposicionamos el badge. */
+        #nova-pill .header-actions__cart-icon svg { mask: none !important; }
+        #nova-pill .header-actions__cart-icon {
+          --cart-bubble-size: 16px !important;
+          --cart-bubble-top: -2px !important;
+          --cart-bubble-right: -4px !important;
+        }
 
         /* ── Search ── */
         #nova-pill .search-action {
@@ -1498,11 +1506,11 @@
         }
         #nova-pill .search-action svg,
         #nova-pill .search-action .svg-wrapper svg {
-          width: 18px !important; height: 18px !important; display: block !important;
+          width: 20px !important; height: 20px !important; display: block !important;
           color: rgba(255,255,255,0.90) !important;
           filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
         }
-        #nova-pill .search-action svg * { stroke-width: 2 !important; }
+        #nova-pill .search-action svg * { stroke-width: 2.2 !important; }
 
         /* Badge del carrito — no recortar */
         #nova-pill cart-drawer-component,
