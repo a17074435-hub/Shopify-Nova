@@ -33,6 +33,30 @@
     }
   }
 
+  /* ── Sticky header compositing fix ──
+     Radiant's opacity:0→1 on .header[data-sticky-state] creates a GPU
+     transparency group that traps children's backdrop-filter.
+     Override: force opacity:1 + no transition via inline style (beats all CSS).
+  ── */
+  (function() {
+    var hdr = document.querySelector('.header[data-sticky-state]');
+    if (!hdr) {
+      var comp = document.getElementById('header-component') || document.querySelector('header-component');
+      if (comp) hdr = comp.querySelector('.header[data-sticky-state]');
+    }
+    if (!hdr) return;
+
+    function lockOpacity(el) {
+      el.style.setProperty('opacity',      '1',    'important');
+      el.style.setProperty('transition',   'none', 'important');
+      el.style.setProperty('will-change',  'auto', 'important');
+    }
+    lockOpacity(hdr);
+
+    new MutationObserver(function() { lockOpacity(hdr); })
+      .observe(hdr, { attributes: true });
+  })();
+
   /* ── Product description collapsible ── */
   function initDescToggle() {
     // Radiant v3.5.1: product description renders as rte-formatter.rte inside .product-details
