@@ -251,26 +251,24 @@
       }
       .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
 
-      /* 7b — Logo orbit sparkle (desktop) */
-      @media screen and (min-width:750px) {
-        .header-logo {
-          position:relative !important;
-          overflow:visible !important;
-          z-index:2 !important;
-        }
-        .header-logo::after {
-          content:'' !important;
-          position:absolute !important;
-          top:50% !important; left:50% !important;
-          width:7px !important; height:7px !important;
-          margin:-3.5px 0 0 -3.5px !important;
-          border-radius:50% !important;
-          background:var(--nova-purple) !important;
-          box-shadow:0 0 6px 3px var(--nova-purple),0 0 18px rgba(168,85,247,0.8) !important;
-          animation:nova-orbit 5s linear infinite !important;
-          z-index:10 !important;
-          pointer-events:none !important;
-        }
+      /* 7b — Logo orbit sparkle (all screens) */
+      .header-logo {
+        position:relative !important;
+        overflow:visible !important;
+        z-index:2 !important;
+      }
+      .header-logo::after {
+        content:'' !important;
+        position:absolute !important;
+        top:50% !important; left:50% !important;
+        width:7px !important; height:7px !important;
+        margin:-3.5px 0 0 -3.5px !important;
+        border-radius:50% !important;
+        background:var(--nova-purple) !important;
+        box-shadow:0 0 6px 3px var(--nova-purple),0 0 18px rgba(168,85,247,0.8) !important;
+        animation:nova-orbit 5s linear infinite !important;
+        z-index:10 !important;
+        pointer-events:none !important;
       }
       @media (prefers-reduced-motion:reduce) { .header-logo::after { animation:none !important; } }
 
@@ -1427,61 +1425,91 @@
         }
         #nova-pill .header-menu .menu-list__link:active::before { opacity: 1 !important; }
 
-        /* ── 4. SVGs nativos del tema — normalizar a tamaño y trazo idénticos ── */
-        #nova-pill .search-action {
-          width: 40px !important;
-          min-width: 40px !important;
-          max-width: 40px !important;
-          justify-content: center !important;
+        /* ── 4. Normalizar account, cart y search con selectores exactos ── */
+
+        /* Eliminar margin negativo que hereda header-actions del tema */
+        #nova-pill header-actions { margin: 0 !important; }
+
+        /* ── Account ── */
+        /* Wrapper externo */
+        #nova-pill .account-button,
+        #nova-pill .account-button.header-actions__action {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
+          height: 40px !important; padding: 0 !important; margin: 0 !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
         }
-        #nova-pill header-actions .header__actions {
-          gap: 0 !important;
-          padding: 0 !important;
-          margin: 0 !important;
-          align-items: center !important;
-          height: 100% !important;
-          display: flex !important;
-        }
-        /* Todos los botones/links — 40×40 uniformes */
-        #nova-pill header-actions .header__icon,
-        #nova-pill header-actions a,
-        #nova-pill header-actions button,
-        #nova-pill .search-action a,
-        #nova-pill .search-action button {
-          width: 40px !important;
-          min-width: 40px !important;
-          max-width: 40px !important;
+        /* shopify-account custom element (tiene min-width:44px propio) */
+        #nova-pill shopify-account {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
           height: 40px !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          padding: 0 !important;
-          margin: 0 !important;
-          flex-shrink: 0 !important;
-          overflow: visible !important;
-          position: relative !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
         }
-        /* Normalizar todos los SVGs del tema al mismo tamaño y trazo */
-        #nova-pill .search-action svg,
-        #nova-pill header-actions svg {
-          display: block !important;
-          width: 18px !important;
-          height: 18px !important;
-          min-width: 18px !important;
-          min-height: 18px !important;
-          max-width: 18px !important;
-          max-height: 18px !important;
+        /* SVG de cuenta (luz DOM, slotted) — viewBox 0 0 15 17 */
+        #nova-pill .account-button__icon {
+          width: 16px !important; height: 16px !important;
           color: rgba(255,255,255,0.90) !important;
           filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
-          flex-shrink: 0 !important;
         }
-        /* Igualar grosor de trazo (search suele ser más fino) */
-        #nova-pill .search-action svg *,
-        #nova-pill header-actions svg * { stroke-width: 2 !important; }
+        #nova-pill .account-button__icon * { stroke-width: 2 !important; }
+
+        /* ── Cart ── */
+        /* cart-drawer-component wrapper */
+        #nova-pill cart-drawer-component,
+        #nova-pill .cart-drawer {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
+          overflow: visible !important;
+        }
+        /* Botón trigger del carrito */
+        #nova-pill .cart-drawer .header-actions__action {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
+          height: 40px !important; padding: 0 !important; margin: 0 !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
+          overflow: visible !important; position: relative !important;
+        }
+        /* cart-icon custom element */
+        #nova-pill cart-icon {
+          display: flex !important; align-items: center !important; justify-content: center !important;
+          position: relative !important; overflow: visible !important;
+        }
+        /* SVG del carrito dentro de .svg-wrapper */
+        #nova-pill .header-actions__cart-icon .svg-wrapper {
+          display: flex !important; align-items: center !important; justify-content: center !important;
+          width: 18px !important; height: 18px !important;
+        }
+        #nova-pill .header-actions__cart-icon .svg-wrapper svg {
+          width: 18px !important; height: 18px !important; display: block !important;
+          color: rgba(255,255,255,0.90) !important;
+          filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
+        }
+        #nova-pill .header-actions__cart-icon .svg-wrapper svg * { stroke-width: 2 !important; }
+
+        /* ── Search ── */
+        #nova-pill .search-action {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
+          height: 40px !important; padding: 0 !important; margin: 0 !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
+        }
+        #nova-pill .search-action button,
+        #nova-pill .search-action a {
+          width: 40px !important; min-width: 40px !important; max-width: 40px !important;
+          height: 40px !important; padding: 0 !important;
+          display: flex !important; align-items: center !important; justify-content: center !important;
+        }
+        #nova-pill .search-action svg,
+        #nova-pill .search-action .svg-wrapper svg {
+          width: 18px !important; height: 18px !important; display: block !important;
+          color: rgba(255,255,255,0.90) !important;
+          filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) !important;
+        }
+        #nova-pill .search-action svg * { stroke-width: 2 !important; }
+
         /* Badge del carrito — no recortar */
-        #nova-pill header-actions,
-        #nova-pill header-actions .header__actions,
-        #nova-pill header-actions .header__icon { overflow: visible !important; }
+        #nova-pill cart-drawer-component,
+        #nova-pill .cart-drawer,
+        #nova-pill .cart-drawer .header-actions__action,
+        #nova-pill cart-icon,
+        #nova-pill .header-actions__cart-icon { overflow: visible !important; }
 
         /* ── 6. Cart: bottom sheet (no pantalla completa) ── */
         .cart-drawer__dialog {
