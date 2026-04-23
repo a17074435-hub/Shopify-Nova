@@ -1364,10 +1364,7 @@
           overflow: visible !important;
         }
 
-        /* Separadores entre secciones */
         #nova-pill .search-action {
-          border-left: 1px solid rgba(168,85,247,0.30) !important;
-          border-right: 1px solid rgba(168,85,247,0.30) !important;
           justify-content: center !important;
         }
 
@@ -1425,16 +1422,30 @@
           padding: 0 !important;
           align-items: center !important;
           height: 100% !important;
+          display: flex !important;
         }
+        /* Todos los botones/iconos del pill — exactamente 36×36 */
+        #nova-pill .header-menu .menu-list__link,
         #nova-pill header-actions .header__icon,
+        #nova-pill header-actions a,
+        #nova-pill header-actions button,
+        #nova-pill .search-action a,
         #nova-pill .search-action button {
           width: 36px !important;
           min-width: 36px !important;
+          max-width: 36px !important;
           height: 34px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           padding: 0 !important;
+          margin: 0 !important;
+          flex-shrink: 0 !important;
+        }
+        /* Anular cualquier gap/padding heredado en header-actions */
+        #nova-pill header-actions * {
+          padding-inline: 0 !important;
+          margin-inline: 0 !important;
         }
 
         /* ── 6. Cart: bottom sheet (no pantalla completa) ── */
