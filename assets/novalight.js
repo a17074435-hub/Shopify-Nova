@@ -144,20 +144,33 @@
       setTimeout(function () { el.remove(); }, parseFloat(dur) * 1000 + 120);
     }
 
-    function initBuySparkles() {
-      var raw = document.querySelector('.shopify-payment-button__button--unbranded');
-      if (!raw) return;
-      var btn = /** @type {HTMLElement} */ (raw);
+    function attachSparkles(/** @type {HTMLElement} */ btn) {
       btn.style.setProperty('overflow', 'visible', 'important');
       btn.style.setProperty('position', 'relative', 'important');
 
       /** @type {ReturnType<typeof setInterval>} */ var timer;
-      function startSlow()  { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); }, 900); }
-      function startFast()  { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); spawnSpark(btn); }, 200); }
+      function startSlow() { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); }, 850); }
+      function startFast() { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); spawnSpark(btn); }, 180); }
 
       startSlow();
       btn.addEventListener('mouseenter', startFast);
       btn.addEventListener('mouseleave', startSlow);
+    }
+
+    function initBuySparkles() {
+      var BTN_SEL = '.shopify-payment-button__button--unbranded, button.shopify-payment-button__button';
+      var raw = document.querySelector(BTN_SEL);
+      if (raw) { attachSparkles(/** @type {HTMLElement} */ (raw)); return; }
+
+      /* El botón carga de forma asíncrona — esperarlo con MutationObserver */
+      var obs = new MutationObserver(function() {
+        var found = document.querySelector(BTN_SEL);
+        if (found) {
+          obs.disconnect();
+          attachSparkles(/** @type {HTMLElement} */ (found));
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
     }
 
     if (document.readyState === 'loading') {
