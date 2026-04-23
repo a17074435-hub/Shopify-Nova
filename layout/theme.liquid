@@ -772,16 +772,18 @@
         padding:2px 7px !important;
       }
 
-      /* Filter dropdown panel */
-      .facets__inputs.facets__panel-content {
-        background:rgba(6,0,22,0.92) !important;
-        backdrop-filter:blur(28px) !important;
-        -webkit-backdrop-filter:blur(28px) !important;
-        border:1px solid rgba(168,85,247,0.28) !important;
-        border-radius:14px !important;
-        box-shadow:0 16px 48px rgba(0,0,0,0.65) !important;
-        padding:12px !important;
-        margin-top:6px !important;
+      /* Filter dropdown panel — glass crystal matching rest of UI */
+      .facets__inputs.facets__panel-content,
+      .facets__panel-content {
+        background:rgba(20,6,55,0.82) !important;
+        backdrop-filter:blur(32px) saturate(1.5) !important;
+        -webkit-backdrop-filter:blur(32px) saturate(1.5) !important;
+        border:1px solid rgba(168,85,247,0.30) !important;
+        border-radius:16px !important;
+        box-shadow:0 16px 48px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06) !important;
+        padding:16px !important;
+        margin-top:8px !important;
+        min-width:200px !important;
       }
       .facets__inputs label,
       .facets__inputs .facets__option-label {
@@ -791,6 +793,62 @@
       }
       .facets__inputs label:hover,
       .facets__inputs .facets__option-label:hover { color:var(--nova-purple) !important; }
+
+      /* Price range inputs */
+      .price-facet__inputs-wrapper {
+        display:flex !important;
+        align-items:center !important;
+        gap:10px !important;
+        justify-content:center !important;
+      }
+      .price-facet__field {
+        position:relative !important;
+        display:flex !important;
+        align-items:center !important;
+        background:rgba(109,40,217,0.12) !important;
+        border:1px solid rgba(168,85,247,0.35) !important;
+        border-radius:10px !important;
+        padding:0 10px !important;
+        gap:4px !important;
+        transition:border-color .2s,box-shadow .2s !important;
+      }
+      .price-facet__field:focus-within {
+        border-color:var(--nova-purple) !important;
+        box-shadow:0 0 0 3px rgba(168,85,247,0.2) !important;
+      }
+      .price-facet__label {
+        color:rgba(168,85,247,0.85) !important;
+        font-size:0.82rem !important;
+        font-weight:600 !important;
+        pointer-events:none !important;
+        position:static !important;
+        transform:none !important;
+        flex-shrink:0 !important;
+      }
+      .price-facet__input {
+        background:transparent !important;
+        border:none !important;
+        outline:none !important;
+        color:#fff !important;
+        font-size:0.88rem !important;
+        font-weight:500 !important;
+        width:70px !important;
+        padding:8px 0 !important;
+        text-align:right !important;
+        box-shadow:none !important;
+      }
+      .price-facet__input::placeholder { color:rgba(255,255,255,0.3) !important; }
+      .price-facet__separator {
+        color:rgba(168,85,247,0.6) !important;
+        font-size:0.85rem !important;
+        flex-shrink:0 !important;
+      }
+      .price-facet__highest-price {
+        color:rgba(255,255,255,0.42) !important;
+        font-size:0.75rem !important;
+        text-align:center !important;
+        margin-top:10px !important;
+      }
 
       /* Filter toggle button (drawer style) */
       .facets-toggle__button {
