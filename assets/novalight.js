@@ -182,6 +182,35 @@
     }
   })();
 
+  /* ── Mobile pill wrapper ── */
+  (function () {
+    function buildPill() {
+      if (window.innerWidth > 749) return;
+      if (document.getElementById('nova-pill')) return;
+
+      var headerCols = document.querySelector('#header-component .header__columns');
+      if (!headerCols) return;
+
+      var menu    = document.querySelector('#header-component .header-menu');
+      var search  = document.querySelector('.search-action');
+      var actions = document.querySelector('header-actions');
+      if (!menu && !actions) return;
+
+      var pill = document.createElement('div');
+      pill.id = 'nova-pill';
+      headerCols.appendChild(pill);
+      if (menu)    pill.appendChild(menu);
+      if (search)  pill.appendChild(search);
+      if (actions) pill.appendChild(actions);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', buildPill);
+    } else {
+      buildPill();
+    }
+  })();
+
   /* ── Force glass style on all dropdown panels ── */
   var PANEL_SEL = '.sorting-filter__options, .facets__panel-content';
 

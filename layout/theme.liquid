@@ -1320,126 +1320,121 @@
          ════════════════════════════════════════════════════════ */
       @media screen and (max-width:749px) {
 
-        /* ── 1. Quitar hamburguesa y mover search+actions a fila 2 ── */
+        /* ── 1. Quitar hamburguesa; grid con 2 filas ── */
         .header__drawer { display:none !important; }
-
-        .search-action {
-          grid-row: 2 !important;
-          grid-column: 4 !important;
-        }
-        header-actions {
-          grid-row: 2 !important;
-          grid-column: 5 !important;
-        }
-
-        /* Grid con 2 filas y padding lateral para pill separada de bordes */
         #header-component .header__columns {
           grid-template-rows: auto auto !important;
-          padding-inline: 10px !important;
-          padding-bottom: 8px !important;
-          row-gap: 4px !important;
+          padding-inline: 0 !important;
+          padding-bottom: 10px !important;
+          row-gap: 6px !important;
         }
 
-        /* ── 2. Nav pill — fila 2, columnas 1-3, gradiente cristal ── */
-        #header-component .header-menu {
-          display: flex !important;
-          grid-column: 1 / 4 !important;
+        /* ── 2. Pill compacta — generada por JS (#nova-pill) ── */
+        #nova-pill {
+          grid-column: 1 / -1 !important;
           grid-row: 2 !important;
-          /* Cristal morado — igual que desktop */
-          background: linear-gradient(135deg,rgba(109,40,217,0.55) 0%,rgba(16,5,45,0.88) 100%) !important;
-          border: 1px solid rgba(168,85,247,0.45) !important;
-          border-right: none !important;
-          border-radius: 100px 0 0 100px !important;
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.16) !important;
-          padding: 0 4px !important;
-          overflow: hidden !important;
-          height: 40px !important;
-          min-height: 40px !important;
+          justify-self: center !important;
+          align-self: center !important;
+          display: flex !important;
           align-items: center !important;
           gap: 0 !important;
-          scrollbar-width: none !important;
+          width: fit-content !important;
+          background: linear-gradient(135deg,rgba(109,40,217,0.55) 0%,rgba(16,5,45,0.88) 100%) !important;
+          border: 1px solid rgba(168,85,247,0.45) !important;
+          border-radius: 100px !important;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+          height: 40px !important;
+          padding: 0 4px !important;
+          overflow: visible !important;
         }
-        #header-component .header-menu::-webkit-scrollbar { display:none !important; }
 
-        /* ── 3. Nav icons: ocultar texto, mostrar emoji icono ── */
-        #header-component .header-menu .menu-list__link {
+        /* Reset de hijos directos dentro del pill */
+        #nova-pill > * {
+          background: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          height: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+          width: auto !important;
+          flex-shrink: 0 !important;
+          overflow: visible !important;
+        }
+
+        /* Separadores entre secciones */
+        #nova-pill .search-action {
+          border-left: 1px solid rgba(168,85,247,0.30) !important;
+          border-right: 1px solid rgba(168,85,247,0.30) !important;
+          justify-content: center !important;
+        }
+
+        /* ── 3. Nav links: iconos SVG (sin emoji) ── */
+        #nova-pill .header-menu { overflow: visible !important; }
+        #nova-pill .header-menu .menu-list__link {
           font-size: 0 !important;
           color: transparent !important;
-          width: 40px !important;
-          min-width: 40px !important;
-          height: 36px !important;
+          width: 36px !important;
+          min-width: 36px !important;
+          height: 34px !important;
           padding: 0 !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           border-radius: 100px !important;
           position: relative !important;
-          transition: background .2s !important;
+          transition: background .18s !important;
         }
-        /* Ocultar carets SVG dentro del link */
-        #header-component .header-menu .menu-list__link svg { display:none !important; }
-        #header-component .header-menu .menu-list__submenu { display:none !important; }
-
-        /* Pseudo-elemento que muestra el icono */
-        #header-component .header-menu .menu-list__link::before {
-          font-size: 1.15rem !important;
-          color: rgba(255,255,255,0.88) !important;
+        #nova-pill .header-menu .menu-list__link svg { display:none !important; }
+        #nova-pill .header-menu .menu-list__submenu { display:none !important; }
+        #nova-pill .header-menu .menu-list__link::before {
+          content: '' !important;
           display: block !important;
-          line-height: 1 !important;
-          text-shadow: none !important;
-          font-style: normal !important;
+          width: 17px !important;
+          height: 17px !important;
+          background: center / contain no-repeat !important;
+          opacity: 0.88 !important;
         }
-        /* Iconos por posición (1=Home, 2=Catalog, 3=Contact, etc.) */
-        #header-component .header-menu .menu-list__list-item:nth-child(1) .menu-list__link::before { content:'⌂'; }
-        #header-component .header-menu .menu-list__list-item:nth-child(2) .menu-list__link::before { content:'⊞'; }
-        #header-component .header-menu .menu-list__list-item:nth-child(3) .menu-list__link::before { content:'✉'; }
-        #header-component .header-menu .menu-list__list-item:nth-child(n+4) .menu-list__link::before { content:'•'; }
+        /* Home */
+        #nova-pill .header-menu .menu-list__list-item:nth-child(1) .menu-list__link::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E") !important;
+        }
+        /* Grid / Catalog */
+        #nova-pill .header-menu .menu-list__list-item:nth-child(2) .menu-list__link::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3C/svg%3E") !important;
+        }
+        /* Mail / Contact */
+        #nova-pill .header-menu .menu-list__list-item:nth-child(3) .menu-list__link::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E") !important;
+        }
+        /* Extra items */
+        #nova-pill .header-menu .menu-list__list-item:nth-child(n+4) .menu-list__link::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") !important;
+        }
+        #nova-pill .header-menu .menu-list__link:active::before { opacity: 1 !important; }
 
-        #header-component .header-menu .menu-list__link:hover {
-          background: rgba(168,85,247,0.22) !important;
+        /* ── 4. Iconos SVG en search y header-actions ── */
+        #nova-pill .search-action svg, #nova-pill header-actions svg {
+          color: rgba(255,255,255,0.92) !important;
+          filter: drop-shadow(0 0 4px rgba(255,255,255,0.28)) !important;
         }
-        #header-component .header-menu .menu-list__link:hover::before {
-          color: #fff !important;
+        #nova-pill header-actions .header__actions {
+          gap: 0 !important;
+          padding: 0 !important;
+          align-items: center !important;
+          height: 100% !important;
         }
-
-        /* ── 4. Search — conector central del pill ── */
-        .search-action {
-          background: linear-gradient(135deg,rgba(109,40,217,0.55) 0%,rgba(16,5,45,0.88) 100%) !important;
-          border-top: 1px solid rgba(168,85,247,0.45) !important;
-          border-bottom: 1px solid rgba(168,85,247,0.45) !important;
-          border-left: 1px solid rgba(168,85,247,0.28) !important;
-          border-right: none !important;
-          border-radius: 0 !important;
-          height: 40px !important;
-          align-self: center !important;
-          justify-self: stretch !important;
+        #nova-pill header-actions .header__icon,
+        #nova-pill .search-action button {
+          width: 36px !important;
+          min-width: 36px !important;
+          height: 34px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           padding: 0 !important;
-        }
-
-        /* ── 5. Header-actions — extremo derecho del pill ── */
-        header-actions {
-          background: linear-gradient(135deg,rgba(80,20,180,0.50) 0%,rgba(16,5,45,0.88) 100%) !important;
-          border: 1px solid rgba(168,85,247,0.45) !important;
-          border-left: none !important;
-          border-radius: 0 100px 100px 0 !important;
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 18px rgba(0,0,0,0.40) !important;
-          height: 40px !important;
-          align-self: center !important;
-          justify-self: stretch !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: flex-end !important;
-          padding: 0 8px 0 2px !important;
-          gap: 0 !important;
-        }
-
-        /* Iconos SVG — blancos brillantes */
-        .search-action svg, header-actions svg {
-          color: rgba(255,255,255,0.92) !important;
-          filter: drop-shadow(0 0 4px rgba(255,255,255,0.28)) !important;
         }
 
         /* ── 6. Cart: bottom sheet (no pantalla completa) ── */
