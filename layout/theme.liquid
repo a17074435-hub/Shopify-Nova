@@ -549,6 +549,60 @@
         font-weight:500 !important;
       }
 
+      /* ── Precio en página de producto: layout vertical con jerarquía visual ── */
+
+      /* Contenedor principal — columna, alineado a la izquierda */
+      .product-details .price__sale {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+      }
+
+      /* Compare-at group sube visualmente antes que el precio actual */
+      .product-details .price__sale .price-item__group:has(.compare-at-price) {
+        order: -1 !important;
+      }
+
+      /* Etiqueta "ANTES" encima del precio tachado */
+      .product-details .price__sale .price-item__group:has(.compare-at-price)::before {
+        content: 'ANTES' !important;
+        display: block !important;
+        font-size: 0.58rem !important;
+        letter-spacing: 0.18em !important;
+        font-weight: 600 !important;
+        color: rgba(255,100,100,0.55) !important;
+        text-shadow: none !important;
+        margin-bottom: 2px !important;
+        line-height: 1 !important;
+      }
+
+      /* Compare-at en producto — tamaño más pequeño que el precio actual */
+      .product-details .compare-at-price {
+        font-size: 1.15rem !important;
+      }
+
+      /* Etiqueta "AHORA" encima del precio actual */
+      .product-details .price__sale .price-item__group:has(.price-item--sale)::before {
+        content: 'AHORA' !important;
+        display: block !important;
+        font-size: 0.58rem !important;
+        letter-spacing: 0.18em !important;
+        font-weight: 600 !important;
+        color: rgba(168,85,247,0.60) !important;
+        text-shadow: none !important;
+        margin-bottom: 2px !important;
+        line-height: 1 !important;
+      }
+
+      /* Separador sutil entre los dos grupos de precio */
+      .product-details .price__sale .price-item__group:has(.price-item--sale) {
+        margin-top: 6px !important;
+        padding-top: 12px !important;
+        border-top: 1px solid rgba(168,85,247,0.18) !important;
+        width: 100% !important;
+      }
+
       /* 9d — Quick-add glass button — always visible, expands on hover */
       .quick-add__button {
         opacity:1 !important;           /* always visible, override Radiant's opacity:0 */
