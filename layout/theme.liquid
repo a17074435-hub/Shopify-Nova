@@ -1343,12 +1343,12 @@
           border: 1px solid rgba(168,85,247,0.45) !important;
           border-radius: 100px !important;
           box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12) !important;
-          height: 40px !important;
-          padding: 0 4px !important;
+          height: 48px !important;
+          padding: 0 8px !important;
           overflow: visible !important;
         }
 
-        /* Reset de hijos directos dentro del pill */
+        /* Reset hijos directos */
         #nova-pill > * {
           background: none !important;
           border: none !important;
@@ -1363,19 +1363,34 @@
           flex-shrink: 0 !important;
           overflow: visible !important;
         }
-
-        #nova-pill .search-action {
-          justify-content: center !important;
-        }
+        #nova-pill .search-action { justify-content: center !important; }
 
         /* ── 3. Nav links: iconos SVG (sin emoji) ── */
+        /* Contenedor de items — eliminar gap propio de Radiant */
         #nova-pill .header-menu { overflow: visible !important; }
+        #nova-pill .header-menu .menu-list__list {
+          display: flex !important;
+          gap: 0 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          list-style: none !important;
+          align-items: center !important;
+          height: 100% !important;
+        }
+        #nova-pill .header-menu .menu-list__list-item {
+          margin: 0 !important;
+          padding: 0 !important;
+          height: 100% !important;
+          display: flex !important;
+          align-items: center !important;
+        }
         #nova-pill .header-menu .menu-list__link {
           font-size: 0 !important;
           color: transparent !important;
-          width: 36px !important;
-          min-width: 36px !important;
-          height: 34px !important;
+          width: 40px !important;
+          min-width: 40px !important;
+          max-width: 40px !important;
+          height: 40px !important;
           padding: 0 !important;
           display: flex !important;
           align-items: center !important;
@@ -1389,8 +1404,8 @@
         #nova-pill .header-menu .menu-list__link::before {
           content: '' !important;
           display: block !important;
-          width: 17px !important;
-          height: 17px !important;
+          width: 18px !important;
+          height: 18px !important;
           background: center / contain no-repeat !important;
           opacity: 0.88 !important;
         }
@@ -1412,14 +1427,21 @@
         }
         #nova-pill .header-menu .menu-list__link:active::before { opacity: 1 !important; }
 
-        /* ── 4. Iconos SVG en search y header-actions ── */
-        /* Todos los SVGs del pill al mismo tamaño visual */
+        /* ── 4. SVGs del tema — mismo peso visual que los propios ── */
         #nova-pill svg {
-          width: 18px !important;
-          height: 18px !important;
+          width: 19px !important;
+          height: 19px !important;
           flex-shrink: 0 !important;
           color: rgba(255,255,255,0.92) !important;
           filter: drop-shadow(0 0 4px rgba(255,255,255,0.28)) !important;
+        }
+        /* Igualar grosor de trazo (lupa y otros iconos del tema) */
+        #nova-pill svg path,
+        #nova-pill svg circle,
+        #nova-pill svg rect,
+        #nova-pill svg line,
+        #nova-pill svg polyline {
+          stroke-width: 1.8 !important;
         }
         #nova-pill header-actions .header__actions {
           gap: 0 !important;
@@ -1428,17 +1450,16 @@
           height: 100% !important;
           display: flex !important;
         }
-        /* Todos los botones/iconos del pill — exactamente 36×36 */
-        #nova-pill .header-menu .menu-list__link,
+        /* Todos los botones — 40×40 uniformes */
         #nova-pill header-actions .header__icon,
         #nova-pill header-actions a,
         #nova-pill header-actions button,
         #nova-pill .search-action a,
         #nova-pill .search-action button {
-          width: 36px !important;
-          min-width: 36px !important;
-          max-width: 36px !important;
-          height: 34px !important;
+          width: 40px !important;
+          min-width: 40px !important;
+          max-width: 40px !important;
+          height: 40px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -1446,14 +1467,12 @@
           margin: 0 !important;
           flex-shrink: 0 !important;
           overflow: visible !important;
+          position: relative !important;
         }
-        /* Badge del carrito — no recortar */
+        /* Badge del carrito — no recortar, posición en esquina */
         #nova-pill header-actions,
         #nova-pill header-actions .header__actions,
-        #nova-pill header-actions .header__icon {
-          overflow: visible !important;
-        }
-        #nova-pill { padding-right: 10px !important; }
+        #nova-pill header-actions .header__icon { overflow: visible !important; }
 
         /* ── 6. Cart: bottom sheet (no pantalla completa) ── */
         .cart-drawer__dialog {
