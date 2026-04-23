@@ -1367,6 +1367,112 @@
       .predictive-search__search-button:hover {
         background: rgba(168,85,247,0.40) !important;
       }
+      /* Close button: always circular */
+      .predictive-search__close-modal-button {
+        width: 40px !important;
+        min-width: 40px !important;
+        height: 40px !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* 27 — Quick-add modal glass (bottom sheet on mobile, popover on desktop) */
+      .quick-add-modal {
+        background: rgba(10,3,30,0.93) !important;
+        backdrop-filter: blur(40px) saturate(1.6) !important;
+        -webkit-backdrop-filter: blur(40px) saturate(1.6) !important;
+        border: 1px solid rgba(168,85,247,0.32) !important;
+        box-shadow: 0 24px 80px rgba(0,0,0,0.70) !important;
+      }
+      .quick-add-modal[open] { border-radius: 28px 28px 0 0 !important; }
+      @media screen and (min-width: 750px) {
+        .quick-add-modal[open] { border-radius: 24px !important; }
+      }
+      /* Sticky footer inside modal keeps glass tint */
+      .quick-add-modal__content .product-details .buy-buttons-block,
+      .quick-add-modal__content .product-details .buy-buttons-block__bar {
+        background-color: rgba(10,3,30,0.95) !important;
+      }
+      .quick-add-modal__close { color: rgba(255,255,255,0.80) !important; }
+
+      /* 28 — Filter drawer internals (glass NovaLight) */
+      .facets.facets--drawer {
+        background: rgba(10,3,30,0.97) !important;
+        backdrop-filter: blur(32px) !important;
+        -webkit-backdrop-filter: blur(32px) !important;
+        border-left: 1px solid rgba(168,85,247,0.28) !important;
+      }
+      .facets__title-wrapper {
+        border-bottom: 1px solid rgba(168,85,247,0.20) !important;
+        padding: 14px 20px !important;
+        background: transparent !important;
+      }
+      .facets-drawer__title { color: rgba(255,255,255,0.92) !important; }
+      .facets-drawer__close {
+        width: 36px !important; height: 36px !important;
+        min-width: 36px !important;
+        border-radius: 50% !important;
+        color: rgba(255,255,255,0.75) !important;
+        background: rgba(255,255,255,0.06) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+      }
+      /* Each filter section (Availability, Price…) */
+      .facets-drawer__filters .facets__panel {
+        background: rgba(255,255,255,0.04) !important;
+        border: 1px solid rgba(168,85,247,0.20) !important;
+        border-radius: 14px !important;
+        margin-bottom: 8px !important;
+        overflow: hidden !important;
+      }
+      .facets-drawer__filters .facets__summary {
+        color: rgba(255,255,255,0.88) !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        padding: 13px 16px !important;
+      }
+      .facets-drawer__filters .facets__panel-content {
+        border-top: 1px solid rgba(168,85,247,0.12) !important;
+        background: rgba(168,85,247,0.04) !important;
+      }
+      /* Checkboxes, labels, price inputs */
+      .facets-drawer__filters input[type="checkbox"] { accent-color: #a855f7 !important; }
+      .facets-drawer__filters label { color: rgba(255,255,255,0.80) !important; }
+      .facets-drawer__filters input[type="number"] {
+        background: rgba(168,85,247,0.10) !important;
+        border: 1px solid rgba(168,85,247,0.28) !important;
+        border-radius: 10px !important;
+        color: rgba(255,255,255,0.88) !important;
+      }
+      /* Sort inside drawer — pill, not card */
+      .facets-drawer__filters .sorting-filter .facets__panel {
+        background: transparent !important;
+        border: none !important; border-radius: 0 !important;
+        overflow: visible !important; margin-bottom: 0 !important;
+      }
+      .facets-drawer__filters .sorting-filter .facets__summary {
+        background: rgba(168,85,247,0.14) !important;
+        border: 1px solid rgba(168,85,247,0.35) !important;
+        border-radius: 100px !important;
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important; font-weight: 600 !important;
+      }
+      /* Drawer footer actions */
+      .facets__drawer-actions {
+        background: rgba(10,3,30,0.97) !important;
+        border-top: 1px solid rgba(168,85,247,0.18) !important;
+        padding: 12px 20px !important;
+      }
+      .facets__clear-all {
+        color: rgba(168,85,247,0.80) !important;
+        border-color: rgba(168,85,247,0.35) !important;
+        border-radius: 100px !important;
+      }
+      .facets__see-results {
+        background: linear-gradient(135deg,rgba(109,40,217,0.85),rgba(168,85,247,0.75)) !important;
+        border: 1px solid rgba(168,85,247,0.55) !important;
+        color: #fff !important;
+        border-radius: 100px !important;
+      }
 
       /* ════════════════════════════════════════════════════════
          MOBILE — max-width 749px ONLY. No desktop change.
@@ -1628,13 +1734,22 @@
         .shopify-payment-button { width: 100% !important; }
         .button,.button-secondary { min-height: 48px !important; }
 
-        /* ── Quick-add "Add to cart" button visible on mobile ── */
+        /* ── Quick-add button: visible + circular + glass on mobile ── */
         .quick-add__button {
           display: flex !important;
           opacity: 1 !important;
           visibility: visible !important;
           pointer-events: auto !important;
+          width: var(--button-size-md) !important;
+          min-width: var(--button-size-md) !important;
+          max-width: var(--button-size-md) !important;
+          border-radius: 50% !important;
+          background: rgba(10,3,30,0.78) !important;
+          border-color: rgba(168,85,247,0.42) !important;
+          padding: 0 !important;
+          overflow: hidden !important;
         }
+        .quick-add__button .add-to-cart-text { display: none !important; }
 
         /* ── Filter bar — remove ugly full-width background bar ── */
         .facets-toggle {
@@ -1681,13 +1796,6 @@
         .sorting-filter__container .sorting-filter__select {
           color: rgba(255,255,255,0.88) !important;
           background: transparent !important;
-        }
-        /* Filter drawer — glass panel */
-        .facets.facets--drawer {
-          background: rgba(14,4,40,0.97) !important;
-          backdrop-filter: blur(32px) !important;
-          -webkit-backdrop-filter: blur(32px) !important;
-          border-left: 1px solid rgba(168,85,247,0.30) !important;
         }
 
       } /* end @media 749px */
