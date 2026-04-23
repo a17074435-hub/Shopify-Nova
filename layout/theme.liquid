@@ -521,13 +521,17 @@
         visibility:visible !important;
         opacity:1 !important;
       }
-      /* Compare-at (original price when on sale) — red neon strikethrough */
+      /* Compare-at — neon rojo igual de brillante que el morado del precio normal */
       .price .price-item--compare-at,
       .price--compare-at,
       s.price-item {
-        color:rgba(255,85,85,1) !important;
+        color:#ff4444 !important;
         text-decoration:line-through !important;
-        text-shadow:0 0 10px rgba(255,80,80,0.5) !important;
+        text-decoration-color:#ff4444 !important;
+        text-shadow:
+          0 0 6px rgba(255,50,50,0.90),
+          0 0 18px rgba(255,60,60,0.65),
+          0 0 38px rgba(255,30,30,0.35) !important;
         opacity:1 !important;
         font-weight:500 !important;
       }
