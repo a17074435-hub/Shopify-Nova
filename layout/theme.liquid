@@ -774,7 +774,8 @@
 
       /* Filter dropdown panel — glass crystal matching rest of UI */
       .facets__inputs.facets__panel-content,
-      .facets__panel-content {
+      .facets__panel-content,
+      .sorting-filter__options {
         background:rgba(20,6,55,0.82) !important;
         backdrop-filter:blur(32px) saturate(1.5) !important;
         -webkit-backdrop-filter:blur(32px) saturate(1.5) !important;
@@ -793,6 +794,22 @@
       }
       .facets__inputs label:hover,
       .facets__inputs .facets__option-label:hover { color:var(--nova-purple) !important; }
+
+      /* Sort dropdown inner items */
+      .sorting-filter__label {
+        color:rgba(255,255,255,0.85) !important;
+        font-size:0.88rem !important;
+        font-weight:500 !important;
+      }
+      .sorting-filter__option {
+        border-radius:8px !important;
+        padding:8px 10px !important;
+        transition:background .2s !important;
+        cursor:pointer !important;
+      }
+      .sorting-filter__option:hover { background:rgba(168,85,247,0.12) !important; }
+      .sorting-filter__option[aria-selected="true"] .sorting-filter__label { color:var(--nova-purple) !important; }
+      .sorting-filter__option[aria-selected="true"] .sorting-filter__checkmark svg { color:var(--nova-purple) !important; }
 
       /* Price range inputs */
       .price-facet__inputs-wrapper {
