@@ -90,4 +90,39 @@
   } else {
     initDescToggle();
   }
+
+  /* ── Force glass style on all dropdown panels ── */
+  var PANEL_SEL = '.sorting-filter__options, .facets__panel-content';
+
+  function applyPanelGlass(/** @type {Element} */ el) {
+    var s = /** @type {HTMLElement} */ (el).style;
+    s.setProperty('background',              'rgba(20,6,55,0.92)', 'important');
+    s.setProperty('background-color',        'rgba(20,6,55,0.92)', 'important');
+    s.setProperty('backdrop-filter',         'blur(32px) saturate(1.5)', 'important');
+    s.setProperty('-webkit-backdrop-filter', 'blur(32px) saturate(1.5)', 'important');
+    s.setProperty('border',                  '1px solid rgba(168,85,247,0.30)', 'important');
+    s.setProperty('border-radius',           '16px', 'important');
+    s.setProperty('box-shadow',              '0 16px 48px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06)', 'important');
+    s.setProperty('color',                   'rgba(255,255,255,0.85)', 'important');
+  }
+
+  function initPanelGlass() {
+    document.querySelectorAll(PANEL_SEL).forEach(applyPanelGlass);
+
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+          if (!(node instanceof Element)) return;
+          if (node.matches(PANEL_SEL)) applyPanelGlass(node);
+          node.querySelectorAll(PANEL_SEL).forEach(applyPanelGlass);
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPanelGlass);
+  } else {
+    initPanelGlass();
+  }
 })();
