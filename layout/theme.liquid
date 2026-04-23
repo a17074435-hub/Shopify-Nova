@@ -506,9 +506,11 @@
         text-shadow:0 0 12px rgba(255,255,255,0.35) !important;
         letter-spacing:-0.02em !important;
       }
-      /* Precio actual (sale) en tarjetas — neon morado igual de brillante que el rojo */
-      .product-card .price-item--sale,
-      .product-card .price .price-item--sale {
+      /* Precio actual (sale) en tarjetas — neon morado igual de brillante que el rojo
+         .price-item--sale y .price son la MISMA clase en el mismo <span>, selector compuesto */
+      .product-card .price-item--sale.price,
+      .product-card product-price .price-item--sale,
+      .product-card .price__sale .price-item--sale {
         color: var(--nova-purple) !important;
         text-shadow:
           0 0 6px rgba(168,85,247,0.95),
@@ -517,8 +519,8 @@
       }
       /* Precio en la página de producto — siempre visible y grande */
       .product-details .price,
-      .product-details .price .price-item--sale,
-      .product-details .price .price-item--regular,
+      .product-details .price-item--sale.price,
+      .product-details product-price .price-item--sale,
       .product-details .price__current,
       .product-details .price-item--regular {
         color: var(--nova-purple) !important;
