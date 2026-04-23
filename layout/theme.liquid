@@ -1313,6 +1313,61 @@
         to   { transform:translateY(100%); opacity:.6; }
       }
 
+      /* 26 — Search modal — glass NovaLight design (global: PC + mobile) */
+      .search-modal__content {
+        background: rgba(14,4,40,0.97) !important;
+        border: 1px solid rgba(168,85,247,0.40) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06) !important;
+        backdrop-filter: blur(40px) saturate(1.6) !important;
+        -webkit-backdrop-filter: blur(40px) saturate(1.6) !important;
+        overflow: hidden !important;
+      }
+      @media screen and (max-width:749px) {
+        .search-modal__content { border-radius: 0 !important; }
+      }
+      predictive-search-component {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+      .predictive-search-form__header {
+        background: transparent !important;
+        background-color: rgba(255,255,255,0.03) !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(168,85,247,0.22) !important;
+        border-radius: 0 !important;
+      }
+      .predictive-search-form__header-inner {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      input.search-input {
+        color: rgba(255,255,255,0.92) !important;
+        background: transparent !important;
+      }
+      .search-input::placeholder { color: rgba(255,255,255,0.38) !important; }
+      .predictive-search__icon { color: rgba(168,85,247,0.85) !important; }
+      .predictive-search-form__content {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+      .predictive-search-form__content-wrapper {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+      .predictive-search__close-modal-button { color: rgba(255,255,255,0.75) !important; }
+      .predictive-search__search-button {
+        background: rgba(168,85,247,0.25) !important;
+        border: 1px solid rgba(168,85,247,0.45) !important;
+        color: #fff !important;
+        border-radius: 100px !important;
+      }
+      .predictive-search__search-button:hover {
+        background: rgba(168,85,247,0.40) !important;
+      }
+
       /* ════════════════════════════════════════════════════════
          MOBILE — max-width 749px ONLY. No desktop change.
          ════════════════════════════════════════════════════════ */
@@ -1572,6 +1627,68 @@
         .announcement-bar { white-space: nowrap; overflow: hidden; }
         .shopify-payment-button { width: 100% !important; }
         .button,.button-secondary { min-height: 48px !important; }
+
+        /* ── Quick-add "Add to cart" button visible on mobile ── */
+        .quick-add__button {
+          display: flex !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+
+        /* ── Filter bar — remove ugly full-width background bar ── */
+        .facets-toggle {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        /* Filter button pill */
+        .facets-toggle__button {
+          background: rgba(168,85,247,0.14) !important;
+          border: 1px solid rgba(168,85,247,0.35) !important;
+          border-radius: 100px !important;
+          color: rgba(255,255,255,0.88) !important;
+          padding: 7px 16px !important;
+          font-size: 0.82rem !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.04em !important;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+        }
+        .facets-toggle__button:hover {
+          background: rgba(168,85,247,0.28) !important;
+          border-color: rgba(168,85,247,0.55) !important;
+        }
+        /* Sort summary button pill */
+        .facets-mobile-wrapper .sorting-filter .facets__summary,
+        .sorting-filter .facets__summary {
+          background: rgba(168,85,247,0.14) !important;
+          border: 1px solid rgba(168,85,247,0.35) !important;
+          border-radius: 100px !important;
+          color: rgba(255,255,255,0.88) !important;
+          padding: 7px 16px !important;
+          font-size: 0.82rem !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.04em !important;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+        }
+        /* Sorting mobile select (fallback for no-filter stores) */
+        .sorting-filter__select-wrapper {
+          background: rgba(168,85,247,0.14) !important;
+          border: 1px solid rgba(168,85,247,0.35) !important;
+          border-radius: 100px !important;
+          padding: 7px 14px !important;
+        }
+        .sorting-filter__container .sorting-filter__select {
+          color: rgba(255,255,255,0.88) !important;
+          background: transparent !important;
+        }
+        /* Filter drawer — glass panel */
+        .facets.facets--drawer {
+          background: rgba(14,4,40,0.97) !important;
+          backdrop-filter: blur(32px) !important;
+          -webkit-backdrop-filter: blur(32px) !important;
+          border-left: 1px solid rgba(168,85,247,0.30) !important;
+        }
 
       } /* end @media 749px */
     </style>
