@@ -1413,7 +1413,11 @@
         #nova-pill .header-menu .menu-list__link:active::before { opacity: 1 !important; }
 
         /* ── 4. Iconos SVG en search y header-actions ── */
-        #nova-pill .search-action svg, #nova-pill header-actions svg {
+        /* Todos los SVGs del pill al mismo tamaño visual */
+        #nova-pill svg {
+          width: 18px !important;
+          height: 18px !important;
+          flex-shrink: 0 !important;
           color: rgba(255,255,255,0.92) !important;
           filter: drop-shadow(0 0 4px rgba(255,255,255,0.28)) !important;
         }
@@ -1441,12 +1445,15 @@
           padding: 0 !important;
           margin: 0 !important;
           flex-shrink: 0 !important;
+          overflow: visible !important;
         }
-        /* Anular cualquier gap/padding heredado en header-actions */
-        #nova-pill header-actions * {
-          padding-inline: 0 !important;
-          margin-inline: 0 !important;
+        /* Badge del carrito — no recortar */
+        #nova-pill header-actions,
+        #nova-pill header-actions .header__actions,
+        #nova-pill header-actions .header__icon {
+          overflow: visible !important;
         }
+        #nova-pill { padding-right: 10px !important; }
 
         /* ── 6. Cart: bottom sheet (no pantalla completa) ── */
         .cart-drawer__dialog {
