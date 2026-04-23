@@ -471,7 +471,8 @@
       }
 
       /* 10 — Primary button — white + black (premium/Apple style) */
-      .button:not(.button-secondary,.button-unstyled,.button-unstyled *) {
+      /* Exclude quick-add, close, and cart buttons from white styling */
+      .button:not(.button-secondary,.button-unstyled,.quick-add__button,.card__add-to-cart,.close-button,.cart__checkout-button) {
         background:#fff !important;
         color:#0a0a0a !important;
         border-color:#fff !important;
@@ -481,14 +482,14 @@
         transition:background .35s var(--nova-ease),color .35s var(--nova-ease),box-shadow .35s var(--nova-ease),transform .22s var(--nova-ease) !important;
       }
       @media (any-pointer:fine) {
-        .button:not(.button-secondary,.button-unstyled):hover {
+        .button:not(.button-secondary,.button-unstyled,.quick-add__button,.card__add-to-cart,.close-button,.cart__checkout-button):hover {
           background:#f0e6ff !important;
           color:#0a0a0a !important;
           border-color:#f0e6ff !important;
           transform:translateY(-2px) !important;
           box-shadow:0 0 28px rgba(123,46,255,0.45),0 8px 24px rgba(0,0,0,0.3) !important;
         }
-        .button:not(.button-secondary,.button-unstyled):active { transform:translateY(0) !important; }
+        .button:not(.button-secondary,.button-unstyled,.quick-add__button,.card__add-to-cart,.close-button):active { transform:translateY(0) !important; }
       }
 
       /* 11 — Secondary/ghost button — glass */
@@ -898,6 +899,7 @@
         background:transparent !important;
         transform:translateY(-4px) scale(1.15) !important;
       }
+      .social-icons__icon-wrapper { --icon-size-lg:52px !important; }
       .social-icons__icon {
         width:52px !important;
         height:52px !important;
