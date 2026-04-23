@@ -506,16 +506,28 @@
         text-shadow:0 0 12px rgba(255,255,255,0.35) !important;
         letter-spacing:-0.02em !important;
       }
+      /* Precio actual (sale) en tarjetas — neon morado igual de brillante que el rojo */
+      .product-card .price-item--sale,
+      .product-card .price .price-item--sale {
+        color: var(--nova-purple) !important;
+        text-shadow:
+          0 0 6px rgba(168,85,247,0.95),
+          0 0 18px rgba(168,85,247,0.70),
+          0 0 38px rgba(124,58,237,0.40) !important;
+      }
       /* Precio en la página de producto — siempre visible y grande */
       .product-details .price,
       .product-details .price .price-item--sale,
       .product-details .price .price-item--regular,
       .product-details .price__current,
       .product-details .price-item--regular {
-        color:#fff !important;
+        color: var(--nova-purple) !important;
         font-weight:700 !important;
         font-size:2rem !important;
-        text-shadow:0 0 18px rgba(255,255,255,0.40) !important;
+        text-shadow:
+          0 0 6px rgba(168,85,247,0.95),
+          0 0 18px rgba(168,85,247,0.70),
+          0 0 38px rgba(124,58,237,0.40) !important;
         letter-spacing:-0.03em !important;
         display:block !important;
         visibility:visible !important;
