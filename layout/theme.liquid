@@ -495,15 +495,31 @@
       }
 
       /* 9c — Prices */
-      .price .price-item--sale,
-      .price .price-item--regular,
-      .price__current,
-      .price-item--regular {
+      /* Precio en tarjetas — tamaño relativo */
+      .product-card .price .price-item--sale,
+      .product-card .price .price-item--regular,
+      .product-card .price__current,
+      .product-card .price-item--regular {
         color:#fff !important;
         font-weight:700 !important;
         font-size:1.05em !important;
         text-shadow:0 0 12px rgba(255,255,255,0.35) !important;
         letter-spacing:-0.02em !important;
+      }
+      /* Precio en la página de producto — siempre visible y grande */
+      .product-details .price,
+      .product-details .price .price-item--sale,
+      .product-details .price .price-item--regular,
+      .product-details .price__current,
+      .product-details .price-item--regular {
+        color:#fff !important;
+        font-weight:700 !important;
+        font-size:2rem !important;
+        text-shadow:0 0 18px rgba(255,255,255,0.40) !important;
+        letter-spacing:-0.03em !important;
+        display:block !important;
+        visibility:visible !important;
+        opacity:1 !important;
       }
       /* Compare-at (original price when on sale) — red neon strikethrough */
       .price .price-item--compare-at,

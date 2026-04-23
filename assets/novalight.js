@@ -81,6 +81,8 @@
     unique.forEach((desc) => {
       if (desc.closest('.nova-desc-wrap')) return;
       if (!desc.textContent.trim()) return;
+      // No envolver bloques que contengan precio — deben estar siempre visibles
+      if (desc.querySelector('.price, .price-item, price-money, .price__current')) return;
 
       const wrap = document.createElement('div');
       wrap.className = 'nova-desc-wrap';
