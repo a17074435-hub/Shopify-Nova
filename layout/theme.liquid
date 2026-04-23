@@ -1485,6 +1485,16 @@
         color: rgba(255,255,255,0.40) !important;
         font-size: 0.78rem !important;
       }
+      /* Price inputs wrapper — contain and clean up */
+      .facets-drawer__filters .facets__inputs-wrapper { padding: 0 !important; }
+      .facets-drawer__filters .price-facet__inputs-wrapper { gap: 8px !important; }
+      .facets-drawer__filters .field {
+        background: rgba(255,255,255,0.06) !important;
+        background-color: rgba(255,255,255,0.06) !important;
+        border: 1px solid rgba(168,85,247,0.40) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+      }
       /* Sort inside drawer — compact pill row, no card */
       .facets-drawer__filters .sorting-filter .facets__panel {
         background: transparent !important;
@@ -1504,11 +1514,25 @@
         color: rgba(255,255,255,0.80) !important;
         letter-spacing: 0.01em !important;
       }
-      .facets-drawer__filters .sorting-filter .sorting-filter__options {
-        background: rgba(14,5,38,0.97) !important;
-        border: 1px solid rgba(168,85,247,0.28) !important;
-        border-radius: 14px !important;
-        backdrop-filter: blur(24px) !important;
+      /* Sort dropdown — direct rule (floating-panel teleports to body, ancestor chain breaks) */
+      .sorting-filter__options {
+        background: rgba(12,4,32,0.97) !important;
+        background-color: rgba(12,4,32,0.97) !important;
+        backdrop-filter: blur(32px) saturate(1.4) !important;
+        -webkit-backdrop-filter: blur(32px) saturate(1.4) !important;
+        border: 1px solid rgba(168,85,247,0.32) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+        color: rgba(255,255,255,0.85) !important;
+      }
+      .sorting-filter__options-inner {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+      .sorting-filter__label { color: rgba(255,255,255,0.82) !important; }
+      .sorting-filter__option:hover {
+        background: rgba(168,85,247,0.16) !important;
+        background-color: rgba(168,85,247,0.16) !important;
       }
       /* Drawer footer */
       .facets__drawer-actions {
