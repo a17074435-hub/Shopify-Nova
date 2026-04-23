@@ -1309,6 +1309,142 @@
       @media screen and (max-width:749px) {
         .button,.button-secondary { min-height:48px !important; }
       }
+
+      /* ════════════════════════════════════════════════════════
+         MOBILE — max-width 749px ONLY. No desktop change.
+         ════════════════════════════════════════════════════════ */
+
+      /* Cart bottom-sheet slide-up animation */
+      @keyframes nova-cart-up {
+        from { transform:translateY(100%); opacity:.6; }
+        to   { transform:translateY(0);    opacity:1;  }
+      }
+      @keyframes nova-cart-down {
+        from { transform:translateY(0);    opacity:1;  }
+        to   { transform:translateY(100%); opacity:.6; }
+      }
+
+      @media screen and (max-width:749px) {
+
+        /* ── Nav: quitar hamburguesa, mostrar pills scrollable ── */
+        .header__drawer { display:none !important; }
+
+        #header-component .header__columns {
+          grid-template-rows: auto auto !important;
+        }
+
+        #header-component .header-menu {
+          display: flex !important;
+          grid-column: 1 / -1 !important;
+          grid-row: 2 !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          scrollbar-width: none !important;
+          /* Barra compacta debajo del header */
+          background: rgba(10,3,30,0.97) !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: 0 1px 0 rgba(168,85,247,0.20), inset 0 1px 0 rgba(168,85,247,0.08) !important;
+          padding: 0 8px !important;
+          gap: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          justify-content: flex-start !important;
+          min-height: 0 !important;
+          height: auto !important;
+        }
+
+        #header-component .header-menu::-webkit-scrollbar { display:none !important; }
+
+        /* Nav links compactos tipo tabs */
+        #header-component .header-menu .menu-list__link,
+        #header-component .header-menu a {
+          font-size: 0.75rem !important;
+          padding: 9px 14px !important;
+          white-space: nowrap !important;
+          border-radius: 0 !important;
+          border-bottom: 2px solid transparent !important;
+          text-shadow: none !important;
+          color: rgba(255,255,255,0.75) !important;
+          transition: color .2s, border-color .2s !important;
+        }
+        #header-component .header-menu .menu-list__link:hover,
+        #header-component .header-menu a:hover {
+          color: #fff !important;
+          border-bottom-color: var(--nova-purple) !important;
+        }
+
+        /* No dropdowns en mobile */
+        #header-component .header-menu .menu-list__submenu { display:none !important; }
+
+        /* ── Cart: bottom sheet (no full screen) ── */
+        .cart-drawer__dialog {
+          top: auto !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          height: 82dvh !important;
+          max-height: 82dvh !important;
+          margin: 0 !important;
+          border-radius: 22px 22px 0 0 !important;
+        }
+        .cart-drawer__dialog:modal {
+          max-height: 82dvh !important;
+        }
+        .cart-drawer__dialog[open] {
+          animation: nova-cart-up 0.38s cubic-bezier(0.16,1,0.3,1) forwards !important;
+        }
+        .cart-drawer__dialog[open].dialog-closing {
+          animation: nova-cart-down 0.28s cubic-bezier(0.4,0,1,1) forwards !important;
+        }
+        /* Pill visual en la barra del cart */
+        .cart-drawer__dialog::before {
+          content: '' !important;
+          display: block !important;
+          width: 36px !important;
+          height: 4px !important;
+          background: rgba(255,255,255,0.20) !important;
+          border-radius: 99px !important;
+          margin: 10px auto 0 !important;
+        }
+
+        /* ── Productos: columna de tarjetas bien compacta ── */
+        .product-card {
+          border-radius: 12px !important;
+        }
+        .product-card .product-card__content { padding-block-end: 8px !important; }
+        .product-card product-title,
+        .product-card .text-block:not(.card-gallery),
+        .product-card .price,
+        .product-card .price-wrapper { padding-inline: 8px !important; }
+
+        /* Precio más pequeño en tarjeta mobile */
+        .product-card .price-item--sale.price {
+          font-size: 0.9rem !important;
+        }
+        .product-card .compare-at-price {
+          font-size: 0.78rem !important;
+        }
+
+        /* ── Hero menos alto en mobile ── */
+        .hero { min-height: 55svh !important; max-height: 70svh !important; }
+        .hero .text-block.h1 > * {
+          font-size: clamp(1.9rem, 9vw, 3rem) !important;
+        }
+
+        /* ── Secciones: padding más ajustado ── */
+        .nova-discount-text { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
+        .nova-countdown { padding: 5px 10px !important; font-size: 0.7rem !important; }
+        .nova-countdown__timer { font-size: 0.8rem !important; }
+
+        /* ── Announcement bar — siempre una línea ── */
+        .announcement-bar { white-space: nowrap; overflow: hidden; }
+
+        /* ── Botón "Buy it now" full width ── */
+        .shopify-payment-button { width: 100% !important; }
+
+      } /* end @media 749px */
     </style>
 
     {% if request.design_mode %}
