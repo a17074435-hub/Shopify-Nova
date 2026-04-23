@@ -1318,21 +1318,22 @@
          ════════════════════════════════════════════════════════ */
       @media screen and (max-width:749px) {
 
-        /* ── 1. Quitar hamburguesa; grid con 2 filas ── */
+        /* ── 1. Quitar hamburguesa; header vuelve a fila única ── */
         .header__drawer { display:none !important; }
         #header-component .header__columns {
-          grid-template-rows: auto auto !important;
+          grid-template-rows: auto !important;
           padding-inline: 0 !important;
-          padding-bottom: 10px !important;
-          row-gap: 6px !important;
+          padding-bottom: 0 !important;
+          row-gap: 0 !important;
         }
 
-        /* ── 2. Pill compacta — generada por JS (#nova-pill) ── */
+        /* ── 2. Pill flotante — fijada al fondo de la pantalla ── */
         #nova-pill {
-          grid-column: 1 / -1 !important;
-          grid-row: 2 !important;
-          justify-self: center !important;
-          align-self: center !important;
+          position: fixed !important;
+          bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          z-index: 999 !important;
           display: flex !important;
           align-items: center !important;
           gap: 2px !important;
@@ -1340,10 +1341,12 @@
           background: linear-gradient(135deg,rgba(109,40,217,0.55) 0%,rgba(16,5,45,0.88) 100%) !important;
           border: 1px solid rgba(168,85,247,0.45) !important;
           border-radius: 100px !important;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(109,40,217,0.35), inset 0 1px 0 rgba(255,255,255,0.12) !important;
           height: 48px !important;
           padding: 0 8px !important;
           overflow: visible !important;
+          backdrop-filter: blur(20px) !important;
+          -webkit-backdrop-filter: blur(20px) !important;
         }
 
         /* Reset hijos directos */
@@ -1555,7 +1558,10 @@
         .product-card .price-item--sale.price { font-size: 0.88rem !important; }
         .product-card .compare-at-price { font-size: 0.75rem !important; }
 
-        /* ── 8. Hero y otros ── */
+        /* ── 8. Padding de página para no tapar contenido con la pill flotante ── */
+        body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important; }
+
+        /* ── 9. Hero y otros ── */
         .hero { min-height: 55svh !important; max-height: 70svh !important; }
         .hero .text-block.h1 > * { font-size: clamp(1.9rem, 9vw, 3rem) !important; }
         .nova-discount-text { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
