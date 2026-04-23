@@ -1401,6 +1401,7 @@
         backdrop-filter: blur(40px) saturate(1.4) !important;
         -webkit-backdrop-filter: blur(40px) saturate(1.4) !important;
         border-left: 1px solid rgba(168,85,247,0.22) !important;
+        border-radius: 24px 0 0 24px !important;
       }
       /* Header */
       .facets__title-wrapper {
@@ -1432,18 +1433,22 @@
         margin-bottom: 0 !important;
         overflow: visible !important;
       }
+      /* Availability / Price accordion headers — bright purple pill */
       .facets-drawer__filters .facets__summary {
-        color: rgba(255,255,255,0.88) !important;
-        background: transparent !important;
-        border-radius: 0 !important;
-        padding: 16px 20px !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
+        background: rgba(168,85,247,0.18) !important;
+        border: 1px solid rgba(168,85,247,0.55) !important;
+        border-radius: 100px !important;
+        color: #fff !important;
+        margin: 10px 16px !important;
+        padding: 11px 18px !important;
+        font-weight: 600 !important;
+        font-size: 0.90rem !important;
+        letter-spacing: 0.02em !important;
       }
       .facets-drawer__filters .facets__panel-content {
         background: transparent !important;
         border-top: none !important;
-        padding: 0 20px 16px !important;
+        padding: 4px 20px 16px !important;
       }
       /* Checkboxes */
       .facets-drawer__filters input[type="checkbox"] {
@@ -1453,21 +1458,32 @@
         flex-shrink: 0 !important;
       }
       .facets-drawer__filters label { color: rgba(255,255,255,0.80) !important; }
-      /* Price range inputs */
-      .facets-drawer__filters input[type="number"] {
-        background: rgba(255,255,255,0.05) !important;
-        border: 1px solid rgba(168,85,247,0.30) !important;
+      /* Price inputs — the theme uses type="text" + class .price-facet__input */
+      .facets-drawer__filters .price-facet__input,
+      .facets-drawer__filters .field__input {
+        background: rgba(255,255,255,0.07) !important;
+        border: 1px solid rgba(168,85,247,0.40) !important;
         border-radius: 10px !important;
-        color: rgba(255,255,255,0.90) !important;
-        padding: 8px 12px !important;
+        color: rgba(255,255,255,0.92) !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
       }
-      .facets-drawer__filters input[type="number"]:focus {
-        border-color: rgba(168,85,247,0.70) !important;
+      .facets-drawer__filters .price-facet__input:focus,
+      .facets-drawer__filters .field__input:focus {
+        border-color: rgba(168,85,247,0.80) !important;
         outline: none !important;
+        box-shadow: 0 0 0 3px rgba(168,85,247,0.15) !important;
       }
-      /* Range slider */
-      .facets-drawer__filters input[type="range"] {
-        accent-color: #a855f7 !important;
+      /* Currency label inside field */
+      .facets-drawer__filters .price-facet__label,
+      .facets-drawer__filters .field__label {
+        color: rgba(168,85,247,0.80) !important;
+        font-weight: 600 !important;
+      }
+      /* "Up to $X" helper text */
+      .facets-drawer__filters .price-facet__highest-price {
+        color: rgba(255,255,255,0.40) !important;
+        font-size: 0.78rem !important;
       }
       /* Sort inside drawer — compact pill row, no card */
       .facets-drawer__filters .sorting-filter .facets__panel {
@@ -1478,10 +1494,15 @@
         margin-bottom: 0 !important;
       }
       .facets-drawer__filters .sorting-filter .facets__summary {
-        padding: 12px 20px !important;
+        background: rgba(168,85,247,0.12) !important;
+        border: 1px solid rgba(168,85,247,0.35) !important;
+        border-radius: 100px !important;
+        margin: 10px 16px !important;
+        padding: 10px 18px !important;
         font-size: 0.88rem !important;
         font-weight: 500 !important;
-        color: rgba(255,255,255,0.70) !important;
+        color: rgba(255,255,255,0.80) !important;
+        letter-spacing: 0.01em !important;
       }
       .facets-drawer__filters .sorting-filter .sorting-filter__options {
         background: rgba(14,5,38,0.97) !important;
