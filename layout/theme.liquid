@@ -211,6 +211,29 @@
         border-bottom:none !important;
         box-shadow:none !important;
       }
+
+      /* ── Sticky header compositing fix ──────────────────────────
+         Radiant animates .header[data-sticky-state] with opacity 0→1.
+         Any element with transition:opacity is promoted to a GPU
+         compositing layer whose backdrop is isolated from the page —
+         so children's backdrop-filter only blur the header's own dark
+         background, making pills look transparent on scroll.
+         Fix: force opacity:1 always, replace fade with clip-path
+         which animates without creating a transparency group.
+      ────────────────────────────────────────────────────────────── */
+      .header[data-sticky-state] {
+        opacity:1 !important;
+        will-change:auto !important;
+        transition:clip-path 0.28s cubic-bezier(0.16,1,0.3,1) !important;
+      }
+      .header[data-sticky-state='idle'] {
+        clip-path:inset(0 0 100% 0) !important;
+        pointer-events:none !important;
+      }
+      .header[data-sticky-state='active'] {
+        clip-path:inset(0) !important;
+        pointer-events:auto !important;
+      }
       .header__nav-link:hover,.header__nav-link:focus-visible { color:var(--nova-purple) !important; }
 
       /* 7b — Logo orbit sparkle (desktop) */
