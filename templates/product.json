@@ -158,6 +158,15 @@
                 "price_tVjtKg"
               ]
             },
+            "nova_badge_xKp7Qm": {
+              "type": "nova-discount-badge",
+              "settings": {
+                "discount_text": "50% OFF",
+                "countdown_hours": 2,
+                "countdown_label": "Only for"
+              },
+              "blocks": {}
+            },
             "divider_VJhene": {
               "type": "_divider",
               "name": "t:names.divider",
@@ -246,6 +255,7 @@
           },
           "block_order": [
             "group_icgrde",
+            "nova_badge_xKp7Qm",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
