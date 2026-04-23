@@ -39,17 +39,18 @@
      Override: force opacity:1 + no transition via inline style (beats all CSS).
   ── */
   (function() {
-    var hdr = document.querySelector('.header[data-sticky-state]');
-    if (!hdr) {
+    var raw = document.querySelector('.header[data-sticky-state]');
+    if (!raw) {
       var comp = document.getElementById('header-component') || document.querySelector('header-component');
-      if (comp) hdr = comp.querySelector('.header[data-sticky-state]');
+      if (comp) raw = comp.querySelector('.header[data-sticky-state]');
     }
-    if (!hdr) return;
+    if (!raw) return;
+    var hdr = /** @type {HTMLElement} */ (raw);
 
-    function lockOpacity(el) {
-      el.style.setProperty('opacity',      '1',    'important');
-      el.style.setProperty('transition',   'none', 'important');
-      el.style.setProperty('will-change',  'auto', 'important');
+    function lockOpacity(/** @type {HTMLElement} */ el) {
+      el.style.setProperty('opacity',     '1',    'important');
+      el.style.setProperty('transition',  'none', 'important');
+      el.style.setProperty('will-change', 'auto', 'important');
     }
     lockOpacity(hdr);
 
@@ -114,6 +115,57 @@
   } else {
     initDescToggle();
   }
+
+  /* ── Buy it now — estrellitas sutiles ── */
+  (function () {
+    var COLORS = [
+      'rgba(255,255,255,0.95)',
+      'rgba(200,150,255,0.90)',
+      'rgba(168,85,247,0.85)',
+    ];
+
+    function spawnSpark(/** @type {HTMLElement} */ btn) {
+      var el = document.createElement('span');
+      var size = 2 + Math.random() * 3.5;
+      var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      var dur   = (0.65 + Math.random() * 0.55).toFixed(2);
+      var dx    = (Math.random() * 10 - 5).toFixed(1);
+      el.className = 'nova-buy-spark';
+      el.style.cssText =
+        'width:'  + size.toFixed(1) + 'px;' +
+        'height:' + size.toFixed(1) + 'px;' +
+        'left:'   + (8 + Math.random() * 84).toFixed(1) + '%;' +
+        'top:'    + (20 + Math.random() * 60).toFixed(1) + '%;' +
+        'background:' + color + ';' +
+        'box-shadow:0 0 ' + (size * 1.8).toFixed(1) + 'px ' + color + ';' +
+        '--dur:' + dur + 's;' +
+        '--sx:'  + dx + 'px;';
+      btn.appendChild(el);
+      setTimeout(function () { el.remove(); }, parseFloat(dur) * 1000 + 120);
+    }
+
+    function initBuySparkles() {
+      var raw = document.querySelector('.shopify-payment-button__button--unbranded');
+      if (!raw) return;
+      var btn = /** @type {HTMLElement} */ (raw);
+      btn.style.setProperty('overflow', 'visible', 'important');
+      btn.style.setProperty('position', 'relative', 'important');
+
+      /** @type {ReturnType<typeof setInterval>} */ var timer;
+      function startSlow()  { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); }, 900); }
+      function startFast()  { clearInterval(timer); timer = setInterval(function(){ spawnSpark(btn); spawnSpark(btn); }, 200); }
+
+      startSlow();
+      btn.addEventListener('mouseenter', startFast);
+      btn.addEventListener('mouseleave', startSlow);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBuySparkles);
+    } else {
+      initBuySparkles();
+    }
+  })();
 
   /* ── Force glass style on all dropdown panels ── */
   var PANEL_SEL = '.sorting-filter__options, .facets__panel-content';

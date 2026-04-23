@@ -87,6 +87,24 @@
         0%   { transform:rotate(0deg)   translateX(42px); }
         100% { transform:rotate(360deg) translateX(42px); }
       }
+      @keyframes nova-sparkle-rise {
+        0%   { transform:translate(0,0) scale(1); opacity:1; }
+        60%  { opacity:.85; }
+        100% { transform:translate(var(--sx,0px),-22px) scale(0); opacity:0; }
+      }
+      /* Partículas del botón Buy it now */
+      .shopify-payment-button,
+      .shopify-payment-button__button--unbranded {
+        overflow:visible !important;
+        position:relative !important;
+      }
+      .nova-buy-spark {
+        position:absolute;
+        pointer-events:none;
+        border-radius:50%;
+        z-index:30;
+        animation:nova-sparkle-rise var(--dur,.9s) ease-out forwards;
+      }
 
       /* 1 — Base */
       html, body { background:#040010 !important; }
