@@ -1397,81 +1397,127 @@
 
       /* 28 — Filter drawer internals (glass NovaLight) */
       .facets.facets--drawer {
-        background: rgba(10,3,30,0.97) !important;
-        backdrop-filter: blur(32px) !important;
-        -webkit-backdrop-filter: blur(32px) !important;
-        border-left: 1px solid rgba(168,85,247,0.28) !important;
+        background: rgba(8,2,24,0.98) !important;
+        backdrop-filter: blur(40px) saturate(1.4) !important;
+        -webkit-backdrop-filter: blur(40px) saturate(1.4) !important;
+        border-left: 1px solid rgba(168,85,247,0.22) !important;
       }
+      /* Header */
       .facets__title-wrapper {
-        border-bottom: 1px solid rgba(168,85,247,0.20) !important;
-        padding: 14px 20px !important;
+        border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+        padding: 16px 20px !important;
         background: transparent !important;
       }
-      .facets-drawer__title { color: rgba(255,255,255,0.92) !important; }
+      .facets-drawer__title {
+        color: rgba(255,255,255,0.95) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.02em !important;
+      }
       .facets-drawer__close {
         width: 36px !important; height: 36px !important;
-        min-width: 36px !important;
+        min-width: 36px !important; min-height: 36px !important;
         border-radius: 50% !important;
-        color: rgba(255,255,255,0.75) !important;
-        background: rgba(255,255,255,0.06) !important;
+        color: rgba(255,255,255,0.70) !important;
+        background: rgba(255,255,255,0.07) !important;
+        border: 1px solid rgba(255,255,255,0.10) !important;
         display: flex !important; align-items: center !important; justify-content: center !important;
+        flex-shrink: 0 !important;
       }
-      /* Each filter section (Availability, Price…) */
+      /* Filter sections — flat rows with divider only, no card boxes */
       .facets-drawer__filters .facets__panel {
-        background: rgba(255,255,255,0.04) !important;
-        border: 1px solid rgba(168,85,247,0.20) !important;
-        border-radius: 14px !important;
-        margin-bottom: 8px !important;
-        overflow: hidden !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        overflow: visible !important;
       }
       .facets-drawer__filters .facets__summary {
         color: rgba(255,255,255,0.88) !important;
         background: transparent !important;
         border-radius: 0 !important;
-        padding: 13px 16px !important;
+        padding: 16px 20px !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
       }
       .facets-drawer__filters .facets__panel-content {
-        border-top: 1px solid rgba(168,85,247,0.12) !important;
-        background: rgba(168,85,247,0.04) !important;
+        background: transparent !important;
+        border-top: none !important;
+        padding: 0 20px 16px !important;
       }
-      /* Checkboxes, labels, price inputs */
-      .facets-drawer__filters input[type="checkbox"] { accent-color: #a855f7 !important; }
+      /* Checkboxes */
+      .facets-drawer__filters input[type="checkbox"] {
+        accent-color: #a855f7 !important;
+        width: 18px !important;
+        height: 18px !important;
+        flex-shrink: 0 !important;
+      }
       .facets-drawer__filters label { color: rgba(255,255,255,0.80) !important; }
+      /* Price range inputs */
       .facets-drawer__filters input[type="number"] {
-        background: rgba(168,85,247,0.10) !important;
-        border: 1px solid rgba(168,85,247,0.28) !important;
+        background: rgba(255,255,255,0.05) !important;
+        border: 1px solid rgba(168,85,247,0.30) !important;
         border-radius: 10px !important;
-        color: rgba(255,255,255,0.88) !important;
+        color: rgba(255,255,255,0.90) !important;
+        padding: 8px 12px !important;
       }
-      /* Sort inside drawer — pill, not card */
+      .facets-drawer__filters input[type="number"]:focus {
+        border-color: rgba(168,85,247,0.70) !important;
+        outline: none !important;
+      }
+      /* Range slider */
+      .facets-drawer__filters input[type="range"] {
+        accent-color: #a855f7 !important;
+      }
+      /* Sort inside drawer — compact pill row, no card */
       .facets-drawer__filters .sorting-filter .facets__panel {
         background: transparent !important;
-        border: none !important; border-radius: 0 !important;
-        overflow: visible !important; margin-bottom: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+        margin-bottom: 0 !important;
       }
       .facets-drawer__filters .sorting-filter .facets__summary {
-        background: rgba(168,85,247,0.14) !important;
-        border: 1px solid rgba(168,85,247,0.35) !important;
-        border-radius: 100px !important;
-        padding: 8px 16px !important;
-        font-size: 0.85rem !important; font-weight: 600 !important;
-      }
-      /* Drawer footer actions */
-      .facets__drawer-actions {
-        background: rgba(10,3,30,0.97) !important;
-        border-top: 1px solid rgba(168,85,247,0.18) !important;
         padding: 12px 20px !important;
+        font-size: 0.88rem !important;
+        font-weight: 500 !important;
+        color: rgba(255,255,255,0.70) !important;
+      }
+      .facets-drawer__filters .sorting-filter .sorting-filter__options {
+        background: rgba(14,5,38,0.97) !important;
+        border: 1px solid rgba(168,85,247,0.28) !important;
+        border-radius: 14px !important;
+        backdrop-filter: blur(24px) !important;
+      }
+      /* Drawer footer */
+      .facets__drawer-actions {
+        background: rgba(8,2,24,0.98) !important;
+        border-top: 1px solid rgba(255,255,255,0.08) !important;
+        padding: 14px 20px !important;
+        gap: 10px !important;
+        display: flex !important;
+        align-items: center !important;
       }
       .facets__clear-all {
-        color: rgba(168,85,247,0.80) !important;
-        border-color: rgba(168,85,247,0.35) !important;
+        color: rgba(168,85,247,0.85) !important;
+        background: transparent !important;
+        border: 1px solid rgba(168,85,247,0.30) !important;
         border-radius: 100px !important;
+        padding: 10px 18px !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        flex-shrink: 0 !important;
       }
       .facets__see-results {
-        background: linear-gradient(135deg,rgba(109,40,217,0.85),rgba(168,85,247,0.75)) !important;
-        border: 1px solid rgba(168,85,247,0.55) !important;
+        background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+        border: none !important;
         color: #fff !important;
         border-radius: 100px !important;
+        flex: 1 !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        letter-spacing: 0.01em !important;
+        box-shadow: 0 4px 20px rgba(168,85,247,0.35) !important;
       }
 
       /* ════════════════════════════════════════════════════════
