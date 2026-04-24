@@ -1314,41 +1314,69 @@
       }
 
       /* 26 — Search modal — glass NovaLight design (global: PC + mobile) */
+      /* ── Search modal — full redesign ── */
+      /* Backdrop overlay */
+      .search-modal__content::backdrop {
+        background: rgba(0,0,0,0.72) !important;
+        backdrop-filter: blur(6px) !important;
+        -webkit-backdrop-filter: blur(6px) !important;
+      }
+      /* Modal panel */
       .search-modal__content {
-        background: rgba(14,4,40,0.97) !important;
-        border: 1px solid rgba(168,85,247,0.40) !important;
-        border-radius: 20px !important;
-        box-shadow: 0 24px 64px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06) !important;
-        backdrop-filter: blur(40px) saturate(1.6) !important;
-        -webkit-backdrop-filter: blur(40px) saturate(1.6) !important;
+        background: rgba(6,1,20,0.97) !important;
+        border: 1px solid rgba(168,85,247,0.32) !important;
+        border-radius: 24px !important;
+        box-shadow:
+          0 48px 96px rgba(0,0,0,0.72),
+          0 0 0 1px rgba(168,85,247,0.10),
+          inset 0 1px 0 rgba(255,255,255,0.07) !important;
+        backdrop-filter: blur(52px) saturate(1.8) !important;
+        -webkit-backdrop-filter: blur(52px) saturate(1.8) !important;
         overflow: hidden !important;
       }
+      /* Mobile: bottom sheet with rounded top */
       @media screen and (max-width:749px) {
-        .search-modal__content { border-radius: 0 !important; }
+        .search-modal__content {
+          border-radius: 28px 28px 0 0 !important;
+          border-bottom: none !important;
+        }
       }
+      /* predictive-search container — transparent */
       predictive-search-component {
         background: transparent !important;
         background-color: transparent !important;
       }
+      /* Header row (input bar + close btn) */
       .predictive-search-form__header {
-        background: transparent !important;
-        background-color: rgba(255,255,255,0.03) !important;
-        border: none !important;
-        border-bottom: 1px solid rgba(168,85,247,0.22) !important;
-        border-radius: 0 !important;
-      }
-      .predictive-search-form__header-inner {
         background: transparent !important;
         background-color: transparent !important;
         border: none !important;
+        border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+        border-radius: 0 !important;
+        padding: 14px 16px !important;
+        gap: 10px !important;
+      }
+      /* Input pill */
+      .predictive-search-form__header-inner {
+        background: rgba(255,255,255,0.06) !important;
+        background-color: rgba(255,255,255,0.06) !important;
+        border: 1.5px solid rgba(168,85,247,0.28) !important;
+        border-radius: 100px !important;
         box-shadow: none !important;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+      }
+      .predictive-search-form__header-inner:focus-within {
+        border-color: rgba(168,85,247,0.72) !important;
+        box-shadow: 0 0 0 3px rgba(168,85,247,0.14) !important;
       }
       input.search-input {
-        color: rgba(255,255,255,0.92) !important;
+        color: rgba(255,255,255,0.94) !important;
         background: transparent !important;
+        font-size: 1rem !important;
       }
-      .search-input::placeholder { color: rgba(255,255,255,0.38) !important; }
-      .predictive-search__icon { color: rgba(168,85,247,0.85) !important; }
+      .search-input::placeholder { color: rgba(255,255,255,0.32) !important; }
+      .predictive-search__icon { color: rgba(168,85,247,0.90) !important; }
+      /* Results scroll area */
       .predictive-search-form__content {
         background: transparent !important;
         background-color: transparent !important;
@@ -1357,23 +1385,41 @@
         background: transparent !important;
         background-color: transparent !important;
       }
-      .predictive-search__close-modal-button { color: rgba(255,255,255,0.75) !important; }
-      .predictive-search__search-button {
-        background: rgba(168,85,247,0.25) !important;
-        border: 1px solid rgba(168,85,247,0.45) !important;
-        color: #fff !important;
-        border-radius: 100px !important;
-      }
-      .predictive-search__search-button:hover {
-        background: rgba(168,85,247,0.40) !important;
-      }
-      /* Close button: always circular */
+      /* Close button — circular ghost */
       .predictive-search__close-modal-button {
         width: 40px !important;
         min-width: 40px !important;
         height: 40px !important;
+        min-height: 40px !important;
         border-radius: 50% !important;
         flex-shrink: 0 !important;
+        background: rgba(255,255,255,0.08) !important;
+        border: 1px solid rgba(255,255,255,0.12) !important;
+        color: rgba(255,255,255,0.78) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+      }
+      .predictive-search__close-modal-button:hover {
+        background: rgba(168,85,247,0.20) !important;
+        border-color: rgba(168,85,247,0.45) !important;
+        color: #fff !important;
+      }
+      /* "View all results" button — full-width purple gradient */
+      .predictive-search__search-button {
+        background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+        border: none !important;
+        color: #fff !important;
+        border-radius: 100px !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        box-shadow: 0 4px 20px rgba(168,85,247,0.38) !important;
+        padding: 12px 28px !important;
+      }
+      .predictive-search__search-button:hover {
+        box-shadow: 0 6px 28px rgba(168,85,247,0.55) !important;
+        transform: translateY(-1px) !important;
       }
 
       /* 27 — Quick-add modal glass (bottom sheet on mobile, popover on desktop) */

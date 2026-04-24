@@ -212,6 +212,11 @@
   var PANEL_SEL = '.sorting-filter__options, .facets__panel-content';
 
   function applyPanelGlass(/** @type {Element} */ el) {
+    // Inside the filter drawer, .facets__panel-content is accordion body content, NOT a floating popup.
+    // Applying popup glass there makes the price/availability sections look broken.
+    if (el.classList.contains('facets__panel-content') && el.closest('.facets-drawer__filters')) {
+      return;
+    }
     var s = /** @type {HTMLElement} */ (el).style;
     s.setProperty('background',              'rgba(20,6,55,0.92)', 'important');
     s.setProperty('background-color',        'rgba(20,6,55,0.92)', 'important');
