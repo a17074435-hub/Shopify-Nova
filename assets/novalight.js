@@ -118,7 +118,7 @@
     initDescToggle();
   }
 
-  /* ── Buy it now — estrellitas sutiles ── */
+  /* ── Buy it now — subtle sparkles ── */
   (function () {
     var COLORS = [
       'rgba(255,255,255,0.95)',
@@ -127,6 +127,7 @@
     ];
 
     function spawnSpark(/** @type {HTMLElement} */ btn) {
+      if (!btn.isConnected) return; // guard: button may have been removed from DOM
       var el = document.createElement('span');
       var size = 2 + Math.random() * 3.5;
       var color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -143,7 +144,7 @@
         '--dur:' + dur + 's;' +
         '--sx:'  + dx + 'px;';
       btn.appendChild(el);
-      setTimeout(function () { el.remove(); }, parseFloat(dur) * 1000 + 120);
+      setTimeout(function () { if (el.parentNode) el.remove(); }, parseFloat(dur) * 1000 + 120);
     }
 
     function attachSparkles(/** @type {HTMLElement} */ btn) {
@@ -157,6 +158,11 @@
       startSlow();
       btn.addEventListener('mouseenter', startFast);
       btn.addEventListener('mouseleave', startSlow);
+
+      // Clean up interval when button is removed from DOM (e.g. variant change, page transition)
+      new MutationObserver(function(_m, self) {
+        if (!btn.isConnected) { clearInterval(timer); self.disconnect(); }
+      }).observe(btn.ownerDocument, { childList: true, subtree: false });
     }
 
     function initBuySparkles() {
@@ -164,7 +170,8 @@
       var raw = document.querySelector(BTN_SEL);
       if (raw) { attachSparkles(/** @type {HTMLElement} */ (raw)); return; }
 
-      /* El botón carga de forma asíncrona — esperarlo con MutationObserver */
+      // Button loads async — scope observer to product form, not entire body
+      var formRoot = document.querySelector('product-form, .product-details, [data-product-form]') || document.body;
       var obs = new MutationObserver(function() {
         var found = document.querySelector(BTN_SEL);
         if (found) {
@@ -172,7 +179,7 @@
           attachSparkles(/** @type {HTMLElement} */ (found));
         }
       });
-      obs.observe(document.body, { childList: true, subtree: true });
+      obs.observe(formRoot, { childList: true, subtree: true });
     }
 
     if (document.readyState === 'loading') {
@@ -182,30 +189,155 @@
     }
   })();
 
-  /* ── Mobile pill wrapper ── */
+  /* ── Mobile pill wrapper ──
+     buildPill() moves header-menu / search-action / header-actions into a floating
+     pill div at the bottom of the screen.  A separate 'cart:update' listener
+     (below init) manually replaces the header-actions in the pill with fresh HTML
+     from the cart response — necessary because Radiant's morphSection(hydrationMode)
+     skips elements that are no longer inside #shopify-section-header.
+
+     Desktop restore: on resize to ≥750px, origins[] is used to put elements back
+     in their original header positions before removing the pill.  If a full section
+     re-render already placed fresh copies in the header, the pill elements are
+     treated as stale orphans and simply discarded.
+  ── */
   (function () {
+    var pill = /** @type {HTMLElement|null} */ (null);
+    /** @type {{el:Element, parent:Element, next:Element|null}[]} */
+    var origins = [];
+
     function buildPill() {
-      if (window.innerWidth > 749) return;
-      if (document.getElementById('nova-pill')) return;
+      // ── Desktop: restore elements, destroy pill ──────────────────────────
+      if (window.innerWidth > 749) {
+        if (!pill) return;
+
+        // If header already has fresh elements (from an AJAX re-render), those are
+        // the current source of truth — the ones in the pill are stale orphans.
+        var hasFreshInHeader = !!(
+          document.querySelector('#header-component header-actions') ||
+          document.querySelector('#header-component .header-menu')
+        );
+
+        if (!hasFreshInHeader) {
+          // Header is empty because elements were moved to the pill and no re-render
+          // occurred. Restore them to their original positions before removing the pill.
+          origins.forEach(function (o) {
+            if (!o.parent.isConnected) return;
+            if (o.next && o.next.isConnected && o.next.parentNode === o.parent) {
+              o.parent.insertBefore(o.el, o.next);
+            } else {
+              o.parent.appendChild(o.el);
+            }
+          });
+        }
+
+        origins.length = 0;
+        pill.remove();
+        pill = null;
+        return;
+      }
+
+      // ── Mobile: create/refresh pill ──────────────────────────────────────
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'nova-pill';
+        document.body.appendChild(pill);
+      }
+
+      // Only rebuild when the header has fresh elements from a section re-render.
+      // If the pill already holds elements and the header is empty, those elements
+      // are the only live copies — clearing the pill would orphan them.
+      var hasFreshInHeader = !!(
+        document.querySelector('#header-component header-actions') ||
+        document.querySelector('#header-component .header-menu')
+      );
+      if (pill.firstChild && !hasFreshInHeader) return;
+
+      // Wipe stale elements (orphaned from previous section render).
+      while (pill.firstChild) pill.removeChild(pill.firstChild);
+      origins.length = 0;
 
       var menu    = document.querySelector('#header-component .header-menu');
       var search  = document.querySelector('.search-action');
       var actions = document.querySelector('header-actions');
       if (!menu && !actions) return;
 
-      var pill = document.createElement('div');
-      pill.id = 'nova-pill';
-      document.body.appendChild(pill);
+      // Capture original DOM positions before moving.
+      [menu, search, actions].forEach(function (el) {
+        if (el) origins.push({ el: el, parent: /** @type {Element} */ (el.parentNode), next: el.nextElementSibling });
+      });
+
       if (menu)    pill.appendChild(menu);
       if (search)  pill.appendChild(search);
       if (actions) pill.appendChild(actions);
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', buildPill);
-    } else {
+    function init() {
       buildPill();
+
+      // Re-run when header section re-renders (AJAX cart add/remove updates it).
+      var headerSection =
+        document.getElementById('shopify-section-header') ||
+        document.querySelector('[id^="shopify-section"][id*="header"]');
+      if (headerSection) {
+        new MutationObserver(function (mutations) {
+          if (window.innerWidth > 749) return;
+          var hasNewNodes = mutations.some(function (m) { return m.addedNodes.length > 0; });
+          if (hasNewNodes) buildPill();
+        }).observe(headerSection, { childList: true });
+      }
+
+      // Rebuild on viewport resize (desktop ↔ mobile).
+      var resizeTimer = /** @type {ReturnType<typeof setTimeout>} */ (0);
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(buildPill, 150);
+      });
     }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    /* ── Cart sync: replace stale header-actions in pill after cart updates ──
+       When header-actions is in #nova-pill, Radiant's morphSection(hydrationMode)
+       can't find data-hydration-key="cart-drawer-inner" (it's in the pill, not the
+       header section). We intercept 'cart:update' — the same event that morphSection
+       reads — and manually swap the stale header-actions for the fresh one from the
+       sections response. Both product-form adds AND cart-items quantity changes fire
+       this event with sections data, so all cart mutations are covered.
+    ── */
+    document.addEventListener('cart:update', function (event) {
+      if (window.innerWidth > 749 || !pill) return;
+      var data = event.detail && event.detail.data;
+      var sections = data && data.sections;
+      if (!sections || typeof sections !== 'object') return;
+
+      // Derive section ID from the section wrapper's DOM id ("shopify-section-header" → "header")
+      var headerSectionEl = document.getElementById('shopify-section-header') ||
+        document.querySelector('[id^="shopify-section"][id*="header"]');
+      if (!headerSectionEl) return;
+      var sectionId = headerSectionEl.id.replace('shopify-section-', '');
+      var sectionHtml = sections[sectionId];
+      if (!sectionHtml) return;
+
+      // Parse fresh HTML and extract header-actions
+      var doc = new DOMParser().parseFromString(sectionHtml, 'text/html');
+      var freshActions = doc.querySelector('header-actions');
+      if (!freshActions) return;
+
+      // Swap — disconnectedCallback cleans up the old, connectedCallback wires up the new
+      var staleActions = pill.querySelector('header-actions');
+      if (staleActions) {
+        pill.replaceChild(freshActions, staleActions);
+        // Update origins so the desktop-restore path re-inserts the fresh element, not the stale one
+        for (var i = 0; i < origins.length; i++) {
+          if (origins[i].el === staleActions) { origins[i].el = freshActions; break; }
+        }
+      }
+    });
   })();
 
   /* ── Force glass style on all dropdown panels ── */
@@ -231,14 +363,32 @@
   function initPanelGlass() {
     document.querySelectorAll(PANEL_SEL).forEach(applyPanelGlass);
 
+    // Batch all mutations through rAF to prevent cascading layout thrash
+    // during rapid DOM changes (cart re-renders, AJAX section updates).
+    var rafId = /** @type {number|null} */ (null);
+    var pendingNodes = /** @type {Element[]} */ ([]);
+
+    function processPending() {
+      rafId = null;
+      var nodes = pendingNodes.splice(0);
+      nodes.forEach(function (node) {
+        if (!(node instanceof Element)) return;
+        if (node.matches(PANEL_SEL)) applyPanelGlass(node);
+        node.querySelectorAll(PANEL_SEL).forEach(applyPanelGlass);
+      });
+    }
+
     new MutationObserver(function(mutations) {
       mutations.forEach(function(m) {
+        // Skip mutations inside the cart dialog or pill — no PANEL_SEL elements live there
+        // and cart morphSection causes hundreds of mutations that would otherwise thrash mobile.
+        var t = m.target;
+        if (t instanceof Element && (t.closest('.cart-drawer__dialog') || t.closest('#nova-pill'))) return;
         m.addedNodes.forEach(function(node) {
-          if (!(node instanceof Element)) return;
-          if (node.matches(PANEL_SEL)) applyPanelGlass(node);
-          node.querySelectorAll(PANEL_SEL).forEach(applyPanelGlass);
+          if (node instanceof Element) pendingNodes.push(node);
         });
       });
+      if (rafId === null) rafId = requestAnimationFrame(processPending);
     }).observe(document.body, { childList: true, subtree: true });
   }
 

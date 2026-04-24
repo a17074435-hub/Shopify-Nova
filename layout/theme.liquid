@@ -1363,19 +1363,29 @@
         gap: 12px !important;
         box-shadow: none !important;
       }
-      /* Header inner: no border, no background — pure flat input */
+      /* Header inner: pill-shaped input container — icon lives inside visually */
       .predictive-search-form__header-inner,
       .dialog-modal .predictive-search-form__header-inner {
-        background: transparent !important;
-        background-color: transparent !important;
-        border: none !important;
+        background: rgba(255,255,255,0.055) !important;
+        background-color: rgba(255,255,255,0.055) !important;
+        border: 1px solid rgba(168,85,247,0.30) !important;
         box-shadow: none !important;
-        border-radius: 0 !important;
+        border-radius: 100px !important;
+        flex: 1 !important;
+        padding-inline: 4px !important;
+        min-width: 0 !important;
       }
-      /* Glow on the header bottom border when focused */
+      .predictive-search-form__header:focus-within
+        .predictive-search-form__header-inner,
+      .dialog-modal .predictive-search-form__header:focus-within
+        .predictive-search-form__header-inner {
+        border-color: rgba(168,85,247,0.60) !important;
+        background-color: rgba(168,85,247,0.07) !important;
+      }
+      /* Header bottom divider glow on focus */
       .predictive-search-form__header:focus-within,
       .dialog-modal .predictive-search-form__header:focus-within {
-        border-bottom-color: rgba(168,85,247,0.55) !important;
+        border-bottom-color: rgba(168,85,247,0.45) !important;
       }
       input.search-input {
         color: rgba(255,255,255,0.94) !important;
@@ -1420,7 +1430,8 @@
         padding-inline: 20px !important;
       }
       /* Close button — circular ghost */
-      .predictive-search__close-modal-button {
+      .predictive-search__close-modal-button,
+      .button.predictive-search__close-modal-button {
         width: 40px !important; min-width: 40px !important;
         height: 40px !important; min-height: 40px !important;
         border-radius: 50% !important; flex-shrink: 0 !important;
@@ -1430,9 +1441,22 @@
         display: flex !important; align-items: center !important; justify-content: center !important;
         padding: 0 !important;
       }
-      .predictive-search__close-modal-button:hover {
+      .predictive-search__close-modal-button:hover,
+      .button.predictive-search__close-modal-button:hover {
         background: rgba(168,85,247,0.38) !important;
         box-shadow: 0 0 12px rgba(168,85,247,0.40) !important;
+      }
+      /* Mobile: two-class specificity (0,2,0) beats global .button min-height (0,1,0) */
+      @media screen and (max-width:749px) {
+        .button.predictive-search__close-modal-button {
+          min-height: 40px !important;
+          height: 40px !important;
+          width: 40px !important;
+          min-width: 40px !important;
+          border-radius: 50% !important;
+          padding: 0 !important;
+          aspect-ratio: 1 / 1 !important;
+        }
       }
       /* "View all results" button */
       .predictive-search__search-button {
@@ -1873,6 +1897,12 @@
           background: rgba(255,255,255,0.18) !important;
           border-radius: 99px !important; margin: 10px auto 0 !important;
         }
+        /* Reduce backdrop-filter blur on mobile — blur(48px) on a full-screen element
+           causes severe GPU jank on low-end phones. 16px is visually still good. */
+        .cart-drawer__dialog {
+          backdrop-filter: blur(16px) saturate(1.3) !important;
+          -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+        }
 
         /* ── 7. Tarjetas 2 columnas compactas ── */
         .product-card { border-radius: 12px !important; }
@@ -1987,6 +2017,211 @@
         }
 
       } /* end @media 749px */
+
+      /* ── Desktop safety net: hide pill even if JS resize handler hasn't fired ── */
+      @media screen and (min-width: 750px) {
+        #nova-pill { display: none !important; }
+      }
+
+      /* ── Circular-button protection: prevent global min-height from making them oval ──
+         Any button we explicitly set to border-radius:50% gets aspect-ratio:1/1 on mobile.
+         Two-class selectors (0,2,0) beat the single-class .button rule (0,1,0). ── */
+      @media screen and (max-width: 749px) {
+        /* Filter drawer close button */
+        .button.facets-drawer__close,
+        .facets-drawer__close {
+          aspect-ratio: 1 / 1 !important;
+          padding: 0 !important;
+        }
+        /* Quick-add modal close button */
+        .button.quick-add-modal__close,
+        .quick-add-modal__close {
+          aspect-ratio: 1 / 1 !important;
+          width: 36px !important;
+          min-width: 36px !important;
+          height: 36px !important;
+          min-height: 36px !important;
+          padding: 0 !important;
+          border-radius: 50% !important;
+        }
+        /* Cart drawer close button — circular + remove Radiant's negative-margin offset */
+        .button.cart-drawer__close-button,
+        .button.close-button.cart-drawer__close-button {
+          width: 36px !important;
+          min-width: 36px !important;
+          height: 36px !important;
+          min-height: 36px !important;
+          aspect-ratio: 1 / 1 !important;
+          border-radius: 50% !important;
+          padding: 0 !important;
+          margin-right: 0 !important;
+          flex-shrink: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+      }
+
+      /* ── Smooth body padding transition on viewport resize ──
+         Prevents jarring layout jump when pill appears/disappears ── */
+      body { transition: padding-bottom 0.2s ease; }
+
+      /* ══════════════════════════════════════════════════════════════
+         30 — "Join the Galaxy" — deep-space nebula text texture
+         ══════════════════════════════════════════════════════════════
+         background-clip: text clips a layered gradient to the letter
+         shapes so the galaxy appears INSIDE the letters.
+         The text content in footer-group.json stays fully editable in
+         the Shopify theme editor — only the visual style is defined here.
+         Selector targets the h3 in the first footer section exclusively.
+      ══════════════════════════════════════════════════════════════ */
+      .shopify-section-group--footer-group .shopify-section:first-child .text-block h3,
+      footer .shopify-section:first-child .text-block h3 {
+        /* Display-weight heading for maximum visual impact */
+        font-weight: 800 !important;
+        font-size:   clamp(2.2rem, 5vw, 4rem) !important;
+        letter-spacing: -0.03em !important;
+        line-height: 1.05 !important;
+        font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+        /* inline-block so the background fills exactly the text bounding box */
+        display: inline-block !important;
+
+        /* ── Deep-space nebula texture — layered radial gradients ── */
+        background:
+          /* Bright stellar burst points */
+          radial-gradient(circle at 11% 22%, rgba(255,255,255,0.95) 0.4%,  transparent 0.4%),
+          radial-gradient(circle at 37% 14%, rgba(255,255,255,0.90) 0.30%, transparent 0.30%),
+          radial-gradient(circle at 66% 38%, rgba(255,255,255,0.95) 0.55%, transparent 0.55%),
+          radial-gradient(circle at 88% 25%, rgba(255,255,255,0.85) 0.25%, transparent 0.25%),
+          radial-gradient(circle at 23% 57%, rgba(255,255,255,0.80) 0.35%, transparent 0.35%),
+          radial-gradient(circle at 74% 70%, rgba(255,255,255,0.90) 0.40%, transparent 0.40%),
+          radial-gradient(circle at 48% 83%, rgba(255,255,255,0.85) 0.28%, transparent 0.28%),
+          radial-gradient(circle at 93% 79%, rgba(255,255,255,0.75) 0.32%, transparent 0.32%),
+          radial-gradient(circle at 58% 6%,  rgba(255,255,255,0.88) 0.35%, transparent 0.35%),
+          radial-gradient(circle at 3%  88%, rgba(255,255,255,0.70) 0.25%, transparent 0.25%),
+          /* Rose / magenta nebula highlights */
+          radial-gradient(ellipse at 22% 10%, rgba(255,55,160,0.68)  0%, transparent 22%),
+          radial-gradient(ellipse at 80% 75%, rgba(220,45,125,0.58)  0%, transparent 19%),
+          radial-gradient(ellipse at 50% 28%, rgba(255,80,200,0.42)  0%, transparent 15%),
+          /* Violet-purple nebula cloud masses */
+          radial-gradient(ellipse at 60% 16%, rgba(200,0,255,0.72)   0%, transparent 28%),
+          radial-gradient(ellipse at 10% 70%, rgba(168,85,247,0.82)  0%, transparent 33%),
+          radial-gradient(ellipse at 90% 36%, rgba(150,0,245,0.68)   0%, transparent 26%),
+          radial-gradient(ellipse at 40% 55%, rgba(120,35,225,0.58)  0%, transparent 36%),
+          /* Deep-blue stellar fields */
+          radial-gradient(ellipse at 36% 80%, rgba(25,0,200,0.62)    0%, transparent 29%),
+          radial-gradient(ellipse at 84% 7%,  rgba(8,38,225,0.56)    0%, transparent 23%),
+          radial-gradient(ellipse at 2%  34%, rgba(18,0,165,0.52)    0%, transparent 27%),
+          radial-gradient(ellipse at 72% 52%, rgba(40,0,180,0.44)    0%, transparent 22%),
+          /* Deep-space base */
+          linear-gradient(155deg,
+            #040010 0%,   #0d0025 12%,
+            #040018 26%,  #18003e 40%,
+            #0a0026 54%,  #120036 68%,
+            #040015 82%,  #09001f 100%
+          ) !important;
+        background-size: 100% 100% !important;
+
+        /* Clip gradient to letter silhouettes */
+        -webkit-background-clip: text !important;
+        background-clip:         text !important;
+        -webkit-text-fill-color: transparent !important;
+        color:                   transparent !important;
+
+        /* Purple glow radiating from letter edges (drop-shadow works with transparent text) */
+        filter:
+          drop-shadow(0 0 10px rgba(168,85,247,0.65))
+          drop-shadow(0 0 30px rgba(120,0,220,0.38)) !important;
+        text-shadow: none !important;
+      }
+
+      /* Mobile: slightly smaller but still impactful */
+      @media screen and (max-width: 749px) {
+        .shopify-section-group--footer-group .shopify-section:first-child .text-block h3,
+        footer .shopify-section:first-child .text-block h3 {
+          font-size: clamp(1.9rem, 9vw, 2.8rem) !important;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         29 — Shopify Account modal — NovaLight glass redesign
+         ══════════════════════════════════════════════════════════════
+         CSS custom properties are the ONLY way to style the shadow DOM
+         of shopify-account. They cascade through the boundary and the
+         component maps each --shopify-account-* token to its internals.
+         Selector specificity (0,1,1) beats Radiant's (0,0,1) rule in
+         header-actions.liquid regardless of source order.
+      ══════════════════════════════════════════════════════════════ */
+
+      /* ─ Core token overrides ─────────────────────────────────────── */
+      .account-button shopify-account {
+        /* Panel background — dark purple, near-opaque */
+        --shopify-account-color-background:     #06010e;
+        /* Primary text — soft white */
+        --shopify-account-color-text:           rgba(255,255,255,0.90);
+        /* Accent — Nova purple (CTA button background, avatar fill) */
+        --shopify-account-color-accent:         #9333ea;
+        --shopify-account-color-accent-text:    #ffffff;
+        /* Panel border (supported on newer component versions) */
+        --shopify-account-color-border:         rgba(168,85,247,0.32);
+        /* Radii */
+        --shopify-account-radius-base:          20px;
+        --shopify-account-radius-button:        100px;
+        --shopify-account-radius-button-small:  100px;
+        --shopify-account-radius-input:         12px;
+        /* Typography — Space Grotesk to match rest of site */
+        --shopify-account-font-heading:         'Space Grotesk', -apple-system, sans-serif;
+        --shopify-account-font-body:            'Space Grotesk', -apple-system, sans-serif;
+        --shopify-account-font-heading-weight:  700;
+        --shopify-account-font-body-weight:     400;
+      }
+
+      /* ─ "Continue with shop" inner component ────────────────────────
+         shop-login-button has its own shadow DOM with its own tokens.
+         These override the Shop Pay brand blue to Nova purple gradient. */
+      shop-login-button {
+        --shop-pay-button--background:          linear-gradient(135deg, #7c3aed, #a855f7);
+        --shop-pay-button--color:               #ffffff;
+        --shop-pay-button--border-radius:       100px;
+        /* Some component versions use these alternate names */
+        --shop-button-background:               #9333ea;
+        --shop-button-color:                    #ffffff;
+        --shop-button-border-radius:            100px;
+      }
+
+      /* ─ Light-DOM dialog glass layer ────────────────────────────────
+         shopify-account renders its panel as a <dialog> child in light
+         DOM (not shadow DOM) for accessibility reasons. Regular CSS
+         selectors reach it, giving us backdrop-filter + border. */
+      shopify-account dialog,
+      shopify-account > [role="dialog"],
+      shopify-account > .shopify-account__panel {
+        background: rgba(6,1,20,0.97) !important;
+        backdrop-filter: blur(52px) saturate(1.8) !important;
+        -webkit-backdrop-filter: blur(52px) saturate(1.8) !important;
+        border: 1px solid rgba(168,85,247,0.35) !important;
+        border-radius: 20px !important;
+        box-shadow:
+          0 32px 80px rgba(0,0,0,0.72),
+          inset 0 1px 0 rgba(255,255,255,0.08) !important;
+        overflow: hidden !important;
+        color: rgba(255,255,255,0.90) !important;
+      }
+
+      /* ─ Mobile: ensure modal appears above the bottom pill ─────────── */
+      @media screen and (max-width: 749px) {
+        shopify-account dialog,
+        shopify-account > [role="dialog"] {
+          /* Pop above the fixed pill (48px) + safe area */
+          bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+          top: auto !important;
+          left: 12px !important;
+          right: 12px !important;
+          width: auto !important;
+          border-radius: 20px !important;
+        }
+      }
+
     </style>
 
     {% if request.design_mode %}
