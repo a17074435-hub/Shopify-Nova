@@ -1,0 +1,67 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq": {
+      "type": "faq-cosmic",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Enviamos en 24-48 horas laborables desde España. Envío gratis en pedidos superiores a €60.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "¿Cómo funciona la devolución?",
+            "answer": "<p>Tienes 30 días desde la recepción para devolver cualquier producto sin coste alguno. Solo contáctanos.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "¿Los proyectores son silenciosos?",
+            "answer": "<p>Sí. Todos nuestros proyectores usan tecnología LED sin ventilador, por lo que son completamente silenciosos (menos de 20dB).</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "¿Qué garantía tienen los productos?",
+            "answer": "<p>Todos los productos incluyen garantía de 2 años. Cubre defectos de fabricación y problemas técnicos.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "¿Son compatibles con Apple HomeKit / Google Home?",
+            "answer": "<p>El Aurora X es compatible con Google Home y Alexa. El Galaxy Pro funciona con nuestra app (iOS y Android).</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "¿Puedo usar los proyectores durante el sueño?",
+            "answer": "<p>Sí. Todos incluyen modo sleep con apagado automático configurable entre 15 minutos y 8 horas.</p>"
+          }
+        }
+      },
+      "settings": {
+        "eyebrow": "Todo lo que necesitas saber",
+        "heading": "Preguntas frecuentes"
+      }
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}

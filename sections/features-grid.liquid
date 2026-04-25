@@ -1,0 +1,78 @@
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'feature' -%}
+          <div class="feature-item" {{ block.shopify_attributes }}>
+            <div class="feature-item__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <div>
+              <h3 class="feature-item__title">{{ block.settings.title }}</h3>
+              <p class="feature-item__text">{{ block.settings.text }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.features-section {
+  padding: 80px 0;
+  background: var(--bg, #000);
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px 32px;
+}
+@media (min-width: 900px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.feature-item__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(168,85,247,0.15);
+  border: 1px solid rgba(168,85,247,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.feature-item__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-heading, #fff);
+  margin: 0 0 6px;
+  font-family: var(--font-heading);
+}
+.feature-item__text {
+  font-size: 13px;
+  color: var(--fg, #A0A0A0);
+  line-height: 1.65;
+  margin: 0;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Features Grid",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text",     "id": "icon",  "label": "Emoji icono",  "default": "⚡" },
+        { "type": "text",     "id": "title", "label": "Título",       "default": "Característica" },
+        { "type": "textarea", "id": "text",  "label": "Descripción",  "default": "Descripción de la característica." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Features Grid" }]
+}
+{% endschema %}

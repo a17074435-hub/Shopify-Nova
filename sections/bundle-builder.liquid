@@ -1,0 +1,143 @@
+{%- liquid
+  assign coll = collections[section.settings.collection]
+  if coll == blank or coll.products_count == 0
+    assign coll = collections.all
+  endif
+  assign max_products = section.settings.product_count | default: 3
+-%}
+
+<section class="bundle-section">
+  <div class="container">
+    <div class="bundle-card reveal">
+      <div>
+        <span class="pill pill-primary">Comprado juntos</span>
+        <h3 style="margin-top:12px;margin-bottom:12px;">{{ section.settings.heading }}</h3>
+        <p style="color:var(--fg);margin-bottom:28px;max-width:480px;">{{ section.settings.subheading }}</p>
+
+        <div class="bundle-products" id="bundle-products">
+          {%- if coll -%}
+            {%- for product in coll.products limit: max_products -%}
+              <label class="bundle-product-slot bundle-product-slot--checked" data-price="{{ product.price }}">
+                <input
+                  type="checkbox"
+                  class="bundle-checkbox"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                  data-price="{{ product.price }}"
+                  data-title="{{ product.title | escape }}"
+                  checked
+                  style="position:absolute;opacity:0;"
+                >
+                <div class="bundle-product-slot__img">
+                  {%- if product.featured_image -%}
+                    {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title | escape }}
+                  {%- endif -%}
+                </div>
+                <div class="bundle-product-slot__price">{{ product.price | money }}</div>
+              </label>
+              {%- unless forloop.last -%}
+                <span class="bundle-plus" aria-hidden="true">+</span>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="bundle-summary">
+        <div class="bundle-summary__label">Total kit</div>
+        <div class="bundle-summary__price">
+          <span class="bundle-summary__current" id="bundle-price">—</span>
+          <span class="bundle-summary__compare" id="bundle-compare" style="display:none;"></span>
+        </div>
+        <div class="bundle-summary__savings" id="bundle-savings"></div>
+        <button
+          type="button"
+          class="btn btn-glow btn-full"
+          id="bundle-atc-btn"
+        >
+          Añadir kit al carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const discount = {{ section.settings.bundle_discount_percent | default: 10 }} / 100;
+
+  function update() {
+    const checks = document.querySelectorAll('.bundle-checkbox');
+    let total = 0;
+    checks.forEach(cb => {
+      cb.closest('label').classList.toggle('bundle-product-slot--unchecked', !cb.checked);
+      cb.closest('label').classList.toggle('bundle-product-slot--checked', cb.checked);
+      if (cb.checked) total += parseInt(cb.dataset.price);
+    });
+    const checkedCount = [...checks].filter(c => c.checked).length;
+    const discountAmt = checkedCount === checks.length ? Math.round(total * discount) : 0;
+    const final = total - discountAmt;
+
+    const priceEl = document.getElementById('bundle-price');
+    const compareEl = document.getElementById('bundle-compare');
+    const savingsEl = document.getElementById('bundle-savings');
+
+    if (priceEl) priceEl.textContent = window.cart ? window.cart.formatMoney(final) : (final/100).toFixed(2) + ' €';
+    if (compareEl) {
+      if (discountAmt > 0) {
+        compareEl.textContent = window.cart ? window.cart.formatMoney(total) : (total/100).toFixed(2) + ' €';
+        compareEl.style.display = '';
+        if (savingsEl) savingsEl.textContent = `Ahorras ${window.cart ? window.cart.formatMoney(discountAmt) : (discountAmt/100).toFixed(2) + ' €'} (${Math.round(discountAmt/total*100)}%)`;
+      } else {
+        compareEl.style.display = 'none';
+        if (savingsEl) savingsEl.textContent = '';
+      }
+    }
+  }
+
+  document.querySelectorAll('.bundle-checkbox').forEach(cb => {
+    cb.closest('label').addEventListener('click', () => {
+      setTimeout(update, 0);
+    });
+  });
+
+  document.getElementById('bundle-atc-btn')?.addEventListener('click', async () => {
+    const items = [...document.querySelectorAll('.bundle-checkbox')]
+      .filter(cb => cb.checked)
+      .map(cb => ({ id: parseInt(cb.dataset.variantId), quantity: 1 }));
+    if (!items.length || !window.cart) return;
+    const btn = document.getElementById('bundle-atc-btn');
+    btn.disabled = true;
+    btn.textContent = 'Añadiendo…';
+    try {
+      await window.cart.add(items);
+      btn.textContent = '✓ Añadido al carrito';
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Añadir kit al carrito'; }, 2000);
+    } catch(e) {
+      btn.textContent = 'Error — inténtalo de nuevo';
+      btn.disabled = false;
+    }
+  });
+
+  // Init
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', update);
+  } else {
+    // Wait for cart.js
+    setTimeout(update, 500);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "El kit galaxia completo" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Llévate los 3 favoritos del drop con un 10% extra de descuento." },
+    { "type": "collection", "id": "collection", "label": "Colección de productos" },
+    { "type": "range", "id": "bundle_discount_percent", "label": "Descuento bundle (%)", "min": 5, "max": 30, "step": 5, "default": 10 },
+    { "type": "range", "id": "product_count", "label": "Número de productos", "min": 2, "max": 5, "step": 1, "default": 3 }
+  ],
+  "presets": [{ "name": "Bundle Builder" }]
+}
+{% endschema %}

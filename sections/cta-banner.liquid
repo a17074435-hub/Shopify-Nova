@@ -1,0 +1,27 @@
+<section class="section-py" style="background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(124,58,237,0.08));border-top:1px solid var(--border-cosmic);border-bottom:1px solid var(--border-cosmic);">
+  <div class="container-narrow" style="text-align:center;">
+    <div class="reveal">
+      <h2 style="margin-bottom:12px;">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p style="color:var(--fg);margin-bottom:32px;">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn btn-glow btn-lg">
+        {{ section.settings.button_label | default: 'Ver productos' }}
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "¿Listo para tu galaxia?" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo" },
+    { "type": "text", "id": "button_label", "label": "Botón", "default": "Ver proyectores" },
+    { "type": "url", "id": "button_link", "label": "Enlace botón" }
+  ],
+  "presets": [{ "name": "CTA Banner" }]
+}
+{% endschema %}

@@ -1,0 +1,198 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "about-hero",
+      "settings": {
+        "eyebrow": "Nuestra historia",
+        "heading": "Hicimos del universo algo íntimo.",
+        "subheading": "NovaLight nació en 2022 con una idea simple: que cualquiera pudiera tener una galaxia en su habitación. Hoy somos miles."
+      }
+    },
+    "stats": {
+      "type": "about-stats",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "50000",
+            "suffix": "+",
+            "label": "Hogares iluminados",
+            "sub": "En España, UK y US"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "23",
+            "suffix": "",
+            "label": "Países",
+            "sub": "Y contamos cada mes"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "49",
+            "suffix": "★",
+            "label": "Rating medio",
+            "sub": "En 4.823 reseñas verificadas"
+          }
+        }
+      },
+      "settings": {}
+    },
+    "manifesto": {
+      "type": "about-manifesto",
+      "settings": {
+        "eyebrow": "Manifiesto",
+        "heading_white": "Creemos que la luz cambia los espacios.",
+        "heading_purple": "Y los espacios cambian a las personas.",
+        "body": "<p>Una habitación oscura es solo una habitación oscura. Pero proyecta una nebulosa en el techo, y de pronto es el cosmos. La cama deja de ser cama, es una nave. La conversación deja de ser banal, se vuelve filosófica.</p><p>Por eso fundamos NovaLight. No vendemos lámparas — <strong>vendemos universos a domicilio</strong>. Drops limitados, ediciones cuidadas, ningún producto sale al mercado sin antes pasar por la habitación de cada uno de nosotros durante un mes.</p><p><em>Si la luz no nos enamora a nosotros, no llega a tu casa.</em></p>"
+      }
+    },
+    "timeline": {
+      "type": "about-timeline",
+      "blocks": {
+        "t1": {
+          "type": "event",
+          "settings": {
+            "year": "2022",
+            "title": "El primer Galaxy Pro",
+            "text": "Tres amigos, un garaje en Valencia, un prototipo que proyectaba una nebulosa fea pero auténtica."
+          }
+        },
+        "t2": {
+          "type": "event",
+          "settings": {
+            "year": "2023",
+            "title": "Primer drop sold out",
+            "text": "500 unidades del Nebula Mini se agotaron en 3 horas. Dejamos los trabajos."
+          }
+        },
+        "t3": {
+          "type": "event",
+          "settings": {
+            "year": "2024",
+            "title": "Aurora X · Innovación",
+            "text": "Lanzamos el primer proyector con simulación de aurora boreal 'silk'. 4.823 reseñas después, 4.9★."
+          }
+        },
+        "t4": {
+          "type": "event",
+          "settings": {
+            "year": "2025",
+            "title": "Hoy, 50.000 hogares",
+            "text": "Drops limitados cada mes, comunidad activa, embajadores en 23 países. Y seguimos sin presentarnos a inversores."
+          }
+        }
+      },
+      "settings": {
+        "eyebrow": "Cuatro años, mil hitos",
+        "heading": "De habitación a constelación"
+      }
+    },
+    "team": {
+      "type": "about-team",
+      "blocks": {
+        "m1": {
+          "type": "member",
+          "settings": {
+            "initial": "M",
+            "name": "Mateo Ruiz",
+            "role": "CEO · Co-fundador",
+            "quote": "Si no lo soñamos en grande, mejor no soñamos."
+          }
+        },
+        "m2": {
+          "type": "member",
+          "settings": {
+            "initial": "L",
+            "name": "Lucía Vega",
+            "role": "Diseño · Co-fundadora",
+            "quote": "La forma cuenta historias que las palabras no pueden."
+          }
+        },
+        "m3": {
+          "type": "member",
+          "settings": {
+            "initial": "H",
+            "name": "Hugo Martín",
+            "role": "Tech · Co-fundador",
+            "quote": "El detalle invisible es el que hace que todo funcione."
+          }
+        }
+      },
+      "settings": {
+        "eyebrow": "El equipo",
+        "heading": "Tres humanos y muchas estrellas."
+      }
+    },
+    "values": {
+      "type": "about-values",
+      "blocks": {
+        "v1": {
+          "type": "value",
+          "settings": {
+            "icon": "✦",
+            "title": "Calidad obsesiva",
+            "text": "Cada producto pasa 30 días en nuestras casas antes de llegar a la tuya."
+          }
+        },
+        "v2": {
+          "type": "value",
+          "settings": {
+            "icon": "💜",
+            "title": "Diseño con alma",
+            "text": "No copiamos. Cada drop es una pieza pensada desde cero."
+          }
+        },
+        "v3": {
+          "type": "value",
+          "settings": {
+            "icon": "↺",
+            "title": "Sin compromisos",
+            "text": "30 días para devolverlo, garantía 2 años, soporte humano de verdad."
+          }
+        },
+        "v4": {
+          "type": "value",
+          "settings": {
+            "icon": "🌱",
+            "title": "Sostenible siempre",
+            "text": "Packaging reciclado, motores eficientes, programa de reciclaje propio."
+          }
+        }
+      },
+      "settings": {
+        "heading": ""
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "heading": "¿Listo para tu galaxia?",
+        "subheading": "Envío gratis en pedidos sobre €60. Devolución en 30 días.",
+        "button_label": "Ver proyectores →",
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "manifesto",
+    "timeline",
+    "team",
+    "values",
+    "cta"
+  ]
+}

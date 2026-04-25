@@ -1,0 +1,78 @@
+<section class="about-hero">
+  {%- render 'starfield', density: 45 -%}
+
+  <!-- Central orb glow -->
+  <div class="about-hero__orb" aria-hidden="true"></div>
+
+  <div class="container about-hero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="about-hero__eyebrow reveal">{{ section.settings.eyebrow | upcase }}</p>
+    {%- endif -%}
+    <h1 class="about-hero__title reveal reveal-delay-1">{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="about-hero__sub reveal reveal-delay-2">
+        {{ section.settings.subheading }}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.about-hero {
+  position: relative;
+  text-align: center;
+  padding: 100px 0 80px;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(55,13,102,0.6) 0%, rgba(88,28,135,0.25) 40%, transparent 70%), var(--bg-cosmic, #080010);
+}
+.about-hero__orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  height: 480px;
+  transform: translate(-50%, -40%);
+  background: radial-gradient(ellipse at 40% 40%, rgba(196,181,253,0.2) 0%, rgba(168,85,247,0.35) 35%, rgba(88,28,135,0.5) 65%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+}
+.about-hero__inner { position: relative; z-index: 2; }
+.about-hero__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--fg-lavender, #C4B5FD);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+.about-hero__title {
+  font-size: clamp(40px, 7vw, 96px);
+  font-family: var(--font-heading, 'Barlow', sans-serif);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  color: var(--fg-heading, #fff);
+  max-width: 820px;
+  margin: 0 auto 24px;
+}
+.about-hero__sub {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--fg, #A0A0A0);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+.about-hero__sub strong { color: var(--fg-heading, #fff); font-weight: 600; }
+</style>
+
+{% schema %}
+{
+  "name": "About Hero",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow",    "default": "Nuestra historia" },
+    { "type": "text",     "id": "heading",    "label": "Título",     "default": "Hicimos del universo algo íntimo." },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo",  "default": "NovaLight nació en 2022 con una idea simple: que cualquiera pudiera tener una galaxia en su habitación. Hoy somos miles." }
+  ],
+  "presets": [{ "name": "About Hero" }]
+}
+{% endschema %}

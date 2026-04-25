@@ -1,0 +1,71 @@
+<section class="about-values-section">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 style="text-align:center;margin-bottom:48px;font-size:clamp(24px,3.5vw,40px);" class="reveal">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="about-values__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'value' -%}
+          <div class="value-card reveal reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="value-card__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <h3 class="value-card__title">{{ block.settings.title }}</h3>
+            <p class="value-card__text">{{ block.settings.text }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.about-values-section {
+  padding: var(--section-py, 120px) 0;
+  background: var(--bg-elevated, #0D0D0D);
+}
+.about-values__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+@media (min-width: 900px) { .about-values__grid { grid-template-columns: repeat(4, 1fr); } }
+.value-card {
+  padding: 28px 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border, #1E1E1E);
+  border-radius: 16px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.value-card:hover { border-color: var(--primary-deep, #7C3AED); transform: translateY(-4px); }
+.value-card__icon { font-size: 28px; margin-bottom: 16px; line-height: 1; }
+.value-card__title { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--fg-heading, #fff); font-family: var(--font-heading); }
+.value-card__text { font-size: 13px; color: var(--fg, #A0A0A0); line-height: 1.6; }
+</style>
+
+{% schema %}
+{
+  "name": "About Valores",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Lo que nos mueve" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Valor",
+      "settings": [
+        { "type": "text",     "id": "icon",  "label": "Emoji",       "default": "✦" },
+        { "type": "text",     "id": "title", "label": "Título" },
+        { "type": "textarea", "id": "text",  "label": "Descripción" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "value", "settings": { "icon": "✦", "title": "Calidad obsesiva",    "text": "Cada producto pasa 30 días en nuestras casas antes de llegar a la tuya." } },
+      { "type": "value", "settings": { "icon": "💜", "title": "Diseño con alma",     "text": "No copiamos. Cada drop es una pieza pensada desde cero." } },
+      { "type": "value", "settings": { "icon": "↺",  "title": "Sin compromisos",     "text": "30 días para devolverlo, garantía 2 años, soporte humano de verdad." } },
+      { "type": "value", "settings": { "icon": "🌱", "title": "Sostenible siempre",  "text": "Packaging reciclado, motores eficientes, programa de reciclaje propio." } }
+    ]
+  },
+}
+{% endschema %}

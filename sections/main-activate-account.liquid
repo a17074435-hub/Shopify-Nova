@@ -1,0 +1,43 @@
+<section class="section-py">
+  <div class="container" style="max-width:480px;">
+    <div class="customer-card">
+      <h1 style="font-size:24px;margin-bottom:8px;">{{ 'customer.activate_account.title' | t }}</h1>
+      <p style="color:var(--fg-muted);font-size:14px;margin-bottom:24px;">{{ 'customer.activate_account.subtext' | t }}</p>
+
+      {%- form 'activate_customer_password' -%}
+        {%- if form.errors -%}
+          <div class="form-errors" style="color:#f87171;font-size:14px;margin-bottom:16px;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div style="margin-bottom:16px;">
+          <label class="form-label" for="Password">{{ 'customer.activate_account.password' | t }}</label>
+          <input id="Password" type="password" name="customer[password]" class="form-input" autocomplete="new-password" required>
+        </div>
+
+        <div style="margin-bottom:24px;">
+          <label class="form-label" for="PasswordConfirm">{{ 'customer.activate_account.password_confirm' | t }}</label>
+          <input id="PasswordConfirm" type="password" name="customer[password_confirmation]" class="form-input" autocomplete="new-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-glow" style="width:100%;">
+          {{ 'customer.activate_account.submit' | t }}
+        </button>
+
+        <div style="text-align:center;margin-top:16px;">
+          <a href="{{ 'routes.account_login_url' | t | default: routes.account_login_url }}" style="color:var(--primary);font-size:14px;">
+            {{ 'customer.activate_account.cancel' | t }}
+          </a>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activar cuenta",
+  "settings": []
+}
+{% endschema %}

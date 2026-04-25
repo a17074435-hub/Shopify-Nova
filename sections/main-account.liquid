@@ -1,0 +1,70 @@
+<section class="account-page">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <h1>Hola, {{ customer.first_name }}</h1>
+        <p style="color:var(--fg-muted);margin-top:4px;">{{ customer.email }}</p>
+      </div>
+      <a href="/account/logout" class="btn btn-outline btn-sm">Cerrar sesión</a>
+    </div>
+
+    <!-- Resumen stats -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:48px;">
+      <div class="about-stat">
+        <div class="about-stat__num">{{ customer.orders.size }}</div>
+        <div class="about-stat__label">Pedidos totales</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat__num">{{ customer.addresses.size }}</div>
+        <div class="about-stat__label">Direcciones</div>
+      </div>
+    </div>
+
+    <!-- Últimos pedidos -->
+    <div class="account-orders">
+      <h2 style="margin-bottom:20px;">Mis pedidos</h2>
+      {%- if customer.orders.size > 0 -%}
+        {%- for order in customer.orders limit: 10 -%}
+          <div class="order-row">
+            <a href="{{ order.customer_url }}" class="order-row__id">{{ order.name }}</a>
+            <span class="order-row__date">{{ order.created_at | date: '%d/%m/%Y' }}</span>
+            <span class="order-row__items">{{ order.line_items.size }} artículo{{ order.line_items.size | pluralize: '', 's' }}</span>
+            <span class="order-row__total">{{ order.total_price | money }}</span>
+            <span class="order-row__status">{{ order.financial_status_label }}</span>
+            <a href="{{ order.customer_url }}" class="btn btn-sm btn-secondary">Ver detalles</a>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="empty-state">
+          <div class="empty-state__icon">📦</div>
+          <p class="empty-state__title">No tienes pedidos todavía</p>
+          <a href="/collections/all" class="btn btn-glow" style="margin-top:20px;">Empezar a comprar</a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Direcciones -->
+    <div style="margin-top:48px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2>Mis direcciones</h2>
+        <a href="/account/addresses" class="btn btn-sm btn-secondary">Gestionar</a>
+      </div>
+      {%- if customer.default_address -%}
+        {%- assign addr = customer.default_address -%}
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;max-width:400px;">
+          <p style="font-weight:500;margin-bottom:8px;">{{ addr.name }}</p>
+          <p style="font-size:14px;color:var(--fg);">{{ addr.address1 }}{%- if addr.address2 != blank %}, {{ addr.address2 }}{%- endif %}</p>
+          <p style="font-size:14px;color:var(--fg);">{{ addr.city }}, {{ addr.zip }}</p>
+          <p style="font-size:14px;color:var(--fg);">{{ addr.country }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cuenta de cliente",
+  "settings": []
+}
+{% endschema %}

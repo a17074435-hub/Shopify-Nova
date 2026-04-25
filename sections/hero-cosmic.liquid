@@ -1,0 +1,292 @@
+<section class="hero-cosmic" id="hero">
+  <!-- Fondo cósmico -->
+  <div class="hero-cosmic__bg" aria-hidden="true">
+    {%- render 'starfield', density: 70 -%}
+    <!-- Orb central -->
+    <div class="hero-cosmic__orb" aria-hidden="true"></div>
+  </div>
+
+  <div class="container hero-cosmic__inner">
+
+    <!-- Eyebrow pills -->
+    <div class="hero-cosmic__eyebrow reveal">
+      <span class="pill pill-live">Drop en vivo</span>
+      {%- if section.settings.social_proof_text != blank -%}
+        <span class="hero-cosmic__viewers">
+          <span class="hero-cosmic__viewers-dot" aria-hidden="true"></span>
+          {{ section.settings.social_proof_text }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <!-- Heading -->
+    <h1 class="hero-cosmic__title reveal reveal-delay-1">
+      {{ section.settings.heading | default: 'Trae el universo a tu habitación' }}
+    </h1>
+
+    <!-- Subtitle -->
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-cosmic__subtitle reveal reveal-delay-2">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <!-- Countdown offer box -->
+    {%- if section.settings.show_countdown_box and settings.enable_countdown -%}
+      <div class="hero-cosmic__offer reveal reveal-delay-2">
+        <span class="hero-cosmic__offer-icon" aria-hidden="true">⚡</span>
+        <span class="hero-cosmic__offer-label">{{ section.settings.discount_label | default: '-30% TERMINA EN' }}</span>
+        <nova-countdown data-hours="{{ settings.countdown_hours }}" data-inline="true" class="hero-cosmic__offer-timer"></nova-countdown>
+      </div>
+    {%- endif -%}
+
+    <!-- CTAs -->
+    <div class="hero-cosmic__ctas reveal reveal-delay-3">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_link | default: '/collections/all' }}" class="btn btn-glow btn-lg hero-cosmic__cta-primary">
+          {{ section.settings.cta_primary_label }}
+          <span class="btn-arrow">→</span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="btn btn-secondary btn-lg">
+          {{ section.settings.cta_secondary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Trust bar -->
+    {%- if section.settings.show_trust_bar -%}
+      <div class="hero-cosmic__trust reveal reveal-delay-4">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust_item' -%}
+            <span class="hero-cosmic__trust-item" {{ block.shopify_attributes }}>
+              <span class="hero-cosmic__trust-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+              {{ block.settings.text }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+.hero-cosmic {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 100px 0 160px;
+}
+.hero-cosmic__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 30%, rgba(88,28,135,0.55) 0%, rgba(55,13,102,0.35) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(124,58,237,0.12), transparent 60%),
+    var(--bg-cosmic, #080010);
+}
+.hero-cosmic__orb {
+  position: absolute;
+  bottom: -15%;
+  left: 50%;
+  width: 680px;
+  height: 680px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 38% 38%,
+    rgba(196,181,253,0.25) 0%,
+    rgba(168,85,247,0.35) 35%,
+    rgba(124,58,237,0.5) 65%,
+    rgba(88,28,135,0.15) 100%
+  );
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: orb-breathe 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-cosmic__inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Eyebrow */
+.hero-cosmic__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-cosmic__viewers {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  color: var(--fg-lavender, #C4B5FD);
+  font-weight: 500;
+}
+.hero-cosmic__viewers-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success, #22C55E);
+  border-radius: 50%;
+  animation: live-blink 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Title */
+.hero-cosmic__title {
+  font-size: clamp(44px, 9vw, 110px);
+  font-family: var(--font-heading, 'Barlow', sans-serif);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  max-width: 900px;
+  background: linear-gradient(160deg, #ffffff 0%, rgba(255,255,255,0.85) 40%, #C4B5FD 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+}
+
+/* Subtitle */
+.hero-cosmic__subtitle {
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--fg, #A0A0A0);
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 36px;
+}
+
+/* Countdown offer box */
+.hero-cosmic__offer {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 5, 20, 0.75);
+  border: 1px solid var(--border-cosmic, #2A1A4E);
+  border-radius: 14px;
+  padding: 14px 24px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(12px);
+}
+.hero-cosmic__offer-icon {
+  font-size: 16px;
+}
+.hero-cosmic__offer-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-lavender, #C4B5FD);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.hero-cosmic__offer-timer {
+  display: inline-flex;
+}
+.hero-cosmic__offer-timer .mono {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+}
+
+/* CTAs */
+.hero-cosmic__ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+.hero-cosmic__cta-primary {
+  background: linear-gradient(135deg, var(--primary, #A855F7) 0%, var(--primary-deep, #7C3AED) 100%);
+  box-shadow: 0 8px 32px rgba(168,85,247,0.4);
+}
+.hero-cosmic__cta-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 48px rgba(168,85,247,0.55);
+}
+
+/* Trust bar */
+.hero-cosmic__trust {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 24px;
+}
+.hero-cosmic__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--fg, #A0A0A0);
+  padding: 0 20px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  white-space: nowrap;
+}
+.hero-cosmic__trust-item:last-child {
+  border-right: 0;
+}
+.hero-cosmic__trust-icon {
+  color: var(--fg-lavender, #C4B5FD);
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .hero-cosmic__trust-item { padding: 8px 12px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .hero-cosmic__trust-item:last-child { border-bottom: 0; }
+  .hero-cosmic__offer { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Cósmico",
+  "settings": [
+    { "type": "text", "id": "social_proof_text", "label": "Texto personas viendo", "default": "✦ 2.847 personas viendo ahora" },
+    { "type": "text", "id": "heading", "label": "Título principal", "default": "Trae el universo a tu habitación" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Proyectores de galaxia y aurora boreal con tecnología cinema-grade. Cambia tu espacio en 3 segundos." },
+    { "type": "header", "content": "Caja de oferta" },
+    { "type": "checkbox", "id": "show_countdown_box", "label": "Mostrar caja de countdown", "default": true },
+    { "type": "text", "id": "discount_label", "label": "Texto de la oferta", "default": "-30% TERMINA EN" },
+    { "type": "header", "content": "CTAs" },
+    { "type": "text", "id": "cta_primary_label", "label": "CTA primario texto", "default": "Comprar ahora" },
+    { "type": "url", "id": "cta_primary_link", "label": "CTA primario enlace" },
+    { "type": "text", "id": "cta_secondary_label", "label": "CTA secundario texto", "default": "Ver demo en vídeo" },
+    { "type": "url", "id": "cta_secondary_link", "label": "CTA secundario enlace" },
+    { "type": "header", "content": "Trust bar" },
+    { "type": "checkbox", "id": "show_trust_bar", "label": "Mostrar trust bar", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Item de confianza",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji icono", "default": "★" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "4.9 · 4.823 reseñas" }
+      ]
+    }
+  ],
+  "default": {
+    "settings": {
+      "show_countdown_box": true,
+      "show_trust_bar": true
+    },
+    "blocks": [
+      { "type": "trust_item", "settings": { "icon": "★", "text": "4.9 · 4.823 reseñas" } },
+      { "type": "trust_item", "settings": { "icon": "↺", "text": "30 días devolución" } },
+      { "type": "trust_item", "settings": { "icon": "⚡", "text": "Envío 24h" } },
+      { "type": "trust_item", "settings": { "icon": "✦", "text": "+50.000 vendidos" } }
+    ]
+  },
+}
+{% endschema %}

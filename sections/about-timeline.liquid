@@ -1,0 +1,163 @@
+<section class="about-timeline-section">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="about-tl__eyebrow reveal">✦ {{ section.settings.eyebrow | upcase }}</p>
+    {%- endif -%}
+    <h2 class="about-tl__title reveal reveal-delay-1">{{ section.settings.heading }}</h2>
+
+    <div class="about-tl">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'event' -%}
+          {%- assign is_right = forloop.index | modulo: 2 -%}
+          <div class="about-tl__item{% if is_right == 0 %} about-tl__item--right{% endif %} reveal reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="about-tl__card">
+              <div class="about-tl__year">{{ block.settings.year }}</div>
+              <h3 class="about-tl__event-title">{{ block.settings.title }}</h3>
+              <p class="about-tl__event-text">{{ block.settings.text }}</p>
+            </div>
+            <div class="about-tl__dot" aria-hidden="true"></div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.about-timeline-section {
+  padding: var(--section-py, 120px) 0;
+  background: var(--bg-elevated, #0D0D0D);
+}
+.about-tl__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--fg-lavender, #C4B5FD);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.about-tl__title {
+  font-size: clamp(28px, 4vw, 52px);
+  text-align: center;
+  margin-bottom: 72px;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+/* Zigzag timeline */
+.about-tl {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+/* Center vertical line */
+.about-tl::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--primary-deep, #7C3AED) 20%, var(--primary-deep, #7C3AED) 80%, transparent);
+}
+.about-tl__item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  padding-right: calc(50% + 32px);
+  margin-bottom: 48px;
+  position: relative;
+}
+.about-tl__item--right {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding-right: 0;
+  padding-left: calc(50% + 32px);
+}
+.about-tl__card {
+  background: var(--bg-card, #111);
+  border: 1px solid var(--border, #1E1E1E);
+  border-radius: 16px;
+  padding: 24px 28px;
+  max-width: 300px;
+  transition: border-color 0.3s;
+}
+.about-tl__card:hover { border-color: var(--primary-deep, #7C3AED); }
+.about-tl__year {
+  font-size: 12px;
+  color: var(--primary, #A855F7);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.about-tl__event-title {
+  font-size: 18px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--fg-heading, #fff);
+}
+.about-tl__event-text {
+  font-size: 13px;
+  color: var(--fg, #A0A0A0);
+  line-height: 1.6;
+}
+/* Center dot */
+.about-tl__dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  background: var(--primary, #A855F7);
+  border-radius: 50%;
+  border: 3px solid var(--bg-elevated, #0D0D0D);
+  box-shadow: 0 0 14px rgba(168,85,247,0.7);
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .about-tl::before { left: 20px; }
+  .about-tl__item,
+  .about-tl__item--right {
+    padding-right: 0;
+    padding-left: 52px;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .about-tl__dot { left: 20px; }
+  .about-tl__card { max-width: 100%; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "About Timeline",
+  "settings": [
+    { "type": "text", "id": "eyebrow",  "label": "Eyebrow", "default": "Cuatro años, mil hitos" },
+    { "type": "text", "id": "heading",  "label": "Título",  "default": "De habitación a constelación" }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Evento",
+      "settings": [
+        { "type": "text",     "id": "year",  "label": "Año",         "default": "2022" },
+        { "type": "text",     "id": "title", "label": "Título",      "default": "El primer Galaxy Pro" },
+        { "type": "textarea", "id": "text",  "label": "Descripción", "default": "Tres amigos, un garaje en Valencia, y un prototipo que proyectaba una nebulosa fea pero auténtica." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "event", "settings": { "year": "2022", "title": "El primer Galaxy Pro", "text": "Tres amigos, un garaje en Valencia, un prototipo que proyectaba una nebulosa fea pero auténtica." } },
+      { "type": "event", "settings": { "year": "2023", "title": "Primer drop sold out", "text": "500 unidades del Nebula Mini se agotaron en 3 horas. Dejamos los trabajos." } },
+      { "type": "event", "settings": { "year": "2024", "title": "Aurora X · Innovación", "text": "Lanzamos el primer proyector con simulación de aurora boreal 'silk'. 4.823 reseñas después, 4.9★." } },
+      { "type": "event", "settings": { "year": "2025", "title": "Hoy, 50.000 hogares", "text": "Drops limitados cada mes, comunidad activa, embajadores en 23 países. Y seguimos sin presentarnos a inversores." } }
+    ]
+  },
+}
+{% endschema %}

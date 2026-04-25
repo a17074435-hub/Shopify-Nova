@@ -1,0 +1,67 @@
+<section class="about-manifesto">
+  <div class="container-narrow">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="about-manifesto__eyebrow reveal">✦ {{ section.settings.eyebrow | upcase }}</p>
+    {%- endif -%}
+
+    <h2 class="about-manifesto__heading reveal reveal-delay-1">
+      {{ section.settings.heading_white }}<br>
+      <span class="about-manifesto__heading-accent">{{ section.settings.heading_purple }}</span>
+    </h2>
+
+    {%- if section.settings.body != blank -%}
+      <div class="about-manifesto__body reveal reveal-delay-2">{{ section.settings.body }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.about-manifesto {
+  padding: var(--section-py, 120px) 0;
+  background: rgba(0,0,0,0.15);
+  border-top: 1px solid var(--border, #1E1E1E);
+  border-bottom: 1px solid var(--border, #1E1E1E);
+}
+.about-manifesto__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--fg-lavender, #C4B5FD);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+.about-manifesto__heading {
+  font-size: clamp(28px, 4.5vw, 56px);
+  font-family: var(--font-heading, 'Barlow', sans-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--fg-heading, #fff);
+  margin-bottom: 32px;
+}
+.about-manifesto__heading-accent {
+  color: var(--primary, #A855F7);
+}
+.about-manifesto__body {
+  font-size: clamp(15px, 1.6vw, 17px);
+  color: var(--fg, #A0A0A0);
+  line-height: 1.75;
+  max-width: 640px;
+}
+.about-manifesto__body p { margin-bottom: 16px; }
+.about-manifesto__body strong { color: var(--fg-heading, #fff); font-weight: 600; }
+.about-manifesto__body em { font-style: italic; color: var(--fg-lavender, #C4B5FD); }
+</style>
+
+{% schema %}
+{
+  "name": "About Manifiesto",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",        "label": "Eyebrow",               "default": "Manifiesto" },
+    { "type": "text",     "id": "heading_white",   "label": "Título línea 1 (blanco)","default": "Creemos que la luz cambia los espacios." },
+    { "type": "text",     "id": "heading_purple",  "label": "Título línea 2 (morado)","default": "Y los espacios cambian a las personas." },
+    { "type": "richtext", "id": "body",            "label": "Texto del manifiesto" }
+  ],
+  "presets": [{ "name": "About Manifiesto" }]
+}
+{% endschema %}

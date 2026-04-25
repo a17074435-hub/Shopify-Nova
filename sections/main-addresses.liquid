@@ -1,0 +1,63 @@
+<section class="customer-page">
+  <div class="container" style="max-width:860px;">
+    <a href="/account" style="color:var(--primary);font-size:14px;display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;">
+      {%- render 'icon', icon: 'chevron-left', size: 14 -%}
+      Volver
+    </a>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:12px;">
+      <h1>Mis direcciones</h1>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('new-address-form').style.display='block';this.style.display='none';">
+        + Añadir dirección
+      </button>
+    </div>
+
+    <!-- Formulario nueva dirección -->
+    <div id="new-address-form" style="display:none;background:var(--bg-card);border:1px solid var(--border-cosmic);border-radius:16px;padding:28px;margin-bottom:32px;">
+      <h3 style="margin-bottom:20px;">Nueva dirección</h3>
+      {%- form 'customer_address', customer.new_address -%}
+        <div class="form-group">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="field"><label>Nombre</label><input type="text" name="address[first_name]" autocomplete="given-name"></div>
+            <div class="field"><label>Apellido</label><input type="text" name="address[last_name]" autocomplete="family-name"></div>
+          </div>
+          <div class="field"><label>Dirección</label><input type="text" name="address[address1]" autocomplete="address-line1" required></div>
+          <div class="field"><label>Piso / Puerta (opcional)</label><input type="text" name="address[address2]" autocomplete="address-line2"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="field"><label>Ciudad</label><input type="text" name="address[city]" autocomplete="address-level2" required></div>
+            <div class="field"><label>CP</label><input type="text" name="address[zip]" autocomplete="postal-code"></div>
+          </div>
+          <div class="field"><label>País</label><select name="address[country]">{{ all_country_option_tags }}</select></div>
+          <label style="display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer;">
+            <input type="checkbox" name="address[default]" value="1"> Establecer como dirección por defecto
+          </label>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <button type="submit" class="btn btn-glow">Guardar dirección</button>
+          <button type="button" class="btn btn-outline" onclick="document.getElementById('new-address-form').style.display='none'">Cancelar</button>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <!-- Direcciones existentes -->
+    {%- for address in customer.addresses -%}
+      <div style="background:var(--bg-card);border:1px solid var(--border){% if address == customer.default_address %};border-color:var(--primary-deep){% endif %};border-radius:16px;padding:24px;margin-bottom:16px;">
+        {%- if address == customer.default_address -%}
+          <span class="pill pill-primary" style="margin-bottom:12px;">Por defecto</span>
+        {%- endif -%}
+        <p><strong>{{ address.name }}</strong></p>
+        <p style="color:var(--fg);font-size:14px;margin-top:6px;">{{ address.address1 }}{% if address.address2 != blank %}, {{ address.address2 }}{% endif %}<br>{{ address.city }}, {{ address.zip }}<br>{{ address.country }}</p>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <a href="/account/addresses/{{ address.id }}" class="btn btn-sm btn-secondary">Editar</a>
+          <a href="/account/addresses/{{ address.id }}" data-method="delete" class="btn btn-sm btn-outline" onclick="return confirm('¿Eliminar esta dirección?')">Eliminar</a>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Direcciones",
+  "settings": []
+}
+{% endschema %}

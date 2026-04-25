@@ -1,0 +1,132 @@
+<section class="about-stats-section">
+  <div class="container">
+    <div class="about-stats-row">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'stat' -%}
+          <div class="about-stats-item reveal reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <div class="about-stats-item__num">
+              <span data-counter="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix }}">
+                {{ block.settings.number | plus: 0 | divided_by: 1000 }}K{{ block.settings.suffix }}
+              </span>
+            </div>
+            <div class="about-stats-item__label">{{ block.settings.label }}</div>
+            {%- if block.settings.sub != blank -%}
+              <div class="about-stats-item__sub">{{ block.settings.sub }}</div>
+            {%- endif -%}
+          </div>
+          {%- unless forloop.last -%}
+            <div class="about-stats-sep" aria-hidden="true"></div>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.about-stats-section {
+  padding: 48px 0;
+  border-top: 1px solid var(--border, #1E1E1E);
+  border-bottom: 1px solid var(--border, #1E1E1E);
+  background: rgba(0,0,0,0.3);
+}
+.about-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.about-stats-item {
+  flex: 1;
+  min-width: 180px;
+  text-align: center;
+  padding: 16px 32px;
+}
+.about-stats-item__num {
+  font-size: clamp(40px, 6vw, 72px);
+  font-family: var(--font-heading, 'Barlow', sans-serif);
+  font-weight: 400;
+  color: var(--fg-heading, #fff);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+}
+.about-stats-item__label {
+  font-size: 13px;
+  color: var(--fg, #A0A0A0);
+  font-weight: 500;
+}
+.about-stats-item__sub {
+  font-size: 11px;
+  color: var(--fg-muted, #6B6B6B);
+  margin-top: 2px;
+}
+.about-stats-sep {
+  width: 1px;
+  height: 60px;
+  background: var(--border, #1E1E1E);
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .about-stats-sep { display: none; }
+  .about-stats-item { min-width: 140px; }
+}
+</style>
+
+<script>
+(function () {
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      el.querySelectorAll('[data-counter]').forEach(function (span) {
+        if (span.dataset.done) return;
+        span.dataset.done = '1';
+        var target = parseInt(span.dataset.counter);
+        var suffix = span.dataset.suffix || '';
+        var dur = 1600;
+        var start = performance.now();
+        (function step(ts) {
+          var p = Math.min((ts - start) / dur, 1);
+          var ease = 1 - Math.pow(1 - p, 3);
+          span.textContent = Math.floor(ease * target).toLocaleString('es') + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else span.textContent = target.toLocaleString('es') + suffix;
+        })(start);
+      });
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.about-stats-item').forEach(function (el) {
+    observer.observe(el);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "About Stats",
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estadística",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número (solo dígitos)", "default": "50000" },
+        { "type": "text", "id": "suffix", "label": "Sufijo (ej: +, ★)", "default": "+" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Hogares iluminados" },
+        { "type": "text", "id": "sub",   "label": "Texto secundario (opcional)" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "About Stats",
+    "blocks": [
+      { "type": "stat", "settings": { "number": "50000", "suffix": "+", "label": "Hogares iluminados", "sub": "En España, UK y US" } },
+      { "type": "stat", "settings": { "number": "23",    "suffix": "",  "label": "Países", "sub": "Y contamos cada mes" } },
+      { "type": "stat", "settings": { "number": "49",    "suffix": "★", "label": "Rating medio", "sub": "En 4.823 reseñas verificadas" } }
+    ]
+  }]
+}
+{% endschema %}
