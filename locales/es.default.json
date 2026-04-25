@@ -1,0 +1,196 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "continue_shopping": "Seguir comprando",
+    "search": "Buscar",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "or": "o"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "view_full_details": "Ver todos los detalles",
+      "quantity": {
+        "label": "Cantidad",
+        "increase": "Aumentar cantidad",
+        "decrease": "Reducir cantidad"
+      },
+      "price": {
+        "regular_price": "Precio regular",
+        "sale_price": "Precio de oferta",
+        "unit_price": "Precio unitario",
+        "unit_price_separator": "por"
+      }
+    },
+    "facets": {
+      "filter_by": "Filtrar por",
+      "sort_by_label": "Ordenar por",
+      "sort_options": {
+        "manual": "Destacados",
+        "best-selling": "Más vendidos",
+        "title-ascending": "A–Z",
+        "title-descending": "Z–A",
+        "price-ascending": "Precio: menor a mayor",
+        "price-descending": "Precio: mayor a menor",
+        "created-ascending": "Más antiguos",
+        "created-descending": "Más recientes"
+      },
+      "clear_all": "Limpiar todo",
+      "showing_results": "Mostrando {{ count }} resultados"
+    }
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "empty": "Tu carrito está vacío",
+    "subtotal": "Subtotal",
+    "checkout": "Finalizar compra",
+    "free_shipping_notice": "Envío gratis en pedidos de {{ amount }}+",
+    "free_shipping_achieved": "¡Envío gratis desbloqueado!",
+    "remove": "Eliminar",
+    "update": "Actualizar",
+    "taxes_and_shipping_policy_at_checkout": "Impuestos e información de envío calculados al finalizar la compra"
+  },
+  "customer": {
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "sign_in": "Entrar",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "no_account": "¿No tienes cuenta?",
+      "create_account": "Crear cuenta"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Crear cuenta",
+      "have_account": "¿Ya tienes cuenta?"
+    },
+    "account": {
+      "title": "Mi cuenta",
+      "orders": "Pedidos",
+      "addresses": "Direcciones",
+      "logout": "Cerrar sesión",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "payment_status": "Pago",
+      "fulfillment_status": "Envío",
+      "total": "Total",
+      "no_orders": "Aún no tienes pedidos."
+    },
+    "addresses": {
+      "title": "Mis direcciones",
+      "default": "Predeterminada",
+      "add_new": "Añadir dirección",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "set_default": "Establecer como predeterminada"
+    },
+    "order": {
+      "title": "Pedido",
+      "date": "Fecha del pedido",
+      "cancelled": "Pedido cancelado el",
+      "cancelled_reason": "Motivo",
+      "billing_address": "Dirección de facturación",
+      "shipping_address": "Dirección de envío",
+      "payment_status": "Estado del pago",
+      "fulfillment_status": "Estado del envío",
+      "product": "Producto",
+      "sku": "SKU",
+      "price": "Precio",
+      "quantity": "Cantidad",
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "tax": "Impuesto",
+      "shipping": "Envío",
+      "discount": "Descuento"
+    },
+    "recover_password": {
+      "title": "Recuperar contraseña",
+      "subtext": "Te enviaremos un correo para restablecer tu contraseña.",
+      "email": "Correo electrónico",
+      "submit": "Enviar instrucciones",
+      "cancel": "Cancelar",
+      "success": "Te enviamos un correo con instrucciones para restablecer tu contraseña."
+    },
+    "reset_password": {
+      "title": "Restablecer contraseña",
+      "password": "Nueva contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Restablecer contraseña"
+    },
+    "activate_account": {
+      "title": "Activar cuenta",
+      "subtext": "Crea una contraseña para activar tu cuenta.",
+      "password": "Contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Activar cuenta",
+      "cancel": "Cancelar"
+    }
+  },
+  "sections": {
+    "header": {
+      "search_placeholder": "Buscar productos..."
+    },
+    "cart": {
+      "title": "Carrito"
+    },
+    "featured_product": {
+      "sold_out": "Agotado",
+      "unavailable": "No disponible"
+    }
+  },
+  "blogs": {
+    "article": {
+      "written_by": "por",
+      "read_more": "Leer más",
+      "back_to_blog": "Volver al blog",
+      "previous_article": "← Anterior",
+      "next_article": "Siguiente →",
+      "tags": "Etiquetas"
+    },
+    "comments": {
+      "title": "Comentarios",
+      "no_comments": "Sin comentarios aún.",
+      "form": {
+        "title": "Dejar un comentario",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Comentario",
+        "submit": "Publicar comentario"
+      }
+    }
+  },
+  "pagination": {
+    "label": "Paginación",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "current_page": "Página {{ current }} de {{ total }}"
+  },
+  "accessibility": {
+    "skip_to_content": "Saltar al contenido principal",
+    "close_modal": "Cerrar modal",
+    "open_navigation": "Abrir navegación",
+    "close_navigation": "Cerrar navegación",
+    "open_search": "Abrir búsqueda",
+    "close_search": "Cerrar búsqueda",
+    "open_cart": "Abrir carrito",
+    "close_cart": "Cerrar carrito",
+    "image_gallery": "Galería de imágenes",
+    "scroll_to_top": "Volver arriba"
+  }
+}
